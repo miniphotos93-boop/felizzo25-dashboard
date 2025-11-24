@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Event - Felizzo'25</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; background: #f5f5f5; padding: 20px; }
+        .container { max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; color: #666; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; }
+        textarea { resize: vertical; min-height: 80px; }
+        .btn { padding: 12px 30px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-right: 10px; }
+        .btn:hover { background: #45a049; }
+        .btn-secondary { background: #666; }
+        .btn-secondary:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update: {{ event.Event }}</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" name="start_date" value="{{ event.Start_Date }}">
+            </div>
+            <div class="form-group">
+                <label>End Date</label>
+                <input type="date" name="end_date" value="{{ event.End_Date }}">
+            </div>
+            <div class="form-group">
+                <label>Finals Date</label>
+                <input type="date" name="finals_date" value="{{ event.Finals_Date }}">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    <option value="Planned" {% if event.Status == 'Planned' %}selected{% endif %}>Planned</option>
+                    <option value="In Progress" {% if event.Status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Completed" {% if event.Status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Number of Participants</label>
+                <input type="number" name="participants" value="{{ event.Participants }}">
+            </div>
+            <div class="form-group">
+                <label>Winner</label>
+                <input type="text" name="winner" value="{{ event.Winner }}">
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea name="notes">{{ event.Notes }}</textarea>
+            </div>
+            <button type="submit" class="btn">Save Changes</button>
+            <a href="/" class="btn btn-secondary" style="text-decoration: none; display: inline-block;">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
