@@ -118,8 +118,13 @@
                         </tr>
                         <tr>
                             <th style="text-align: left;">
+                                {% if event.Event == 'Group Dance' %}
+                                Execution & Synchronization (10)
+                                <span class="tooltip">Focuses on accuracy of movements and how well dancers move together. Includes timing and coordination, ensuring movements are performed on beat and in unison.</span>
+                                {% else %}
                                 Stage Presence (10)
                                 <span class="tooltip">How well dancers command and utilize the stage. Considers confidence, charisma, and energy.</span>
+                                {% endif %}
                             </th>
                             <td><input type="number" name="stage_presence_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_0', {}).get('stage_presence', 0) }}"></td>
                             <td><input type="number" name="stage_presence_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('stage_presence', 0) }}"></td>
@@ -206,7 +211,9 @@
                                     <td><input type="number" name="performance_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('performance', 0) }}"></td>
                                 </tr>
                                 <tr>
-                                    <th style="text-align: left;">Stage Presence (10)</th>
+                                    <th style="text-align: left;">
+                                        {% if event.Event == 'Group Dance' %}Execution & Synchronization (10){% else %}Stage Presence (10){% endif %}
+                                    </th>
                                     <td><input type="number" name="stage_presence_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('stage_presence', 0) }}"></td>
                                     <td><input type="number" name="stage_presence_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('stage_presence', 0) }}"></td>
                                     <td><input type="number" name="stage_presence_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('stage_presence', 0) }}"></td>
