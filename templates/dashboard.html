@@ -144,9 +144,6 @@
                     <p><strong>Start:</strong> {{ event.Start_Date }}</p>
                     {% endif %}
                     <p><strong>🏆 Winner:</strong> {{ event.Winner if event.Winner else 'TBD' }}</p>
-                    {% if event.Participants %}
-                    <p><strong>👥 Participants:</strong> {{ event.Participants }} <a href="/participants/{{ loop.index0 }}" style="color: #2196F3; font-size: 12px;">(view list)</a></p>
-                    {% endif %}
                     {% if event.Notes %}
                     <p><em>{{ event.Notes }}</em></p>
                     {% endif %}
