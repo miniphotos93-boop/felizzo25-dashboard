@@ -126,7 +126,7 @@
 
         <div class="progress-bar">
             <div class="progress-fill" style="width: {{ (completed / total * 100)|int }}%">
-                {{ (completed / total * 100)|int }}% Complete
+                {% if (completed / total * 100)|int > 15 %}{{ (completed / total * 100)|int }}% Complete{% endif %}
             </div>
         </div>
 
