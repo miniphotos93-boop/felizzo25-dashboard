@@ -134,6 +134,30 @@
                 </div>
                 {% endfor %}
             </div>
+            <div style="background: rgba(0, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; border: 2px solid rgba(0, 255, 255, 0.3);">
+                <h3 style="color: #00ffff; margin-bottom: 10px;">Round {{ round_num }} - Combined Total Score</h3>
+                <p style="color: #fff; font-size: 32px; font-weight: bold;" id="grand_total_{{ p.serial_number }}_{{ round_num }}">0 / 150</p>
+                <p style="color: #e0e0ff; font-size: 14px;">Sum of all 3 judges' scores</p>
+            </div>
+            <script>
+                (function() {
+                    function updateGrandTotal() {
+                        let total = 0;
+                        {% for judge_idx in range(3) %}
+                        const judge{{ judge_idx }}Total = parseInt(document.getElementById('judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}').textContent) || 0;
+                        total += judge{{ judge_idx }}Total;
+                        {% endfor %}
+                        document.getElementById('grand_total_{{ p.serial_number }}_{{ round_num }}').textContent = total + ' / 150';
+                    }
+                    
+                    // Update grand total whenever any judge's scores change
+                    document.querySelectorAll('input[onchange*="{{ p.serial_number }}_{{ round_num }}"]').forEach(input => {
+                        input.addEventListener('change', updateGrandTotal);
+                    });
+                    
+                    updateGrandTotal();
+                })();
+            </script>
             </form>
             {% endfor %}
         </div>
