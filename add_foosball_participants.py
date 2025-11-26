@@ -1,0 +1,57 @@
+import json
+from pathlib import Path
+
+participants_dir = Path("participants_data")
+participants_dir.mkdir(exist_ok=True)
+
+foosball_participants = [
+    {"serial_number": 1, "participant1_name": "Vinod", "participant2_name": "Balu", "team_name": "SDL"},
+    {"serial_number": 2, "participant1_name": "Syed S", "participant2_name": "Hari", "team_name": "EU/UK"},
+    {"serial_number": 3, "participant1_name": "Akash Chandran", "participant2_name": "Harish", "team_name": "Vega"},
+    {"serial_number": 4, "participant1_name": "Stalin", "participant2_name": "karthickraja", "team_name": "3p Apps"},
+    {"serial_number": 5, "participant1_name": "AK Sathish", "participant2_name": "Sukumar Gokul", "team_name": "SE"},
+    {"serial_number": 6, "participant1_name": "Balamurugan", "participant2_name": "Balaji", "team_name": "EU/UK"},
+    {"serial_number": 7, "participant1_name": "Ijaz", "participant2_name": "chandru", "team_name": "SDL"},
+    {"serial_number": 8, "participant1_name": "Arvind", "participant2_name": "Shiva", "team_name": "Mod"},
+    {"serial_number": 9, "participant1_name": "Abinash", "participant2_name": "Kanimozhi", "team_name": "Vega"},
+    {"serial_number": 10, "participant1_name": "Vignesh", "participant2_name": "Janarthanam", "team_name": "Sysapps"},
+    {"serial_number": 11, "participant1_name": "Ashik", "participant2_name": "Murugan", "team_name": "Mod"},
+    {"serial_number": 12, "participant1_name": "Mohanram", "participant2_name": "Mirunalini Suresh", "team_name": "Vega"},
+    {"serial_number": 13, "participant1_name": "Hema", "participant2_name": "mohana priya", "team_name": "SDL"},
+    {"serial_number": 14, "participant1_name": "Subash", "participant2_name": "Balaji", "team_name": "FBDA"},
+    {"serial_number": 15, "participant1_name": "Chandran", "participant2_name": "Vignesh", "team_name": "Core experience"},
+    {"serial_number": 16, "participant1_name": "Nandhini", "participant2_name": "Deepika", "team_name": "SDL"},
+    {"serial_number": 17, "participant1_name": "Muralidharan M", "participant2_name": "Akash R", "team_name": "Sysapps"},
+    {"serial_number": 18, "participant1_name": "Kanan", "participant2_name": "Keerthana", "team_name": "SDL"},
+    {"serial_number": 19, "participant1_name": "Agalya", "participant2_name": "Akash", "team_name": "MOD"},
+    {"serial_number": 20, "participant1_name": "Rahul", "participant2_name": "Soumya", "team_name": "SE"},
+    {"serial_number": 21, "participant1_name": "Karthickraja", "participant2_name": "Stalin", "team_name": "3p Apps"},
+    {"serial_number": 22, "participant1_name": "Elavarasan", "participant2_name": "Muthukumaran", "team_name": "3p Apps"},
+    {"serial_number": 23, "participant1_name": "Atshara", "participant2_name": "Tejas", "team_name": "3p Apps"},
+    {"serial_number": 24, "participant1_name": "Hamirth", "participant2_name": "shanmugapriyan", "team_name": "3p Apps"},
+    {"serial_number": 25, "participant1_name": "Haripriya", "participant2_name": "Akshay", "team_name": "3p Apps"},
+    {"serial_number": 26, "participant1_name": "Suriya", "participant2_name": "Deepika", "team_name": "3p Apps"},
+    {"serial_number": 27, "participant1_name": "Muthu", "participant2_name": "Soorya", "team_name": "Discovery"},
+    {"serial_number": 28, "participant1_name": "Srinivasaperumal", "participant2_name": "Aravindh", "team_name": "Sysapps"},
+    {"serial_number": 29, "participant1_name": "Sudharshan", "participant2_name": "Anish", "team_name": "SE"},
+    {"serial_number": 30, "participant1_name": "Hemanth", "participant2_name": "Karthikeyan", "team_name": "SE"},
+    {"serial_number": 31, "participant1_name": "Thirumal", "participant2_name": "abirajan", "team_name": "Discovery"},
+    {"serial_number": 32, "participant1_name": "Swarnali", "participant2_name": "Divya", "team_name": "FBDA"},
+    {"serial_number": 33, "participant1_name": "Dhanush", "participant2_name": "Manuneethy cholan", "team_name": "SE"},
+    {"serial_number": 34, "participant1_name": "Kalki", "participant2_name": "Nethra", "team_name": "Mod"},
+    {"serial_number": 35, "participant1_name": "Anupriyanka", "participant2_name": "Priyanka", "team_name": "Mod"},
+    {"serial_number": 36, "participant1_name": "Anantha karthick", "participant2_name": "shahid", "team_name": "NFA"},
+    {"serial_number": 37, "participant1_name": "Hari prasad", "participant2_name": "sri ram", "team_name": "SDL"},
+    {"serial_number": 38, "participant1_name": "Arulmozhi", "participant2_name": "Dharshini", "team_name": "SDL"},
+    {"serial_number": 39, "participant1_name": "Monika", "participant2_name": "Aarthi", "team_name": "SDL"},
+    {"serial_number": 40, "participant1_name": "Arun", "participant2_name": "Raghul", "team_name": "Vega"},
+    {"serial_number": 41, "participant1_name": "Aasif", "participant2_name": "Deepu P J", "team_name": "Sysapps"},
+    {"serial_number": 42, "participant1_name": "pradeep", "participant2_name": "MOHANAPRIYA", "team_name": "SDL"},
+    {"serial_number": 43, "participant1_name": "Raasique", "participant2_name": "chithra", "team_name": "MOD"},
+]
+
+# Foosball is event index 4
+with open(participants_dir / "event_4.json", "w") as f:
+    json.dump(foosball_participants, f, indent=2)
+
+print(f"Added {len(foosball_participants)} Foosball participants!")
