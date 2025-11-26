@@ -75,6 +75,88 @@ def update(idx):
         return redirect('/')
     return render_template('update.html', event=events[idx], idx=idx)
 
+def clear_participants(event_id):
+    conn = get_db()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM participants WHERE event_id = ?', (event_id,))
+    conn.commit()
+    conn.close()
+
+def get_scorecard_file(idx):
+    return PARTICIPANTS_DIR / f"scorecard_{idx}.json"
+
+def load_scorecard(idx):
+    file = get_scorecard_file(idx)
+    if file.exists():
+        with open(file) as f:
+            return json.load(f)
+    return {"judges": ["Judge 1", "Judge 2", "Judge 3"], "rounds": {}, "faceoff": {}}
+
+def save_scorecard(idx, scorecard):
+    file = get_scorecard_file(idx)
+    with open(file, 'w') as f:
+        json.dump(scorecard, f, indent=2)
+
+@app.route('/scorecard/<int:idx>', methods=['GET', 'POST'])
+def scorecard(idx):
+    events = load_events()
+    event = events[idx]
+    participants = load_participants(idx)
+    scorecard_data = load_scorecard(idx)
+    
+    if request.method == 'POST':
+        action = request.form.get('action')
+        
+        if action == 'save_judges':
+            scorecard_data['judges'] = [
+                request.form.get('judge1', 'Judge 1'),
+                request.form.get('judge2', 'Judge 2'),
+                request.form.get('judge3', 'Judge 3')
+            ]
+            save_scorecard(idx, scorecard_data)
+        
+        elif action == 'save_scores':
+            round_num = request.form.get('round')
+            participant_serial = request.form.get('participant_serial')
+            
+            if round_num not in scorecard_data['rounds']:
+                scorecard_data['rounds'][round_num] = {}
+            
+            scores = {}
+            for judge_idx in range(3):
+                judge_scores = {
+                    'technical': int(request.form.get(f'technical_{judge_idx}', 0)),
+                    'musicality': int(request.form.get(f'musicality_{judge_idx}', 0)),
+                    'choreography': int(request.form.get(f'choreography_{judge_idx}', 0)),
+                    'performance': int(request.form.get(f'performance_{judge_idx}', 0)),
+                    'stage_presence': int(request.form.get(f'stage_presence_{judge_idx}', 0))
+                }
+                scores[f'judge_{judge_idx}'] = judge_scores
+            
+            scorecard_data['rounds'][round_num][participant_serial] = scores
+            save_scorecard(idx, scorecard_data)
+        
+        return redirect(f'/scorecard/{idx}')
+    
+    # Calculate aggregates
+    aggregates = {}
+    for p in participants:
+        serial = str(p['serial_number'])
+        total = 0
+        for round_num in ['1', '2', '3']:
+            if round_num in scorecard_data['rounds'] and serial in scorecard_data['rounds'][round_num]:
+                round_scores = scorecard_data['rounds'][round_num][serial]
+                for judge_scores in round_scores.values():
+                    total += sum(judge_scores.values())
+        aggregates[serial] = total
+    
+    # Get top 2 for faceoff
+    top_2 = sorted(aggregates.items(), key=lambda x: x[1], reverse=True)[:2]
+    
+    return render_template('scorecard.html', event=event, idx=idx, 
+                         participants=participants, scorecard=scorecard_data,
+                         aggregates=aggregates, top_2=top_2)
+
 @app.route('/manage-participants/<int:idx>', methods=['GET', 'POST'])
 def manage_participants(idx):
     events = load_events()
