@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Participants - {{ event.Event }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #1a0033 0%, #2d0052 25%, #4a0080 50%, #6b00b3 75%, #8b00e6 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 215, 0, 0.3); }
+        h1 { color: #ffd700; text-align: center; margin-bottom: 10px; font-size: 32px; text-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+        h2 { color: #00d9ff; margin: 30px 0 15px; font-size: 20px; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: linear-gradient(135deg, #ffd700, #ffed4e); color: #1a0033; text-decoration: none; border-radius: 25px; font-weight: 700; margin-bottom: 20px; }
+        form { background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; margin-bottom: 30px; border: 1px solid rgba(255, 215, 0, 0.2); }
+        label { display: block; color: #ffd700; margin: 10px 0 5px; font-weight: 600; }
+        input, textarea { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255, 215, 0, 0.3); background: rgba(255, 255, 255, 0.1); color: #fff; font-family: 'Poppins', sans-serif; }
+        .btn { padding: 12px 24px; background: linear-gradient(135deg, #ffd700, #ffed4e); color: #1a0033; border: none; border-radius: 25px; cursor: pointer; font-weight: 700; margin-top: 15px; }
+        .btn-danger { background: linear-gradient(135deg, #ff1493, #ff69b4); color: #fff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 215, 0, 0.2); color: #e0e0ff; }
+        th { color: #ffd700; font-weight: 700; background: rgba(255, 215, 0, 0.1); }
+        .delete-btn { padding: 6px 12px; background: #ff1493; color: #fff; border: none; border-radius: 15px; cursor: pointer; font-size: 12px; }
+        .form-row { display: grid; grid-template-columns: {% if event_type == 'pair' %}1fr 1fr 1fr 1fr{% elif event_type == 'group' %}1fr 2fr 1fr{% else %}1fr 1fr 1fr{% endif %}; gap: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Back to Dashboard</a>
+        <h1>{{ event.Event }}</h1>
+        <p style="color: #e0e0ff; text-align: center; margin-bottom: 20px;">Event Type: 
+            {% if event_type == 'pair' %}Pair (2 players per team)
+            {% elif event_type == 'group' %}Group (3+ players per team)
+            {% else %}Solo (1 player per team)
+            {% endif %}
+        </p>
+
+        <h2>Add Participant</h2>
+        <form method="POST">
+            <input type="hidden" name="action" value="add">
+            <div class="form-row">
+                <div>
+                    <label>Serial #</label>
+                    <input type="number" name="serial_number" placeholder="Auto">
+                </div>
+                {% if event_type == 'pair' %}
+                <div>
+                    <label>Participant 1 *</label>
+                    <input type="text" name="participant1" required>
+                </div>
+                <div>
+                    <label>Participant 2 *</label>
+                    <input type="text" name="participant2" required>
+                </div>
+                {% elif event_type == 'group' %}
+                <div>
+                    <label>Participants (comma separated) *</label>
+                    <textarea name="participant1" rows="2" required placeholder="Name1, Name2, Name3..."></textarea>
+                </div>
+                {% else %}
+                <div>
+                    <label>Participant Name *</label>
+                    <input type="text" name="participant1" required>
+                </div>
+                {% endif %}
+                <div>
+                    <label>Team Name *</label>
+                    <input type="text" name="team_name" required>
+                </div>
+            </div>
+            <button type="submit" class="btn">Add Participant</button>
+        </form>
+
+        <h2>Participants List ({{ participants|length }})</h2>
+        {% if participants %}
+        <table>
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    {% if event_type == 'pair' %}
+                    <th>Participant 1</th>
+                    <th>Participant 2</th>
+                    {% elif event_type == 'group' %}
+                    <th>Participants</th>
+                    {% else %}
+                    <th>Participant</th>
+                    {% endif %}
+                    <th>Team Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in participants %}
+                <tr>
+                    <td>{{ p.serial_number }}</td>
+                    <td>{{ p.participant1_name }}</td>
+                    {% if event_type == 'pair' %}
+                    <td>{{ p.participant2_name }}</td>
+                    {% endif %}
+                    <td>{{ p.team_name }}</td>
+                    <td>
+                        <form method="POST" style="display: inline; padding: 0; margin: 0; background: none; border: none;">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="serial_number" value="{{ p.serial_number }}">
+                            <button type="submit" class="delete-btn" onclick="return confirm('Delete this participant?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <form method="POST" style="margin-top: 20px;">
+            <input type="hidden" name="action" value="clear">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Clear all participants?')">Clear All Participants</button>
+        </form>
+        {% else %}
+        <p style="color: #e0e0ff; text-align: center; padding: 20px;">No participants added yet.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
