@@ -102,6 +102,20 @@ def manage_participants(idx):
                 })
                 save_participants(idx, participants)
         
+        elif action == 'edit':
+            serial = int(request.form.get('serial_number'))
+            participant1 = request.form.get('participant1', '').strip()
+            participant2 = request.form.get('participant2', '').strip() if event_type == 'pair' else None
+            team = request.form.get('team_name', '').strip()
+            
+            for p in participants:
+                if p['serial_number'] == serial:
+                    p['participant1_name'] = participant1
+                    p['participant2_name'] = participant2
+                    p['team_name'] = team
+                    break
+            save_participants(idx, participants)
+        
         elif action == 'delete':
             serial = int(request.form.get('serial_number'))
             participants = [p for p in participants if p['serial_number'] != serial]

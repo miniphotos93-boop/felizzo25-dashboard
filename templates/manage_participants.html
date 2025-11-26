@@ -24,6 +24,11 @@
         th, td { padding: 12px; text-align: left; border-bottom: 1px solid rgba(255, 215, 0, 0.2); color: #e0e0ff; }
         th { color: #ffd700; font-weight: 700; background: rgba(255, 215, 0, 0.1); }
         .delete-btn { padding: 6px 12px; background: #ff1493; color: #fff; border: none; border-radius: 15px; cursor: pointer; font-size: 12px; }
+        .edit-btn { padding: 6px 12px; background: #00d9ff; color: #000; border: none; border-radius: 15px; cursor: pointer; font-size: 12px; margin-right: 5px; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        .modal-content { background: linear-gradient(135deg, #1a0033, #2d0052); margin: 5% auto; padding: 30px; border-radius: 20px; width: 80%; max-width: 600px; border: 2px solid rgba(255, 215, 0, 0.3); }
+        .close { color: #ffd700; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: #fff; }
         .form-row { display: grid; grid-template-columns: {% if event_type == 'pair' %}1fr 1fr 1fr 1fr{% elif event_type == 'group' %}1fr 2fr 1fr{% else %}1fr 1fr 1fr{% endif %}; gap: 15px; }
     </style>
 </head>
@@ -102,6 +107,7 @@
                     {% endif %}
                     <td>{{ p.team_name }}</td>
                     <td>
+                        <button class="edit-btn" onclick="openEditModal({{ p.serial_number }}, '{{ p.participant1_name }}', '{{ p.participant2_name if p.participant2_name else '' }}', '{{ p.team_name }}')">Edit</button>
                         <form method="POST" style="display: inline; padding: 0; margin: 0; background: none; border: none;">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="serial_number" value="{{ p.serial_number }}">
@@ -120,5 +126,65 @@
         <p style="color: #e0e0ff; text-align: center; padding: 20px;">No participants added yet.</p>
         {% endif %}
     </div>
+    
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2 style="color: #ffd700; margin-bottom: 20px;">Edit Participant</h2>
+            <form method="POST" id="editForm">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="serial_number" id="edit_serial">
+                <div class="form-row">
+                    {% if event_type == 'pair' %}
+                    <div>
+                        <label>Participant 1 *</label>
+                        <input type="text" name="participant1" id="edit_participant1" required>
+                    </div>
+                    <div>
+                        <label>Participant 2 *</label>
+                        <input type="text" name="participant2" id="edit_participant2" required>
+                    </div>
+                    {% elif event_type == 'group' %}
+                    <div>
+                        <label>Participants *</label>
+                        <textarea name="participant1" id="edit_participant1" rows="2" required></textarea>
+                    </div>
+                    {% else %}
+                    <div>
+                        <label>Participant Name *</label>
+                        <input type="text" name="participant1" id="edit_participant1" required>
+                    </div>
+                    {% endif %}
+                    <div>
+                        <label>Team Name *</label>
+                        <input type="text" name="team_name" id="edit_team" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function openEditModal(serial, p1, p2, team) {
+            document.getElementById('edit_serial').value = serial;
+            document.getElementById('edit_participant1').value = p1;
+            {% if event_type == 'pair' %}
+            document.getElementById('edit_participant2').value = p2;
+            {% endif %}
+            document.getElementById('edit_team').value = team;
+            document.getElementById('editModal').style.display = 'block';
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('editModal')) {
+                closeEditModal();
+            }
+        }
+    </script>
 </body>
 </html>
