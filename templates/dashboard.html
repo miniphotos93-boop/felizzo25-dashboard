@@ -20,12 +20,30 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: 
+                url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=1200&q=80'),
+                linear-gradient(135deg, rgba(26, 0, 51, 0.85) 0%, rgba(45, 0, 82, 0.85) 50%, rgba(107, 0, 179, 0.85) 100%);
+            background-blend-mode: overlay;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            pointer-events: none;
+            z-index: 0;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 105, 180, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(0, 255, 255, 0.15) 0%, transparent 50%);
             pointer-events: none;
             animation: shimmer 8s ease-in-out infinite;
+            z-index: 0;
         }
         @keyframes shimmer {
             0%, 100% { opacity: 0.5; }
@@ -251,7 +269,36 @@
             box-shadow: 0 0 30px rgba(255, 215, 0, 0.9);
             background: linear-gradient(135deg, #ffed4e, #ffd700);
         }
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ffd700;
+            z-index: 0;
+            animation: confetti-fall linear infinite;
+        }
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
     </style>
+    <script>
+        function createConfetti() {
+            const colors = ['#ffd700', '#ff69b4', '#00d9ff', '#00ff88', '#ff1493'];
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                confetti.style.opacity = Math.random() * 0.5 + 0.3;
+                document.body.appendChild(confetti);
+            }
+        }
+        window.addEventListener('load', createConfetti);
+    </script>
 </head>
 <body>
     <div class="container">
