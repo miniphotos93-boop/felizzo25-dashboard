@@ -118,22 +118,23 @@ def scorecard(idx):
         elif action == 'save_scores':
             round_num = request.form.get('round')
             participant_serial = request.form.get('participant_serial')
+            judge_idx = int(request.form.get('judge_idx'))
             
             if round_num not in scorecard_data['rounds']:
                 scorecard_data['rounds'][round_num] = {}
             
-            scores = {}
-            for judge_idx in range(3):
-                judge_scores = {
-                    'technical': int(request.form.get(f'technical_{judge_idx}', 0)),
-                    'musicality': int(request.form.get(f'musicality_{judge_idx}', 0)),
-                    'choreography': int(request.form.get(f'choreography_{judge_idx}', 0)),
-                    'performance': int(request.form.get(f'performance_{judge_idx}', 0)),
-                    'stage_presence': int(request.form.get(f'stage_presence_{judge_idx}', 0))
-                }
-                scores[f'judge_{judge_idx}'] = judge_scores
+            if participant_serial not in scorecard_data['rounds'][round_num]:
+                scorecard_data['rounds'][round_num][participant_serial] = {}
             
-            scorecard_data['rounds'][round_num][participant_serial] = scores
+            judge_scores = {
+                'technical': int(request.form.get('technical', 0)),
+                'musicality': int(request.form.get('musicality', 0)),
+                'choreography': int(request.form.get('choreography', 0)),
+                'performance': int(request.form.get('performance', 0)),
+                'stage_presence': int(request.form.get('stage_presence', 0))
+            }
+            
+            scorecard_data['rounds'][round_num][participant_serial][f'judge_{judge_idx}'] = judge_scores
             save_scorecard(idx, scorecard_data)
         
         return redirect(f'/scorecard/{idx}')

@@ -66,114 +66,74 @@
             <h2>Round {{ round_num }} Scoring (50 points max per judge)</h2>
             {% for p in participants %}
             <h3 style="color: #00ffff; margin-top: 30px;">{{ p.participant1_name }} - {{ p.team_name }}</h3>
-            <form method="POST">
-                <input type="hidden" name="action" value="save_scores">
-                <input type="hidden" name="round" value="{{ round_num }}">
-                <input type="hidden" name="participant_serial" value="{{ p.serial_number }}">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Criteria</th>
-                            <th>{{ scorecard.judges[0] }}</th>
-                            <th>{{ scorecard.judges[1] }}</th>
-                            <th>{{ scorecard.judges[2] }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th style="text-align: left;">
-                                Technical Proficiency (10)
-                                <span class="tooltip">Assesses fundamental skills including proper footwork, body alignment, flexibility, and precision.</span>
-                            </th>
-                            <td><input type="number" name="technical_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_0', {}).get('technical', 0) }}"></td>
-                            <td><input type="number" name="technical_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('technical', 0) }}"></td>
-                            <td><input type="number" name="technical_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_2', {}).get('technical', 0) }}"></td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left;">
-                                Musicality & Rhythm (10)
-                                <span class="tooltip">Evaluates how well the dancer interprets the music, moving in sync with rhythm and dynamics, matching movements to the beat and expressing the mood.</span>
-                            </th>
-                            <td><input type="number" name="musicality_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_0', {}).get('musicality', 0) }}"></td>
-                            <td><input type="number" name="musicality_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('musicality', 0) }}"></td>
-                            <td><input type="number" name="musicality_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_2', {}).get('musicality', 0) }}"></td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left;">
-                                Choreography & Creativity (10)
-                                <span class="tooltip">Judges the dance's design and originality. Looks for creativity in steps, formations, and overall concept, considering if choreography is unique and well-arranged.</span>
-                            </th>
-                            <td><input type="number" name="choreography_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_0', {}).get('choreography', 0) }}"></td>
-                            <td><input type="number" name="choreography_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('choreography', 0) }}"></td>
-                            <td><input type="number" name="choreography_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_2', {}).get('choreography', 0) }}"></td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left;">
-                                Performance & Showmanship (10)
-                                <span class="tooltip">Assesses stage presence, energy, and connection with audience. Includes projection, personality, and ability to tell a story or convey emotion.</span>
-                            </th>
-                            <td><input type="number" name="performance_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_0', {}).get('performance', 0) }}"></td>
-                            <td><input type="number" name="performance_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('performance', 0) }}"></td>
-                            <td><input type="number" name="performance_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_2', {}).get('performance', 0) }}"></td>
-                        </tr>
-                        <tr>
-                            <th style="text-align: left;">
-                                {% if event.Event == 'Group Dance' %}
-                                Execution & Synchronization (10)
-                                <span class="tooltip">Focuses on accuracy of movements and how well dancers move together. Includes timing and coordination, ensuring movements are performed on beat and in unison.</span>
-                                {% else %}
-                                Stage Presence (10)
-                                <span class="tooltip">How well dancers command and utilize the stage. Considers confidence, charisma, and energy.</span>
-                                {% endif %}
-                            </th>
-                            <td><input type="number" name="stage_presence_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_0', {}).get('stage_presence', 0) }}"></td>
-                            <td><input type="number" name="stage_presence_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('stage_presence', 0) }}"></td>
-                            <td><input type="number" name="stage_presence_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_2', {}).get('stage_presence', 0) }}"></td>
-                        </tr>
-                        <tr style="background: rgba(255, 215, 0, 0.1); font-weight: bold;">
-                            <th style="text-align: left;">TOTAL (out of 50)</th>
-                            <td class="total-col" id="judge0_total_{{ p.serial_number }}_{{ round_num }}">0</td>
-                            <td class="total-col" id="judge1_total_{{ p.serial_number }}_{{ round_num }}">0</td>
-                            <td class="total-col" id="judge2_total_{{ p.serial_number }}_{{ round_num }}">0</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <button type="submit" class="btn" style="margin-top: 15px;">Save Scores</button>
-                <div style="background: rgba(0, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center;">
-                    <h3 style="color: #00ffff; margin-bottom: 10px;">Round {{ round_num }} Total Score</h3>
-                    <p style="color: #fff; font-size: 24px; font-weight: bold;" id="grand_total_{{ p.serial_number }}_{{ round_num }}">0 / 150</p>
-                    <p style="color: #e0e0ff; font-size: 14px;">Sum of all 3 judges' scores</p>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                {% for judge_idx in range(3) %}
+                <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.2);">
+                    <h4 style="color: #ffd700; text-align: center; margin-bottom: 15px;">{{ scorecard.judges[judge_idx] }}</h4>
+                    <form method="POST">
+                        <input type="hidden" name="action" value="save_scores">
+                        <input type="hidden" name="round" value="{{ round_num }}">
+                        <input type="hidden" name="participant_serial" value="{{ p.serial_number }}">
+                        <input type="hidden" name="judge_idx" value="{{ judge_idx }}">
+                        
+                        <table style="width: 100%; font-size: 13px;">
+                            <tbody>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Technical (10)
+                                        <span class="tooltip">Assesses fundamental skills including proper footwork, body alignment, flexibility, and precision.</span>
+                                    </th>
+                                    <td><input type="number" name="technical" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('technical', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Musicality (10)
+                                        <span class="tooltip">Evaluates how well the dancer interprets the music, moving in sync with rhythm and dynamics.</span>
+                                    </th>
+                                    <td><input type="number" name="musicality" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('musicality', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Choreography (10)
+                                        <span class="tooltip">Judges the dance's design and originality.</span>
+                                    </th>
+                                    <td><input type="number" name="choreography" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('choreography', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Performance (10)
+                                        <span class="tooltip">Assesses stage presence, energy, and connection with audience.</span>
+                                    </th>
+                                    <td><input type="number" name="performance" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('performance', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        {% if event.Event == 'Group Dance' %}Execution (10){% else %}Stage Presence (10){% endif %}
+                                    </th>
+                                    <td><input type="number" name="stage_presence" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('stage_presence', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr style="background: rgba(255, 215, 0, 0.1); font-weight: bold;">
+                                    <th style="text-align: left;">TOTAL</th>
+                                    <td class="total-col" id="judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}">0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="btn" style="margin-top: 10px; width: 100%; font-size: 14px;">Save My Scores</button>
+                    </form>
+                    <script>
+                        function calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}() {
+                            const form = document.querySelector('form input[value="{{ judge_idx }}"][name="judge_idx"]').closest('form');
+                            let total = 0;
+                            ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(c => {
+                                total += parseInt(form.querySelector('[name="' + c + '"]').value) || 0;
+                            });
+                            document.getElementById('judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}').textContent = total;
+                        }
+                        calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}();
+                    </script>
                 </div>
-            </form>
-            <script>
-                (function() {
-                    const form = document.querySelector('form[action*="{{ p.serial_number }}"]');
-                    if (!form) return;
-                    
-                    function calculateTotals() {
-                        let judge0Total = 0, judge1Total = 0, judge2Total = 0;
-                        
-                        ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(criteria => {
-                            judge0Total += parseInt(form.querySelector('[name="' + criteria + '_0"]').value) || 0;
-                            judge1Total += parseInt(form.querySelector('[name="' + criteria + '_1"]').value) || 0;
-                            judge2Total += parseInt(form.querySelector('[name="' + criteria + '_2"]').value) || 0;
-                        });
-                        
-                        document.getElementById('judge0_total_{{ p.serial_number }}_{{ round_num }}').textContent = judge0Total;
-                        document.getElementById('judge1_total_{{ p.serial_number }}_{{ round_num }}').textContent = judge1Total;
-                        document.getElementById('judge2_total_{{ p.serial_number }}_{{ round_num }}').textContent = judge2Total;
-                        
-                        const grandTotal = judge0Total + judge1Total + judge2Total;
-                        document.getElementById('grand_total_{{ p.serial_number }}_{{ round_num }}').textContent = grandTotal + ' / 150';
-                    }
-                    
-                    form.querySelectorAll('input[type="number"]').forEach(input => {
-                        input.addEventListener('input', calculateTotals);
-                    });
-                    
-                    calculateTotals();
-                })();
-            </script>
+                {% endfor %}
+            </div>
             </form>
             {% endfor %}
         </div>
