@@ -35,7 +35,7 @@
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
-        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+        .container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; overflow: visible; }
         .container::before {
             content: '🎮';
             position: absolute;
@@ -55,25 +55,23 @@
             animation: float 3.5s ease-in-out infinite;
         }
         .side-icons-left {
-            position: fixed;
-            left: 50px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: absolute;
+            left: -80px;
+            top: 200px;
             display: flex;
             flex-direction: column;
-            gap: 80px;
+            gap: 100px;
             font-size: 60px;
             opacity: 0.5;
             z-index: 0;
         }
         .side-icons-right {
-            position: fixed;
-            right: 50px;
-            top: 50%;
-            transform: translateY(-50%);
+            position: absolute;
+            right: -80px;
+            top: 200px;
             display: flex;
             flex-direction: column;
-            gap: 80px;
+            gap: 100px;
             font-size: 60px;
             opacity: 0.5;
             z-index: 0;
@@ -237,21 +235,21 @@
     </style>
 </head>
 <body>
-    <div class="side-icons-left">
-        <span>🎨</span>
-        <span>🎭</span>
-        <span>📸</span>
-        <span>🎵</span>
-        <span>🏆</span>
-    </div>
-    <div class="side-icons-right">
-        <span>🎤</span>
-        <span>⚡</span>
-        <span>💎</span>
-        <span>🎬</span>
-        <span>✨</span>
-    </div>
     <div class="container">
+        <div class="side-icons-left">
+            <span>🎨</span>
+            <span>🎭</span>
+            <span>📸</span>
+            <span>🎵</span>
+            <span>🏆</span>
+        </div>
+        <div class="side-icons-right">
+            <span>🎤</span>
+            <span>⚡</span>
+            <span>💎</span>
+            <span>🎬</span>
+            <span>✨</span>
+        </div>
         <h1>FELIZZO'25</h1>
         
         <div class="stats">
