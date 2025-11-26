@@ -54,28 +54,38 @@
             opacity: 0.5;
             animation: float 3.5s ease-in-out infinite;
         }
-        .side-icons-left {
+        .side-icons-left, .side-icons-right {
             position: absolute;
-            left: -120px;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
             font-size: 50px;
             opacity: 0.5;
             z-index: 0;
         }
-        .side-icons-right {
+        .side-icons-left { left: -120px; }
+        .side-icons-right { right: -120px; }
+        .side-icons-left span, .side-icons-right span {
             position: absolute;
-            right: -120px;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            font-size: 50px;
-            opacity: 0.5;
-            z-index: 0;
+            animation: float 4s ease-in-out infinite;
         }
+        .side-icons-left span:nth-child(1) { top: 50px; left: 0; }
+        .side-icons-left span:nth-child(2) { top: 200px; left: 10px; }
+        .side-icons-left span:nth-child(3) { top: 350px; left: -10px; }
+        .side-icons-left span:nth-child(4) { top: 500px; left: 5px; }
+        .side-icons-left span:nth-child(5) { top: 650px; left: -5px; }
+        .side-icons-left span:nth-child(6) { top: 800px; left: 10px; }
+        .side-icons-left span:nth-child(7) { top: 950px; left: 0; }
+        .side-icons-left span:nth-child(8) { top: 1100px; left: -10px; }
+        .side-icons-left span:nth-child(9) { top: 1250px; left: 5px; }
+        .side-icons-left span:nth-child(10) { top: 1400px; left: 0; }
+        .side-icons-right span:nth-child(1) { top: 100px; right: 0; }
+        .side-icons-right span:nth-child(2) { top: 250px; right: 10px; }
+        .side-icons-right span:nth-child(3) { top: 400px; right: -10px; }
+        .side-icons-right span:nth-child(4) { top: 550px; right: 5px; }
+        .side-icons-right span:nth-child(5) { top: 700px; right: -5px; }
+        .side-icons-right span:nth-child(6) { top: 850px; right: 10px; }
+        .side-icons-right span:nth-child(7) { top: 1000px; right: 0; }
+        .side-icons-right span:nth-child(8) { top: 1150px; right: -10px; }
+        .side-icons-right span:nth-child(9) { top: 1300px; right: 5px; }
+        .side-icons-right span:nth-child(10) { top: 1450px; right: 0; }
         .side-icons-left span, .side-icons-right span {
             animation: float 4s ease-in-out infinite;
         }
@@ -247,28 +257,18 @@
             <span>⚡</span>
             <span>💎</span>
             <span>✨</span>
-            <span>🎨</span>
-            <span>🎤</span>
-            <span>🎬</span>
-            <span>🎭</span>
-            <span>📸</span>
         </div>
         <div class="side-icons-right">
             <span>🎤</span>
-            <span>⚡</span>
-            <span>💎</span>
             <span>🎬</span>
-            <span>✨</span>
-            <span>🎮</span>
-            <span>🎯</span>
             <span>🎨</span>
-            <span>🏆</span>
-            <span>🎵</span>
             <span>🎭</span>
             <span>📸</span>
-            <span>🎤</span>
+            <span>🎮</span>
+            <span>🏆</span>
             <span>⚡</span>
             <span>💎</span>
+            <span>✨</span>
         </div>
         <h1>FELIZZO'25</h1>
         
