@@ -7,7 +7,15 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, #1a0033 0%, #2d0052 25%, #4a0080 50%, #6b00b3 75%, #8b00e6 100%);
+            background: 
+                linear-gradient(135deg, transparent 0%, transparent 25%, rgba(255, 215, 0, 0.05) 25%, rgba(255, 215, 0, 0.05) 50%, transparent 50%, transparent 75%, rgba(255, 215, 0, 0.05) 75%),
+                linear-gradient(45deg, transparent 0%, transparent 25%, rgba(255, 105, 180, 0.05) 25%, rgba(255, 105, 180, 0.05) 50%, transparent 50%, transparent 75%, rgba(255, 105, 180, 0.05) 75%),
+                repeating-linear-gradient(90deg, rgba(0, 217, 255, 0.03) 0px, rgba(0, 217, 255, 0.03) 2px, transparent 2px, transparent 40px),
+                repeating-linear-gradient(0deg, rgba(0, 255, 136, 0.03) 0px, rgba(0, 255, 136, 0.03) 2px, transparent 2px, transparent 40px),
+                radial-gradient(circle at 30% 40%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 60%, rgba(255, 105, 180, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, #1a0033 0%, #2d0052 25%, #4a0080 50%, #6b00b3 75%, #8b00e6 100%);
+            background-size: 80px 80px, 80px 80px, 40px 40px, 40px 40px, 100% 100%, 100% 100%, 100% 100%;
             min-height: 100vh;
             padding: 20px;
             position: relative;
