@@ -130,9 +130,50 @@
                             <td><input type="number" name="stage_presence_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_1', {}).get('stage_presence', 0) }}"></td>
                             <td><input type="number" name="stage_presence_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_2', {}).get('stage_presence', 0) }}"></td>
                         </tr>
+                        <tr style="background: rgba(255, 215, 0, 0.1); font-weight: bold;">
+                            <th style="text-align: left;">TOTAL (out of 50)</th>
+                            <td class="total-col" id="judge0_total_{{ p.serial_number }}_{{ round_num }}">0</td>
+                            <td class="total-col" id="judge1_total_{{ p.serial_number }}_{{ round_num }}">0</td>
+                            <td class="total-col" id="judge2_total_{{ p.serial_number }}_{{ round_num }}">0</td>
+                        </tr>
                     </tbody>
                 </table>
                 <button type="submit" class="btn" style="margin-top: 15px;">Save Scores</button>
+                <div style="background: rgba(0, 255, 255, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center;">
+                    <h3 style="color: #00ffff; margin-bottom: 10px;">Round {{ round_num }} Total Score</h3>
+                    <p style="color: #fff; font-size: 24px; font-weight: bold;" id="grand_total_{{ p.serial_number }}_{{ round_num }}">0 / 150</p>
+                    <p style="color: #e0e0ff; font-size: 14px;">Sum of all 3 judges' scores</p>
+                </div>
+            </form>
+            <script>
+                (function() {
+                    const form = document.querySelector('form[action*="{{ p.serial_number }}"]');
+                    if (!form) return;
+                    
+                    function calculateTotals() {
+                        let judge0Total = 0, judge1Total = 0, judge2Total = 0;
+                        
+                        ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(criteria => {
+                            judge0Total += parseInt(form.querySelector('[name="' + criteria + '_0"]').value) || 0;
+                            judge1Total += parseInt(form.querySelector('[name="' + criteria + '_1"]').value) || 0;
+                            judge2Total += parseInt(form.querySelector('[name="' + criteria + '_2"]').value) || 0;
+                        });
+                        
+                        document.getElementById('judge0_total_{{ p.serial_number }}_{{ round_num }}').textContent = judge0Total;
+                        document.getElementById('judge1_total_{{ p.serial_number }}_{{ round_num }}').textContent = judge1Total;
+                        document.getElementById('judge2_total_{{ p.serial_number }}_{{ round_num }}').textContent = judge2Total;
+                        
+                        const grandTotal = judge0Total + judge1Total + judge2Total;
+                        document.getElementById('grand_total_{{ p.serial_number }}_{{ round_num }}').textContent = grandTotal + ' / 150';
+                    }
+                    
+                    form.querySelectorAll('input[type="number"]').forEach(input => {
+                        input.addEventListener('input', calculateTotals);
+                    });
+                    
+                    calculateTotals();
+                })();
+            </script>
             </form>
             {% endfor %}
         </div>
@@ -218,9 +259,50 @@
                                     <td><input type="number" name="stage_presence_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('stage_presence', 0) }}"></td>
                                     <td><input type="number" name="stage_presence_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('stage_presence', 0) }}"></td>
                                 </tr>
+                                <tr style="background: rgba(255, 215, 0, 0.1); font-weight: bold;">
+                                    <th style="text-align: left;">TOTAL (out of 50)</th>
+                                    <td class="total-col" id="faceoff_judge0_total_{{ p.serial_number }}">0</td>
+                                    <td class="total-col" id="faceoff_judge1_total_{{ p.serial_number }}">0</td>
+                                    <td class="total-col" id="faceoff_judge2_total_{{ p.serial_number }}">0</td>
+                                </tr>
                             </tbody>
                         </table>
                         <button type="submit" class="btn" style="margin-top: 15px;">Save Face-off Scores</button>
+                        <div style="background: rgba(255, 0, 255, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px; text-align: center;">
+                            <h3 style="color: #ff00ff; margin-bottom: 10px;">Face-off Total Score</h3>
+                            <p style="color: #fff; font-size: 24px; font-weight: bold;" id="faceoff_grand_total_{{ p.serial_number }}">0 / 150</p>
+                            <p style="color: #e0e0ff; font-size: 14px;">Sum of all 3 judges' scores</p>
+                        </div>
+                    </form>
+                    <script>
+                        (function() {
+                            const form = document.querySelector('form[action*="faceoff"][action*="{{ p.serial_number }}"]');
+                            if (!form) return;
+                            
+                            function calculateFaceoffTotals() {
+                                let judge0Total = 0, judge1Total = 0, judge2Total = 0;
+                                
+                                ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(criteria => {
+                                    judge0Total += parseInt(form.querySelector('[name="' + criteria + '_0"]').value) || 0;
+                                    judge1Total += parseInt(form.querySelector('[name="' + criteria + '_1"]').value) || 0;
+                                    judge2Total += parseInt(form.querySelector('[name="' + criteria + '_2"]').value) || 0;
+                                });
+                                
+                                document.getElementById('faceoff_judge0_total_{{ p.serial_number }}').textContent = judge0Total;
+                                document.getElementById('faceoff_judge1_total_{{ p.serial_number }}').textContent = judge1Total;
+                                document.getElementById('faceoff_judge2_total_{{ p.serial_number }}').textContent = judge2Total;
+                                
+                                const grandTotal = judge0Total + judge1Total + judge2Total;
+                                document.getElementById('faceoff_grand_total_{{ p.serial_number }}').textContent = grandTotal + ' / 150';
+                            }
+                            
+                            form.querySelectorAll('input[type="number"]').forEach(input => {
+                                input.addEventListener('input', calculateFaceoffTotals);
+                            });
+                            
+                            calculateFaceoffTotals();
+                        })();
+                    </script>
                     </form>
                     {% endif %}
                 {% endfor %}
