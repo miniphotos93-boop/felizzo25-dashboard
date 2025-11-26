@@ -32,6 +32,10 @@
     <div class="container">
         <h1>🎉 Felizzo'25 Event Dashboard</h1>
         
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="/sync-quip" style="padding: 10px 20px; background: #9C27B0; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">🔄 Sync from Master Quip</a>
+        </div>
+        
         <div class="stats">
             <div class="stat-card">
                 <h3>Total Events</h3>
@@ -66,11 +70,9 @@
                     {% if event.Start_Date %}
                     <p><strong>Start:</strong> {{ event.Start_Date }}</p>
                     {% endif %}
-                    {% if event.Winner %}
-                    <p><strong>🏆 Winner:</strong> {{ event.Winner }}</p>
-                    {% endif %}
+                    <p><strong>🏆 Winner:</strong> {{ event.Winner if event.Winner else 'TBD' }}</p>
                     {% if event.Participants %}
-                    <p><strong>👥 Participants:</strong> {{ event.Participants }}</p>
+                    <p><strong>👥 Participants:</strong> {{ event.Participants }} <a href="/participants/{{ loop.index0 }}" style="color: #2196F3; font-size: 12px;">(view list)</a></p>
                     {% endif %}
                     {% if event.Notes %}
                     <p><em>{{ event.Notes }}</em></p>
@@ -81,6 +83,8 @@
                         {{ event.Status }}
                     </span>
                     <br><br>
+                    <a href="/import/{{ loop.index0 }}" class="btn" style="background: #9C27B0; margin-bottom: 10px;">Import Participants</a>
+                    <br>
                     <a href="/update/{{ loop.index0 }}" class="btn">Update</a>
                 </div>
             </div>
