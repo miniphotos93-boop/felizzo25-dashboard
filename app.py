@@ -218,7 +218,12 @@ def schedule(idx):
     events = load_events()
     event = events[idx]
     
-    with open('foosball_day_schedule.json', 'r') as f:
+    schedule_file = Path(__file__).parent / 'foosball_day_schedule.json'
+    
+    if not schedule_file.exists():
+        return "Schedule not found. Please generate the schedule first.", 404
+    
+    with open(schedule_file, 'r') as f:
         schedule_data = json.load(f)
     
     total_matches = sum(len(d['matches']) for d in schedule_data)
