@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, request, redirect, jsonify
-import csv
 import json
+import os
 from pathlib import Path
+
+# Try to import psycopg2, fallback to JSON if not available
+try:
+    import psycopg2
+    from psycopg2.extras import RealDictCursor
+    USE_DATABASE = bool(os.environ.get('DATABASE_URL'))
+except ImportError:
+    USE_DATABASE = False
 
 app = Flask(__name__)
 EVENTS_FILE = Path(__file__).parent / "event_tracker.json"
@@ -18,31 +26,80 @@ EVENT_TYPES = {
     'Seven Stones': 'group', 'Treasure Hunt': 'group'
 }
 
+def get_db_connection():
+    if USE_DATABASE:
+        return psycopg2.connect(os.environ['DATABASE_URL'], cursor_factory=RealDictCursor)
+    return None
+
 def load_events():
-    if EVENTS_FILE.exists():
-        with open(EVENTS_FILE) as f:
-            events = json.load(f)
+    if USE_DATABASE:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM events ORDER BY id')
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        
+        events = []
+        for row in rows:
+            events.append({
+                'Event': row['event_name'],
+                'Coordinator': row['coordinator'],
+                'Manager': row['manager'],
+                'Start_Date': row['start_date'],
+                'End_Date': row['end_date'],
+                'Finals_Date': row['finals_date'],
+                'Status': row['status'],
+                'Participants': row['participants'],
+                'Winner': row['winner'],
+                'Notes': row['notes']
+            })
     else:
-        # Fallback to CSV if JSON doesn't exist
-        with open('event_tracker.csv') as f:
-            events = list(csv.DictReader(f))
-        # Save as JSON
-        with open(EVENTS_FILE, 'w') as f:
-            json.dump(events, f, indent=2)
+        # Fallback to JSON
+        if EVENTS_FILE.exists():
+            with open(EVENTS_FILE) as f:
+                events = json.load(f)
+        else:
+            events = []
     
     for event in events:
         event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
     return events
 
 def save_events(events):
-    # Remove event_type before saving
-    events_to_save = []
-    for event in events:
-        event_copy = {k: v for k, v in event.items() if k != 'event_type'}
-        events_to_save.append(event_copy)
-    
-    with open(EVENTS_FILE, 'w') as f:
-        json.dump(events_to_save, f, indent=2)
+    if USE_DATABASE:
+        conn = get_db_connection()
+        cur = conn.cursor()
+        for idx, event in enumerate(events):
+            cur.execute('''
+                UPDATE events 
+                SET coordinator=%s, manager=%s, start_date=%s, end_date=%s,
+                    finals_date=%s, status=%s, participants=%s, winner=%s, notes=%s
+                WHERE event_name=%s
+            ''', (
+                event.get('Coordinator', ''),
+                event.get('Manager', ''),
+                event.get('Start_Date', ''),
+                event.get('End_Date', ''),
+                event.get('Finals_Date', ''),
+                event.get('Status', 'Planned'),
+                event.get('Participants', ''),
+                event.get('Winner', ''),
+                event.get('Notes', ''),
+                event['Event']
+            ))
+        conn.commit()
+        cur.close()
+        conn.close()
+    else:
+        # Fallback to JSON
+        events_to_save = []
+        for event in events:
+            event_copy = {k: v for k, v in event.items() if k != 'event_type'}
+            events_to_save.append(event_copy)
+        
+        with open(EVENTS_FILE, 'w') as f:
+            json.dump(events_to_save, f, indent=2)
 
 def get_participants_file(idx):
     return PARTICIPANTS_DIR / f"event_{idx}.json"
