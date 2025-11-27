@@ -162,9 +162,6 @@ def scorecard(idx):
 def manage_participants(idx):
     events = load_events()
     event = events[idx]
-def manage_participants(idx):
-    events = load_events()
-    event = events[idx]
     event_type = event.get('event_type', 'solo')
     
     if request.method == 'POST':
