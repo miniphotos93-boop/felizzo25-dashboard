@@ -248,7 +248,7 @@ def update_match_winner():
     with open('foosball_results.json', 'w') as f:
         json.dump(results, f, indent=2)
     
-    return {'status': 'success'}
+    return jsonify({'status': 'success'})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
