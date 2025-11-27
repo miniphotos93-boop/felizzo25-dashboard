@@ -289,7 +289,7 @@ def schedule(idx):
                 match_counter += 1
         
         # Distribute across weekdays only (30 matches per day, 15 per table)
-        start_date = datetime(2025, 12, 1)  # December 1st
+        start_date = datetime(2025, 12, 2)  # December 2nd
         matches_per_day = 30
         day_schedule = []
         
