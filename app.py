@@ -221,6 +221,85 @@ def schedule(idx):
         
         events = load_events()
         event = events[idx]
+        event_name = event['Event']
+        
+        # Handle Tug of War separately
+        if event_name == 'Tug of War':
+            participants = load_participants(idx)
+            
+            if not participants:
+                return "No participants found. Please add participants first.", 404
+            
+            # Split into groups based on serial numbers
+            group_a = [p for p in participants if p['serial_number'] <= 8]
+            group_b = [p for p in participants if p['serial_number'] > 8]
+            
+            def generate_round_robin(teams, group_name):
+                matches = []
+                match_num = 1
+                for i, j in combinations(range(len(teams)), 2):
+                    team1 = teams[i]
+                    team2 = teams[j]
+                    matches.append({
+                        'match_id': f"{group_name}_M{match_num}",
+                        'match_number': match_num,
+                        'group': group_name,
+                        'team1_serial': team1['serial_number'],
+                        'team1_name': team1['team_name'],
+                        'team1_members': team1['participant1_name'],
+                        'team2_serial': team2['serial_number'],
+                        'team2_name': team2['team_name'],
+                        'team2_members': team2['participant1_name']
+                    })
+                    match_num += 1
+                return matches
+            
+            group_a_matches = generate_round_robin(group_a, "Group A")
+            group_b_matches = generate_round_robin(group_b, "Group B")
+            
+            # Interleave matches
+            all_matches = []
+            max_matches = max(len(group_a_matches), len(group_b_matches))
+            for i in range(max_matches):
+                if i < len(group_a_matches):
+                    all_matches.append(group_a_matches[i])
+                if i < len(group_b_matches):
+                    all_matches.append(group_b_matches[i])
+            
+            # Distribute across weekdays
+            start_date = datetime(2025, 11, 28)
+            matches_per_day = 6
+            day_schedule = []
+            current_date = start_date
+            
+            for day_start in range(0, len(all_matches), matches_per_day):
+                while current_date.weekday() >= 5:
+                    current_date += timedelta(days=1)
+                
+                day_matches = all_matches[day_start:day_start + matches_per_day]
+                
+                for match in day_matches:
+                    match['date'] = current_date.strftime('%Y-%m-%d')
+                    match['day_name'] = current_date.strftime('%A, %B %d')
+                
+                group_a_day = [m for m in day_matches if m['group'] == 'Group A']
+                group_b_day = [m for m in day_matches if m['group'] == 'Group B']
+                
+                day_schedule.append({
+                    'date': current_date.strftime('%Y-%m-%d'),
+                    'day_name': current_date.strftime('%A, %B %d'),
+                    'group_a': group_a_day,
+                    'group_b': group_b_day
+                })
+                
+                current_date += timedelta(days=1)
+            
+            total_matches = len(all_matches)
+            return render_template('tugofwar_schedule.html', event_name=event_name,
+                                 schedule=day_schedule, total_days=len(day_schedule),
+                                 total_matches=total_matches)
+        
+        # Handle Foosball (existing code)
         participants = load_participants(idx)
         
         if not participants:
