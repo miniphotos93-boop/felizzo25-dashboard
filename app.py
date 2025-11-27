@@ -226,9 +226,6 @@ def schedule(idx):
         if not participants:
             return "No participants found. Please add participants first.", 404
         
-        # Create participant lookup
-        pair_lookup = {p['serial_number']: p for p in participants}
-        
         # Group by team
         teams = {}
         for pair in participants:
@@ -243,6 +240,7 @@ def schedule(idx):
         
         # Generate matches
         all_matches = []
+        match_counter = 1
         
         # Large teams
         for team, pairs in large_teams.items():
@@ -251,7 +249,8 @@ def schedule(idx):
                 pair1 = pairs[i]
                 pair2 = pairs[j]
                 all_matches.append({
-                    'match_id': f"{team}_M{len(all_matches)+1}",
+                    'match_id': f"{team}_M{match_counter}",
+                    'match_number': match_counter,
                     'group': team,
                     'pair1_num': pair1.get('serial_number', 0),
                     'pair1_p1': pair1.get('participant1_name', ''),
@@ -262,6 +261,7 @@ def schedule(idx):
                     'pair2_p2': pair2.get('participant2_name', ''),
                     'pair2_team': pair2.get('team_name', '')
                 })
+                match_counter += 1
         
         # Combined small teams
         combined_group = []
@@ -274,7 +274,8 @@ def schedule(idx):
                 pair1 = combined_group[i]
                 pair2 = combined_group[j]
                 all_matches.append({
-                    'match_id': f"COMBINED_M{len(all_matches)+1}",
+                    'match_id': f"COMBINED_M{match_counter}",
+                    'match_number': match_counter,
                     'group': 'COMBINED_SMALL_TEAMS',
                     'pair1_num': pair1.get('serial_number', 0),
                     'pair1_p1': pair1.get('participant1_name', ''),
@@ -285,26 +286,53 @@ def schedule(idx):
                     'pair2_p2': pair2.get('participant2_name', ''),
                     'pair2_team': pair2.get('team_name', '')
                 })
+                match_counter += 1
         
-        # Distribute across days
-        start_date = datetime(2025, 11, 27)
-        matches_per_day = 15
+        # Distribute across weekdays only (30 matches per day, 15 per table)
+        start_date = datetime(2025, 11, 28)  # Tomorrow
+        matches_per_day = 30
         day_schedule = []
         
+        current_date = start_date
         for day_num in range(0, len(all_matches), matches_per_day):
+            # Skip weekends
+            while current_date.weekday() >= 5:  # 5=Saturday, 6=Sunday
+                current_date += timedelta(days=1)
+            
             day_matches = all_matches[day_num:day_num + matches_per_day]
-            current_date = start_date + timedelta(days=len(day_schedule))
+            
+            # Split into two tables (15 each)
+            table1_matches = day_matches[:15]
+            table2_matches = day_matches[15:]
+            
+            # Add table assignment
+            for match in table1_matches:
+                match['table'] = 'Table 1'
+                match['date'] = current_date.strftime('%Y-%m-%d')
+                match['day_name'] = current_date.strftime('%A, %B %d')
+            
+            for match in table2_matches:
+                match['table'] = 'Table 2'
+                match['date'] = current_date.strftime('%Y-%m-%d')
+                match['day_name'] = current_date.strftime('%A, %B %d')
+            
             day_schedule.append({
                 'date': current_date.strftime('%Y-%m-%d'),
                 'day_name': current_date.strftime('%A, %B %d'),
-                'matches': day_matches
+                'table1': table1_matches,
+                'table2': table2_matches
             })
+            
+            current_date += timedelta(days=1)
+        
+        # Get unique teams for filter
+        unique_teams = sorted(set(m['pair1_team'] for m in all_matches) | set(m['pair2_team'] for m in all_matches))
         
         total_matches = len(all_matches)
         
         return render_template('schedule.html', event_name=event['Event'], 
                              schedule=day_schedule, total_days=len(day_schedule),
-                             total_matches=total_matches)
+                             total_matches=total_matches, teams=unique_teams)
     except Exception as e:
         return f"Error generating schedule: {str(e)}", 500
 
