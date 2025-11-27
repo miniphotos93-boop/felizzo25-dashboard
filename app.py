@@ -232,23 +232,28 @@ def schedule(idx):
 
 @app.route('/update-match-winner', methods=['POST'])
 def update_match_winner():
-    data = request.json
-    match_id = data['match_id']
-    winner = data['winner']
-    
-    # Load existing results or create new
     try:
-        with open('foosball_results.json', 'r') as f:
-            results = json.load(f)
-    except:
-        results = {}
-    
-    results[match_id] = winner
-    
-    with open('foosball_results.json', 'w') as f:
-        json.dump(results, f, indent=2)
-    
-    return jsonify({'status': 'success'})
+        data = request.json
+        match_id = data['match_id']
+        winner = data['winner']
+        
+        results_file = Path(__file__).parent / 'foosball_results.json'
+        
+        # Load existing results or create new
+        try:
+            with open(results_file, 'r') as f:
+                results = json.load(f)
+        except:
+            results = {}
+        
+        results[match_id] = winner
+        
+        with open(results_file, 'w') as f:
+            json.dump(results, f, indent=2)
+        
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
