@@ -3,6 +3,5 @@ __pycache__/
 *.pyc
 .env
 .elasticbeanstalk/
-event_tracker.csv
 foosball_results.json
 tugofwar_results.json

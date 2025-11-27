@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 app = Flask(__name__)
-CSV_FILE = Path(__file__).parent / "event_tracker.csv"
+EVENTS_FILE = Path(__file__).parent / "event_tracker.json"
 PARTICIPANTS_DIR = Path(__file__).parent / "participants_data"
 PARTICIPANTS_DIR.mkdir(exist_ok=True)
 
@@ -19,20 +19,30 @@ EVENT_TYPES = {
 }
 
 def load_events():
-    with open(CSV_FILE) as f:
-        events = list(csv.DictReader(f))
-        for event in events:
-            event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
-        return events
+    if EVENTS_FILE.exists():
+        with open(EVENTS_FILE) as f:
+            events = json.load(f)
+    else:
+        # Fallback to CSV if JSON doesn't exist
+        with open('event_tracker.csv') as f:
+            events = list(csv.DictReader(f))
+        # Save as JSON
+        with open(EVENTS_FILE, 'w') as f:
+            json.dump(events, f, indent=2)
+    
+    for event in events:
+        event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
+    return events
 
 def save_events(events):
-    with open(CSV_FILE, 'w', newline='') as f:
-        fieldnames = [k for k in events[0].keys() if k != 'event_type']
-        writer = csv.DictWriter(f, fieldnames=fieldnames)
-        writer.writeheader()
-        for event in events:
-            row = {k: v for k, v in event.items() if k != 'event_type'}
-            writer.writerow(row)
+    # Remove event_type before saving
+    events_to_save = []
+    for event in events:
+        event_copy = {k: v for k, v in event.items() if k != 'event_type'}
+        events_to_save.append(event_copy)
+    
+    with open(EVENTS_FILE, 'w') as f:
+        json.dump(events_to_save, f, indent=2)
 
 def get_participants_file(idx):
     return PARTICIPANTS_DIR / f"event_{idx}.json"
