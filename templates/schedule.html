@@ -21,6 +21,12 @@
             background-clip: text;
             text-align: center;
             font-size: 48px;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #00ffff;
+            font-size: 18px;
             margin-bottom: 30px;
         }
         .back-btn {
@@ -33,97 +39,119 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-        .group {
+        .day-section {
+            margin-bottom: 40px;
+        }
+        .day-header {
+            background: linear-gradient(135deg, #ff00ff, #ff0080);
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .matches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 15px;
+        }
+        .match-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 12px;
             padding: 20px;
-            margin-bottom: 30px;
+            transition: all 0.3s;
         }
-        .group-title {
-            font-size: 24px;
-            color: #00ffff;
-            margin-bottom: 15px;
-            font-weight: bold;
+        .match-card:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
         }
-        .match {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            border-left: 3px solid #ff00ff;
-        }
-        .match-id {
+        .match-header {
             color: #00ff88;
+            font-size: 14px;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .group-badge {
+            background: rgba(255, 0, 255, 0.2);
+            padding: 3px 10px;
+            border-radius: 5px;
+            font-size: 12px;
         }
         .pair {
-            padding: 8px 0;
-            font-size: 16px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
-        .vs {
+        .pair-num {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .players {
+            color: #fff;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .team-tag {
+            color: #00ffff;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .vs-divider {
+            text-align: center;
             color: #ff0080;
             font-weight: bold;
-            margin: 5px 0;
-        }
-        .team-badge {
-            display: inline-block;
-            background: rgba(255, 0, 255, 0.2);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            margin-left: 10px;
-        }
-        .info {
-            background: rgba(0, 255, 255, 0.1);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            border-left: 3px solid #00ffff;
+            font-size: 20px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
     <a href="/" class="back-btn">← Back to Dashboard</a>
-    <h1>{{ event_name }} - First Round Schedule</h1>
+    <h1>{{ event_name }}</h1>
+    <div class="subtitle">First Round Schedule - {{ total_matches }} Matches across {{ total_days }} Days</div>
     
-    {% for group in schedule %}
-    <div class="group">
-        <div class="group-title">
-            {% if group.team == 'COMBINED_SMALL_TEAMS' %}
-                COMBINED GROUP - SMALL TEAMS
-            {% else %}
-                TEAM: {{ group.team.upper() }}
-            {% endif %}
+    {% for day in schedule %}
+    <div class="day-section">
+        <div class="day-header">
+            📅 {{ day.day_name }} - {{ day.matches|length }} Matches
         </div>
         
-        <div class="info">
-            {% if group.team == 'COMBINED_SMALL_TEAMS' %}
-                Teams: {{ group.teams_included|join(', ') }}<br>
-            {% endif %}
-            Total Matches: {{ group.matches|length }} | Top {{ group.qualified_count }} pairs qualify to next round
-        </div>
-        
-        {% for match in group.matches %}
-        <div class="match">
-            <div class="match-id">{{ match.match_id }}</div>
-            <div class="pair">
-                Pair #{{ match.pair1 }}
-                {% if match.team1 %}
-                <span class="team-badge">{{ match.team1 }}</span>
-                {% endif %}
+        <div class="matches-grid">
+            {% for match in day.matches %}
+            <div class="match-card">
+                <div class="match-header">
+                    <span>{{ match.match_id }}</span>
+                    <span class="group-badge">{{ match.group }}</span>
+                </div>
+                
+                <div class="pair">
+                    <div class="pair-num">Pair #{{ match.pair1_num }}</div>
+                    <div class="players">
+                        {{ match.pair1_p1 }} & {{ match.pair1_p2 }}
+                    </div>
+                    <div class="team-tag">{{ match.pair1_team }}</div>
+                </div>
+                
+                <div class="vs-divider">VS</div>
+                
+                <div class="pair">
+                    <div class="pair-num">Pair #{{ match.pair2_num }}</div>
+                    <div class="players">
+                        {{ match.pair2_p1 }} & {{ match.pair2_p2 }}
+                    </div>
+                    <div class="team-tag">{{ match.pair2_team }}</div>
+                </div>
             </div>
-            <div class="vs">VS</div>
-            <div class="pair">
-                Pair #{{ match.pair2 }}
-                {% if match.team2 %}
-                <span class="team-badge">{{ match.team2 }}</span>
-                {% endif %}
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
     {% endfor %}
 </body>

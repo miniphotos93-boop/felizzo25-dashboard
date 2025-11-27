@@ -221,10 +221,14 @@ def schedule(idx):
     events = load_events()
     event = events[idx]
     
-    with open('foosball_schedule.json', 'r') as f:
+    with open('foosball_day_schedule.json', 'r') as f:
         schedule_data = json.load(f)
     
-    return render_template('schedule.html', event_name=event['Event'], schedule=schedule_data)
+    total_matches = sum(len(d['matches']) for d in schedule_data)
+    
+    return render_template('schedule.html', event_name=event['Event'], 
+                         schedule=schedule_data, total_days=len(schedule_data),
+                         total_matches=total_matches)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
