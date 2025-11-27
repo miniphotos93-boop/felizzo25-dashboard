@@ -21,12 +21,6 @@
             background-clip: text;
             text-align: center;
             font-size: 48px;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            text-align: center;
-            color: #00ffff;
-            font-size: 18px;
             margin-bottom: 30px;
         }
         .back-btn {
@@ -39,94 +33,72 @@
             font-weight: bold;
             margin-bottom: 20px;
         }
-        .day-section {
-            margin-bottom: 40px;
-        }
         .day-header {
             background: linear-gradient(135deg, #ff00ff, #ff0080);
             padding: 15px 20px;
             border-radius: 12px;
             font-size: 24px;
             font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .match-list {
-            list-style: none;
-        }
-        .match-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .match-num {
-            background: linear-gradient(135deg, #ff00ff, #ff0080);
-            padding: 10px 15px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 18px;
-            min-width: 80px;
+            margin: 30px 0 20px 0;
             text-align: center;
         }
-        .match-details {
-            flex: 1;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 30px;
         }
-        .match-id {
-            color: #00ff88;
-            font-size: 12px;
-            margin-bottom: 8px;
-        }
-        .pair-row {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 8px;
-            margin-bottom: 8px;
-        }
-        .pair-info {
-            flex: 1;
-        }
-        .pair-num {
-            color: #ffd700;
+        th {
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            color: #000;
+            padding: 15px;
+            text-align: left;
             font-weight: bold;
+            font-size: 16px;
+        }
+        td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        tr:hover {
+            background: rgba(0, 255, 255, 0.1);
+        }
+        .team-cell {
             font-size: 14px;
+        }
+        .team-name {
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 3px;
         }
         .players {
             color: #fff;
-            font-size: 16px;
-            margin: 5px 0;
+            font-size: 13px;
         }
         .team-tag {
-            color: #00ffff;
-            font-size: 12px;
+            color: #888;
+            font-size: 11px;
         }
-        .vs {
-            color: #ff0080;
+        .match-num {
+            color: #ffd700;
             font-weight: bold;
-            font-size: 18px;
-            text-align: center;
-            padding: 0 10px;
+            font-size: 16px;
         }
-        .winner-section {
+        .winner-btns {
             display: flex;
-            flex-direction: column;
             gap: 10px;
-            min-width: 150px;
         }
         .winner-btn {
-            padding: 8px 16px;
+            padding: 8px 12px;
             border: 2px solid #00ff88;
             background: transparent;
             color: #00ff88;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
             transition: all 0.3s;
         }
         .winner-btn:hover {
@@ -138,81 +110,62 @@
             color: #000;
             font-weight: bold;
         }
-        .winner-status {
-            text-align: center;
-            color: #ffd700;
-            font-size: 12px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
     <a href="/" class="back-btn">← Back to Dashboard</a>
-    <h1>{{ event_name }}</h1>
-    <div class="subtitle">First Round Schedule - {{ total_matches }} Matches across {{ total_days }} Days</div>
+    <h1>{{ event_name }} - Schedule</h1>
     
     {% for day in schedule %}
-    <div class="day-section">
-        <div class="day-header">
-            📅 {{ day.day_name }} - {{ day.matches|length }} Matches
-        </div>
-        
-        <ul class="match-list">
-            {% for match in day.matches %}
-            <li class="match-item">
-                <div class="match-num">Match {{ loop.index }}</div>
-                
-                <div class="match-details">
-                    <div class="match-id">{{ match.match_id }} - {{ match.group }}</div>
-                    
-                    <div class="pair-row">
-                        <div class="pair-info">
-                            <div class="pair-num">Pair #{{ match.pair1_num }}</div>
-                            <div class="players">{{ match.pair1_p1 }} & {{ match.pair1_p2 }}</div>
-                            <div class="team-tag">{{ match.pair1_team }}</div>
-                        </div>
-                    </div>
-                    
-                    <div class="vs">VS</div>
-                    
-                    <div class="pair-row">
-                        <div class="pair-info">
-                            <div class="pair-num">Pair #{{ match.pair2_num }}</div>
-                            <div class="players">{{ match.pair2_p1 }} & {{ match.pair2_p2 }}</div>
-                            <div class="team-tag">{{ match.pair2_team }}</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="winner-section">
-                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">
-                        Pair #{{ match.pair1_num }} Wins
-                    </button>
-                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">
-                        Pair #{{ match.pair2_num }} Wins
-                    </button>
-                    <div class="winner-status" id="status-{{ match.match_id }}"></div>
-                </div>
-            </li>
-            {% endfor %}
-        </ul>
+    <div class="day-header">
+        📅 {{ day.day_name }}
     </div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Match #</th>
+                <th>Team 1</th>
+                <th>Team 2</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in day.matches %}
+            <tr>
+                <td class="match-num">{{ loop.index }}</td>
+                <td class="team-cell">
+                    <div class="team-name">Pair #{{ match.pair1_num }}</div>
+                    <div class="players">{{ match.pair1_p1 }} & {{ match.pair1_p2 }}</div>
+                    <div class="team-tag">{{ match.pair1_team }}</div>
+                </td>
+                <td class="team-cell">
+                    <div class="team-name">Pair #{{ match.pair2_num }}</div>
+                    <div class="players">{{ match.pair2_p1 }} & {{ match.pair2_p2 }}</div>
+                    <div class="team-tag">{{ match.pair2_team }}</div>
+                </td>
+                <td>
+                    <div class="winner-btns">
+                        <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">
+                            Team 1
+                        </button>
+                        <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">
+                            Team 2
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% endfor %}
     
     <script>
         function selectWinner(matchId, winner, btn) {
-            // Remove selected class from siblings
             const buttons = btn.parentElement.querySelectorAll('.winner-btn');
             buttons.forEach(b => b.classList.remove('selected'));
-            
-            // Add selected class to clicked button
             btn.classList.add('selected');
             
-            // Update status
-            const status = document.getElementById('status-' + matchId);
-            status.textContent = '✓ Winner Selected';
-            
-            // Save to backend
             fetch('/update-match-winner', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
