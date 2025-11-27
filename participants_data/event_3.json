@@ -3,13 +3,13 @@
     "serial_number": 1,
     "participant1_name": "Syed S",
     "participant2_name": "Lokesh",
-    "team_name": "EU/UK"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 2,
     "participant1_name": "Balamurugan",
     "participant2_name": "Balaji",
-    "team_name": "EU/UK"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 3,
@@ -27,13 +27,13 @@
     "serial_number": 5,
     "participant1_name": "Kaushik",
     "participant2_name": "Jayaram",
-    "team_name": "EU/UK"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 6,
     "participant1_name": "Bharat",
     "participant2_name": "Abinesh",
-    "team_name": "Paras"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 7,
@@ -69,7 +69,7 @@
     "serial_number": 12,
     "participant1_name": "Subash S",
     "participant2_name": "Vignesh Balaji",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 13,
@@ -81,7 +81,7 @@
     "serial_number": 14,
     "participant1_name": "Muralidharan M",
     "participant2_name": "Akash R",
-    "team_name": "Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 15,
@@ -105,7 +105,7 @@
     "serial_number": 18,
     "participant1_name": "vishwa",
     "participant2_name": "vashiist",
-    "team_name": "1P"
+    "team_name": "1P Launches"
   },
   {
     "serial_number": 19,
@@ -117,7 +117,7 @@
     "serial_number": 20,
     "participant1_name": "Chandran",
     "participant2_name": "Vignesh",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 21,
@@ -147,18 +147,18 @@
     "serial_number": 25,
     "participant1_name": "shahid",
     "participant2_name": "shahdsa",
-    "team_name": "NFA"
+    "team_name": "1P Launches"
   },
   {
     "serial_number": 26,
     "participant1_name": "kevin",
     "participant2_name": "karthigeyan",
-    "team_name": "KTLO"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 27,
     "participant1_name": "Elavarasan",
     "participant2_name": "stalin",
-    "team_name": "3p Apps"
+    "team_name": "3P Apps"
   }
 ]

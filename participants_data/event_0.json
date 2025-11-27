@@ -3,7 +3,7 @@
     "serial_number": 1,
     "participant1_name": "Harish",
     "participant2_name": "Agalya",
-    "team_name": "Mod"
+    "team_name": "MOD"
   },
   {
     "serial_number": 2,
@@ -39,31 +39,31 @@
     "serial_number": 7,
     "participant1_name": "Hamirth",
     "participant2_name": "Shanmugapriyan",
-    "team_name": "3P apps"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 8,
     "participant1_name": "Srini",
     "participant2_name": "Yogesh",
-    "team_name": "Bison/Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 9,
     "participant1_name": "Aarthi",
     "participant2_name": "Haripriya",
-    "team_name": "3P apps"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 10,
     "participant1_name": "Atshara",
     "participant2_name": "Tejas",
-    "team_name": "3P apps"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 11,
     "participant1_name": "Suriya",
     "participant2_name": "Elavarasan",
-    "team_name": "3P apps"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 12,
@@ -93,19 +93,19 @@
     "serial_number": 16,
     "participant1_name": "Richard",
     "participant2_name": "Hareesh",
-    "team_name": "3P NDL"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 17,
     "participant1_name": "Kaushik",
     "participant2_name": "Bharat",
-    "team_name": "Paras"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 18,
     "participant1_name": "Jayaram",
     "participant2_name": "Shameema",
-    "team_name": "Paras"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 19,
@@ -117,7 +117,7 @@
     "serial_number": 20,
     "participant1_name": "Rajesh",
     "participant2_name": "Karthikeyan",
-    "team_name": "KTLO"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 21,
@@ -135,7 +135,7 @@
     "serial_number": 23,
     "participant1_name": "Balaji",
     "participant2_name": "Santhosh",
-    "team_name": "3P NDL"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 24,
@@ -147,7 +147,7 @@
     "serial_number": 25,
     "participant1_name": "Syed S",
     "participant2_name": "sandhiya",
-    "team_name": "3P NDL"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 26,
@@ -165,13 +165,13 @@
     "serial_number": 28,
     "participant1_name": "Karthickraja",
     "participant2_name": "Akshay",
-    "team_name": "3p Apps"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 29,
     "participant1_name": "Ranjani",
     "participant2_name": "Deepika",
-    "team_name": "3p Apps"
+    "team_name": "3P Apps"
   },
   {
     "serial_number": 30,
@@ -183,19 +183,19 @@
     "serial_number": 31,
     "participant1_name": "chandran S",
     "participant2_name": "thavithu",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 32,
     "participant1_name": "Subash",
     "participant2_name": "Abitha",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 33,
     "participant1_name": "arun m",
     "participant2_name": "madhavan",
-    "team_name": "vega"
+    "team_name": "Vega"
   },
   {
     "serial_number": 34,
@@ -207,55 +207,55 @@
     "serial_number": 35,
     "participant1_name": "Adithya",
     "participant2_name": "Divya",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 36,
     "participant1_name": "shivaprasad",
     "participant2_name": "Anupriyanka",
-    "team_name": "Mod"
+    "team_name": "MOD"
   },
   {
     "serial_number": 37,
     "participant1_name": "Subashree",
     "participant2_name": "Dhivya",
-    "team_name": "1P/ Stabilization"
+    "team_name": "1P Launches"
   },
   {
     "serial_number": 38,
     "participant1_name": "arvind",
     "participant2_name": "thasleer",
-    "team_name": "Mod"
+    "team_name": "MOD"
   },
   {
     "serial_number": 39,
     "participant1_name": "Swetha",
     "participant2_name": "Aravindh",
-    "team_name": "DC/OOBE"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 40,
     "participant1_name": "VELLAISAMY, INBARAJA",
     "participant2_name": "Vignesh S, Hari Hara",
-    "team_name": "Paras"
+    "team_name": "3P Launches"
   },
   {
     "serial_number": 41,
     "participant1_name": "Krithika N",
     "participant2_name": "Mano Priya A S",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 42,
     "participant1_name": "Mohana D",
     "participant2_name": "Mohanraj",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 43,
     "participant1_name": "Sri Bala",
     "participant2_name": "Harini",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 44,
@@ -273,7 +273,7 @@
     "serial_number": 46,
     "participant1_name": "Janarthanam",
     "participant2_name": "Vignesh",
-    "team_name": "DC/Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 47,
@@ -285,55 +285,55 @@
     "serial_number": 48,
     "participant1_name": "Arpan",
     "participant2_name": "Sudalai",
-    "team_name": "DC"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 49,
     "participant1_name": "Swarnali",
     "participant2_name": "Lavanya",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 50,
     "participant1_name": "Mirunalani Selvaraj",
     "participant2_name": "Sariga P",
-    "team_name": "Vizzini/Discovery"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 51,
     "participant1_name": "Vignesh Balaji",
     "participant2_name": "Anchana",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 52,
     "participant1_name": "hariharan",
     "participant2_name": "sathish",
-    "team_name": "vega"
+    "team_name": "Vega"
   },
   {
     "serial_number": 53,
     "participant1_name": "Raziabanu M",
     "participant2_name": "Suganya",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 54,
     "participant1_name": "Kishore",
     "participant2_name": "Vignesh",
-    "team_name": "Core experience"
+    "team_name": "Core Experience"
   },
   {
     "serial_number": 55,
     "participant1_name": "Rajkumar",
     "participant2_name": "Akash",
-    "team_name": "Mod"
+    "team_name": "MOD"
   },
   {
     "serial_number": 56,
     "participant1_name": "Ananthakarthik",
     "participant2_name": "Anand",
-    "team_name": "PTI"
+    "team_name": "1P Launches"
   },
   {
     "serial_number": 57,
@@ -345,7 +345,7 @@
     "serial_number": 58,
     "participant1_name": "Muralidharan M",
     "participant2_name": "Deepu P J",
-    "team_name": "Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 59,
@@ -357,13 +357,13 @@
     "serial_number": 60,
     "participant1_name": "Yaasmi",
     "participant2_name": "arvind",
-    "team_name": "Vizzini"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 61,
     "participant1_name": "Ramya",
     "participant2_name": "Suhasini",
-    "team_name": "Vizzini"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 62,
@@ -375,7 +375,7 @@
     "serial_number": 63,
     "participant1_name": "Vashiist",
     "participant2_name": "Pavithra",
-    "team_name": "1P"
+    "team_name": "1P Launches"
   },
   {
     "serial_number": 64,
@@ -387,18 +387,18 @@
     "serial_number": 65,
     "participant1_name": "Kevin",
     "participant2_name": "",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 66,
     "participant1_name": "Sangeetha",
     "participant2_name": "Akash",
-    "team_name": "Mobile/Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 67,
     "participant1_name": "Vignesh",
     "participant2_name": "Santhosh",
-    "team_name": "Paras"
+    "team_name": "3P Launches"
   }
 ]
