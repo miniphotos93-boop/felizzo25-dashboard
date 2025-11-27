@@ -1,0 +1,77 @@
+[
+  {
+    "serial_number": 1,
+    "team_name": "Discovery",
+    "team_members": "Subash, Adithya, Vignesh, Saravana, Susan, Suhasini, Mirunalini"
+  },
+  {
+    "serial_number": 2,
+    "team_name": "SDL",
+    "team_members": "Balu, Gokul, Keerthana, Vanisha, Hemalatha, Sivakumar, Pradeep, Vinod"
+  },
+  {
+    "serial_number": 3,
+    "team_name": "Core Experience",
+    "team_members": "Mohan, Mohana, Razia banu, Ramya, Bala, Dilip, Krithika"
+  },
+  {
+    "serial_number": 4,
+    "team_name": "3P Apps",
+    "team_members": "Shanmugapriyan, Hamirth, Atshara, Stalin, Surya, Deepika, Udhay"
+  },
+  {
+    "serial_number": 5,
+    "team_name": "1P Launches",
+    "team_members": "Abishek, Anantha Karthick, Surabi, Elakkiya, Saran, Sangeetha"
+  },
+  {
+    "serial_number": 6,
+    "team_name": "System Experience",
+    "team_members": "Akash, Aravindh, Arun, Harini, Muralidharan, Nithya sree, Swetha"
+  },
+  {
+    "serial_number": 7,
+    "team_name": "Vega",
+    "team_members": "Akash, Hariharan, Harish, Mirunalini, Gautam, Keerthana, Mohanram, Rajeswari"
+  },
+  {
+    "serial_number": 8,
+    "team_name": "3P Launches",
+    "team_members": "Richard, Steffi, Sandhiya, Rachel, Balamurugan, Santhosh"
+  },
+  {
+    "serial_number": 9,
+    "team_name": "SDL",
+    "team_members": "Ijaz, Sriram, Hariprasad, Chandru, Kannan, Nandhini, Arulmozhi"
+  },
+  {
+    "serial_number": 10,
+    "team_name": "Core Experience",
+    "team_members": "Vignesh, Chandran, Poovarasan, Thavithu, Catherin, Aruna, Reshma"
+  },
+  {
+    "serial_number": 11,
+    "team_name": "1P Launches",
+    "team_members": "Dharshini, Kezia, Vashist, Balaji, John, Sandhiya, Keerthi, Vishwa"
+  },
+  {
+    "serial_number": 12,
+    "team_name": "Vega",
+    "team_members": "Raghul, Arun, Ishrat, Abinash, Kanimozhi, Laxmipathy, Vinothini"
+  },
+  {
+    "serial_number": 13,
+    "team_name": "Discovery",
+    "team_members": "Abhirajan, Thirumal Rajesh, Muthu, Sariga, Abitha, Vijayalakshmi"
+  },
+  {
+    "serial_number": 14,
+    "team_name": "System Experience",
+    "team_members": "Jana, Vignesh, Yogesh, Srini, Kalpana, Sangeetha, Mohanapriya"
+  },
+  {
+    "serial_number": 15,
+    "team_name": "SE",
+    "team_members": "Anish, Hemanth, Sudharshan, Rahul, Rohit, Soumya, Sathish"
+  }
+]
