@@ -49,67 +49,100 @@
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            text-align: center;
         }
-        .matches-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-            gap: 15px;
+        .match-list {
+            list-style: none;
         }
-        .match-card {
+        .match-item {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 255, 255, 0.3);
             border-radius: 12px;
             padding: 20px;
-            transition: all 0.3s;
-        }
-        .match-card:hover {
-            border-color: #00ffff;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-        .match-header {
-            color: #00ff88;
-            font-size: 14px;
-            font-weight: bold;
             margin-bottom: 15px;
             display: flex;
-            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
         }
-        .group-badge {
-            background: rgba(255, 0, 255, 0.2);
-            padding: 3px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-        }
-        .pair {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 12px;
+        .match-num {
+            background: linear-gradient(135deg, #ff00ff, #ff0080);
+            padding: 10px 15px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            min-width: 80px;
+            text-align: center;
+        }
+        .match-details {
+            flex: 1;
+        }
+        .match-id {
+            color: #00ff88;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .pair-row {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .pair-info {
+            flex: 1;
         }
         .pair-num {
             color: #ffd700;
             font-weight: bold;
-            font-size: 16px;
-            margin-bottom: 5px;
+            font-size: 14px;
         }
         .players {
             color: #fff;
-            font-size: 15px;
-            line-height: 1.6;
+            font-size: 16px;
+            margin: 5px 0;
         }
         .team-tag {
             color: #00ffff;
             font-size: 12px;
-            margin-top: 5px;
         }
-        .vs-divider {
-            text-align: center;
+        .vs {
             color: #ff0080;
             font-weight: bold;
-            font-size: 20px;
-            margin: 10px 0;
+            font-size: 18px;
+            text-align: center;
+            padding: 0 10px;
+        }
+        .winner-section {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 150px;
+        }
+        .winner-btn {
+            padding: 8px 16px;
+            border: 2px solid #00ff88;
+            background: transparent;
+            color: #00ff88;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .winner-btn:hover {
+            background: #00ff88;
+            color: #000;
+        }
+        .winner-btn.selected {
+            background: #00ff88;
+            color: #000;
+            font-weight: bold;
+        }
+        .winner-status {
+            text-align: center;
+            color: #ffd700;
+            font-size: 12px;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -124,35 +157,68 @@
             📅 {{ day.day_name }} - {{ day.matches|length }} Matches
         </div>
         
-        <div class="matches-grid">
+        <ul class="match-list">
             {% for match in day.matches %}
-            <div class="match-card">
-                <div class="match-header">
-                    <span>{{ match.match_id }}</span>
-                    <span class="group-badge">{{ match.group }}</span>
-                </div>
+            <li class="match-item">
+                <div class="match-num">Match {{ loop.index }}</div>
                 
-                <div class="pair">
-                    <div class="pair-num">Pair #{{ match.pair1_num }}</div>
-                    <div class="players">
-                        {{ match.pair1_p1 }} & {{ match.pair1_p2 }}
+                <div class="match-details">
+                    <div class="match-id">{{ match.match_id }} - {{ match.group }}</div>
+                    
+                    <div class="pair-row">
+                        <div class="pair-info">
+                            <div class="pair-num">Pair #{{ match.pair1_num }}</div>
+                            <div class="players">{{ match.pair1_p1 }} & {{ match.pair1_p2 }}</div>
+                            <div class="team-tag">{{ match.pair1_team }}</div>
+                        </div>
                     </div>
-                    <div class="team-tag">{{ match.pair1_team }}</div>
-                </div>
-                
-                <div class="vs-divider">VS</div>
-                
-                <div class="pair">
-                    <div class="pair-num">Pair #{{ match.pair2_num }}</div>
-                    <div class="players">
-                        {{ match.pair2_p1 }} & {{ match.pair2_p2 }}
+                    
+                    <div class="vs">VS</div>
+                    
+                    <div class="pair-row">
+                        <div class="pair-info">
+                            <div class="pair-num">Pair #{{ match.pair2_num }}</div>
+                            <div class="players">{{ match.pair2_p1 }} & {{ match.pair2_p2 }}</div>
+                            <div class="team-tag">{{ match.pair2_team }}</div>
+                        </div>
                     </div>
-                    <div class="team-tag">{{ match.pair2_team }}</div>
                 </div>
-            </div>
+                
+                <div class="winner-section">
+                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">
+                        Pair #{{ match.pair1_num }} Wins
+                    </button>
+                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">
+                        Pair #{{ match.pair2_num }} Wins
+                    </button>
+                    <div class="winner-status" id="status-{{ match.match_id }}"></div>
+                </div>
+            </li>
             {% endfor %}
-        </div>
+        </ul>
     </div>
-    {% endfor %}
+    {% endfor}
+    
+    <script>
+        function selectWinner(matchId, winner, btn) {
+            // Remove selected class from siblings
+            const buttons = btn.parentElement.querySelectorAll('.winner-btn');
+            buttons.forEach(b => b.classList.remove('selected'));
+            
+            // Add selected class to clicked button
+            btn.classList.add('selected');
+            
+            // Update status
+            const status = document.getElementById('status-' + matchId);
+            status.textContent = '✓ Winner Selected';
+            
+            // Save to backend
+            fetch('/update-match-winner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({match_id: matchId, winner: winner})
+            });
+        }
+    </script>
 </body>
 </html>

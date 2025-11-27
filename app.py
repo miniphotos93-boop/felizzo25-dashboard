@@ -230,5 +230,25 @@ def schedule(idx):
                          schedule=schedule_data, total_days=len(schedule_data),
                          total_matches=total_matches)
 
+@app.route('/update-match-winner', methods=['POST'])
+def update_match_winner():
+    data = request.json
+    match_id = data['match_id']
+    winner = data['winner']
+    
+    # Load existing results or create new
+    try:
+        with open('foosball_results.json', 'r') as f:
+            results = json.load(f)
+    except:
+        results = {}
+    
+    results[match_id] = winner
+    
+    with open('foosball_results.json', 'w') as f:
+        json.dump(results, f, indent=2)
+    
+    return {'status': 'success'}
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
