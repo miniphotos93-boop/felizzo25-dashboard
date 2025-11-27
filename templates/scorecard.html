@@ -78,6 +78,53 @@
                         
                         <table style="width: 100%; font-size: 13px;">
                             <tbody>
+                                {% if event.Event in ['Solo Singing', 'Group Singing'] %}
+                                {% if event.Event == 'Group Singing' %}
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Vocal Blend (10)
+                                        <span class="tooltip">How well the group's voices blend together harmoniously.</span>
+                                    </th>
+                                    <td><input type="number" name="technical" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('technical', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Pitch & Intonation (10)
+                                        <span class="tooltip">The ability to sing in tune and on key.</span>
+                                    </th>
+                                    <td><input type="number" name="technical" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('technical', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        {% if event.Event == 'Group Singing' %}Pitch & Intonation (10){% else %}Rhythm & Timing (10){% endif %}
+                                        <span class="tooltip">{% if event.Event == 'Group Singing' %}The ability to sing in tune and on key.{% else %}How well the performance aligns with the music's tempo and beat.{% endif %}</span>
+                                    </th>
+                                    <td><input type="number" name="musicality" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('musicality', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        {% if event.Event == 'Group Singing' %}Rhythm & Tempo (10){% else %}Breath Control (10){% endif %}
+                                        <span class="tooltip">{% if event.Event == 'Group Singing' %}The group's ability to stay in time with the music.{% else %}Proper support for sustained notes and phrases.{% endif %}</span>
+                                    </th>
+                                    <td><input type="number" name="choreography" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('choreography', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        {% if event.Event == 'Group Singing' %}Breath Control (10){% else %}Song Choice (10){% endif %}
+                                        <span class="tooltip">{% if event.Event == 'Group Singing' %}Proper support for sustained notes and phrases.{% else %}Selecting a song that is appropriate for their voice and the competition.{% endif %}</span>
+                                    </th>
+                                    <td><input type="number" name="performance" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('performance', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        {% if event.Event == 'Group Singing' %}Song Choice (10){% else %}Vocal Range (10){% endif %}
+                                        <span class="tooltip">{% if event.Event == 'Group Singing' %}Choosing a song that suits the group's strengths and the competition's criteria.{% else %}How well a singer can navigate both high and low notes without strain.{% endif %}</span>
+                                    </th>
+                                    <td><input type="number" name="stage_presence" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('stage_presence', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                {% else %}
                                 <tr>
                                     <th style="text-align: left; font-size: 11px;">
                                         Technical (10)
@@ -112,6 +159,7 @@
                                     </th>
                                     <td><input type="number" name="stage_presence" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('stage_presence', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
                                 </tr>
+                                {% endif %}
                                 <tr style="background: rgba(255, 215, 0, 0.1); font-weight: bold;">
                                     <th style="text-align: left;">TOTAL</th>
                                     <td class="total-col" id="judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}">0</td>
