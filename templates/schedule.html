@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ event_name }} - Schedule</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 30px;
+        }
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .group {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .group-title {
+            font-size: 24px;
+            color: #00ffff;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .match {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-left: 3px solid #ff00ff;
+        }
+        .match-id {
+            color: #00ff88;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .pair {
+            padding: 8px 0;
+            font-size: 16px;
+        }
+        .vs {
+            color: #ff0080;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+        .team-badge {
+            display: inline-block;
+            background: rgba(255, 0, 255, 0.2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .info {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 3px solid #00ffff;
+        }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-btn">← Back to Dashboard</a>
+    <h1>{{ event_name }} - First Round Schedule</h1>
+    
+    {% for group in schedule %}
+    <div class="group">
+        <div class="group-title">
+            {% if group.team == 'COMBINED_SMALL_TEAMS' %}
+                COMBINED GROUP - SMALL TEAMS
+            {% else %}
+                TEAM: {{ group.team.upper() }}
+            {% endif %}
+        </div>
+        
+        <div class="info">
+            {% if group.team == 'COMBINED_SMALL_TEAMS' %}
+                Teams: {{ group.teams_included|join(', ') }}<br>
+            {% endif %}
+            Total Matches: {{ group.matches|length }} | Top {{ group.qualified_count }} pairs qualify to next round
+        </div>
+        
+        {% for match in group.matches %}
+        <div class="match">
+            <div class="match-id">{{ match.match_id }}</div>
+            <div class="pair">
+                Pair #{{ match.pair1 }}
+                {% if match.team1 %}
+                <span class="team-badge">{{ match.team1 }}</span>
+                {% endif %}
+            </div>
+            <div class="vs">VS</div>
+            <div class="pair">
+                Pair #{{ match.pair2 }}
+                {% if match.team2 %}
+                <span class="team-badge">{{ match.team2 }}</span>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,799 @@
+[
+  {
+    "team": "3p Apps",
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "3p Apps_M1",
+        "pair1": 4,
+        "pair2": 21
+      },
+      {
+        "match_id": "3p Apps_M2",
+        "pair1": 4,
+        "pair2": 22
+      },
+      {
+        "match_id": "3p Apps_M3",
+        "pair1": 4,
+        "pair2": 23
+      },
+      {
+        "match_id": "3p Apps_M4",
+        "pair1": 4,
+        "pair2": 24
+      },
+      {
+        "match_id": "3p Apps_M5",
+        "pair1": 4,
+        "pair2": 25
+      },
+      {
+        "match_id": "3p Apps_M6",
+        "pair1": 4,
+        "pair2": 26
+      },
+      {
+        "match_id": "3p Apps_M7",
+        "pair1": 21,
+        "pair2": 22
+      },
+      {
+        "match_id": "3p Apps_M8",
+        "pair1": 21,
+        "pair2": 23
+      },
+      {
+        "match_id": "3p Apps_M9",
+        "pair1": 21,
+        "pair2": 24
+      },
+      {
+        "match_id": "3p Apps_M10",
+        "pair1": 21,
+        "pair2": 25
+      },
+      {
+        "match_id": "3p Apps_M11",
+        "pair1": 21,
+        "pair2": 26
+      },
+      {
+        "match_id": "3p Apps_M12",
+        "pair1": 22,
+        "pair2": 23
+      },
+      {
+        "match_id": "3p Apps_M13",
+        "pair1": 22,
+        "pair2": 24
+      },
+      {
+        "match_id": "3p Apps_M14",
+        "pair1": 22,
+        "pair2": 25
+      },
+      {
+        "match_id": "3p Apps_M15",
+        "pair1": 22,
+        "pair2": 26
+      },
+      {
+        "match_id": "3p Apps_M16",
+        "pair1": 23,
+        "pair2": 24
+      },
+      {
+        "match_id": "3p Apps_M17",
+        "pair1": 23,
+        "pair2": 25
+      },
+      {
+        "match_id": "3p Apps_M18",
+        "pair1": 23,
+        "pair2": 26
+      },
+      {
+        "match_id": "3p Apps_M19",
+        "pair1": 24,
+        "pair2": 25
+      },
+      {
+        "match_id": "3p Apps_M20",
+        "pair1": 24,
+        "pair2": 26
+      },
+      {
+        "match_id": "3p Apps_M21",
+        "pair1": 25,
+        "pair2": 26
+      }
+    ],
+    "qualified_count": 2
+  },
+  {
+    "team": "Mod",
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "Mod_M1",
+        "pair1": 8,
+        "pair2": 11
+      },
+      {
+        "match_id": "Mod_M2",
+        "pair1": 8,
+        "pair2": 34
+      },
+      {
+        "match_id": "Mod_M3",
+        "pair1": 8,
+        "pair2": 35
+      },
+      {
+        "match_id": "Mod_M4",
+        "pair1": 11,
+        "pair2": 34
+      },
+      {
+        "match_id": "Mod_M5",
+        "pair1": 11,
+        "pair2": 35
+      },
+      {
+        "match_id": "Mod_M6",
+        "pair1": 34,
+        "pair2": 35
+      }
+    ],
+    "qualified_count": 2
+  },
+  {
+    "team": "SDL",
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "SDL_M1",
+        "pair1": 1,
+        "pair2": 7
+      },
+      {
+        "match_id": "SDL_M2",
+        "pair1": 1,
+        "pair2": 13
+      },
+      {
+        "match_id": "SDL_M3",
+        "pair1": 1,
+        "pair2": 16
+      },
+      {
+        "match_id": "SDL_M4",
+        "pair1": 1,
+        "pair2": 18
+      },
+      {
+        "match_id": "SDL_M5",
+        "pair1": 1,
+        "pair2": 37
+      },
+      {
+        "match_id": "SDL_M6",
+        "pair1": 1,
+        "pair2": 38
+      },
+      {
+        "match_id": "SDL_M7",
+        "pair1": 1,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M8",
+        "pair1": 1,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M9",
+        "pair1": 7,
+        "pair2": 13
+      },
+      {
+        "match_id": "SDL_M10",
+        "pair1": 7,
+        "pair2": 16
+      },
+      {
+        "match_id": "SDL_M11",
+        "pair1": 7,
+        "pair2": 18
+      },
+      {
+        "match_id": "SDL_M12",
+        "pair1": 7,
+        "pair2": 37
+      },
+      {
+        "match_id": "SDL_M13",
+        "pair1": 7,
+        "pair2": 38
+      },
+      {
+        "match_id": "SDL_M14",
+        "pair1": 7,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M15",
+        "pair1": 7,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M16",
+        "pair1": 13,
+        "pair2": 16
+      },
+      {
+        "match_id": "SDL_M17",
+        "pair1": 13,
+        "pair2": 18
+      },
+      {
+        "match_id": "SDL_M18",
+        "pair1": 13,
+        "pair2": 37
+      },
+      {
+        "match_id": "SDL_M19",
+        "pair1": 13,
+        "pair2": 38
+      },
+      {
+        "match_id": "SDL_M20",
+        "pair1": 13,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M21",
+        "pair1": 13,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M22",
+        "pair1": 16,
+        "pair2": 18
+      },
+      {
+        "match_id": "SDL_M23",
+        "pair1": 16,
+        "pair2": 37
+      },
+      {
+        "match_id": "SDL_M24",
+        "pair1": 16,
+        "pair2": 38
+      },
+      {
+        "match_id": "SDL_M25",
+        "pair1": 16,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M26",
+        "pair1": 16,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M27",
+        "pair1": 18,
+        "pair2": 37
+      },
+      {
+        "match_id": "SDL_M28",
+        "pair1": 18,
+        "pair2": 38
+      },
+      {
+        "match_id": "SDL_M29",
+        "pair1": 18,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M30",
+        "pair1": 18,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M31",
+        "pair1": 37,
+        "pair2": 38
+      },
+      {
+        "match_id": "SDL_M32",
+        "pair1": 37,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M33",
+        "pair1": 37,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M34",
+        "pair1": 38,
+        "pair2": 39
+      },
+      {
+        "match_id": "SDL_M35",
+        "pair1": 38,
+        "pair2": 42
+      },
+      {
+        "match_id": "SDL_M36",
+        "pair1": 39,
+        "pair2": 42
+      }
+    ],
+    "qualified_count": 2
+  },
+  {
+    "team": "SE",
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "SE_M1",
+        "pair1": 5,
+        "pair2": 20
+      },
+      {
+        "match_id": "SE_M2",
+        "pair1": 5,
+        "pair2": 29
+      },
+      {
+        "match_id": "SE_M3",
+        "pair1": 5,
+        "pair2": 30
+      },
+      {
+        "match_id": "SE_M4",
+        "pair1": 5,
+        "pair2": 33
+      },
+      {
+        "match_id": "SE_M5",
+        "pair1": 20,
+        "pair2": 29
+      },
+      {
+        "match_id": "SE_M6",
+        "pair1": 20,
+        "pair2": 30
+      },
+      {
+        "match_id": "SE_M7",
+        "pair1": 20,
+        "pair2": 33
+      },
+      {
+        "match_id": "SE_M8",
+        "pair1": 29,
+        "pair2": 30
+      },
+      {
+        "match_id": "SE_M9",
+        "pair1": 29,
+        "pair2": 33
+      },
+      {
+        "match_id": "SE_M10",
+        "pair1": 30,
+        "pair2": 33
+      }
+    ],
+    "qualified_count": 2
+  },
+  {
+    "team": "Sysapps",
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "Sysapps_M1",
+        "pair1": 10,
+        "pair2": 17
+      },
+      {
+        "match_id": "Sysapps_M2",
+        "pair1": 10,
+        "pair2": 28
+      },
+      {
+        "match_id": "Sysapps_M3",
+        "pair1": 10,
+        "pair2": 41
+      },
+      {
+        "match_id": "Sysapps_M4",
+        "pair1": 17,
+        "pair2": 28
+      },
+      {
+        "match_id": "Sysapps_M5",
+        "pair1": 17,
+        "pair2": 41
+      },
+      {
+        "match_id": "Sysapps_M6",
+        "pair1": 28,
+        "pair2": 41
+      }
+    ],
+    "qualified_count": 2
+  },
+  {
+    "team": "Vega",
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "Vega_M1",
+        "pair1": 3,
+        "pair2": 9
+      },
+      {
+        "match_id": "Vega_M2",
+        "pair1": 3,
+        "pair2": 12
+      },
+      {
+        "match_id": "Vega_M3",
+        "pair1": 3,
+        "pair2": 40
+      },
+      {
+        "match_id": "Vega_M4",
+        "pair1": 9,
+        "pair2": 12
+      },
+      {
+        "match_id": "Vega_M5",
+        "pair1": 9,
+        "pair2": 40
+      },
+      {
+        "match_id": "Vega_M6",
+        "pair1": 12,
+        "pair2": 40
+      }
+    ],
+    "qualified_count": 2
+  },
+  {
+    "team": "COMBINED_SMALL_TEAMS",
+    "teams_included": [
+      "EU/UK",
+      "FBDA",
+      "Core experience",
+      "MOD",
+      "Discovery",
+      "NFA"
+    ],
+    "round": "First Round",
+    "matches": [
+      {
+        "match_id": "COMBINED_M1",
+        "pair1": 2,
+        "pair2": 6,
+        "team1": "EU/UK",
+        "team2": "EU/UK"
+      },
+      {
+        "match_id": "COMBINED_M2",
+        "pair1": 2,
+        "pair2": 14,
+        "team1": "EU/UK",
+        "team2": "FBDA"
+      },
+      {
+        "match_id": "COMBINED_M3",
+        "pair1": 2,
+        "pair2": 32,
+        "team1": "EU/UK",
+        "team2": "FBDA"
+      },
+      {
+        "match_id": "COMBINED_M4",
+        "pair1": 2,
+        "pair2": 15,
+        "team1": "EU/UK",
+        "team2": "Core experience"
+      },
+      {
+        "match_id": "COMBINED_M5",
+        "pair1": 2,
+        "pair2": 19,
+        "team1": "EU/UK",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M6",
+        "pair1": 2,
+        "pair2": 43,
+        "team1": "EU/UK",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M7",
+        "pair1": 2,
+        "pair2": 27,
+        "team1": "EU/UK",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M8",
+        "pair1": 2,
+        "pair2": 31,
+        "team1": "EU/UK",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M9",
+        "pair1": 2,
+        "pair2": 36,
+        "team1": "EU/UK",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M10",
+        "pair1": 6,
+        "pair2": 14,
+        "team1": "EU/UK",
+        "team2": "FBDA"
+      },
+      {
+        "match_id": "COMBINED_M11",
+        "pair1": 6,
+        "pair2": 32,
+        "team1": "EU/UK",
+        "team2": "FBDA"
+      },
+      {
+        "match_id": "COMBINED_M12",
+        "pair1": 6,
+        "pair2": 15,
+        "team1": "EU/UK",
+        "team2": "Core experience"
+      },
+      {
+        "match_id": "COMBINED_M13",
+        "pair1": 6,
+        "pair2": 19,
+        "team1": "EU/UK",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M14",
+        "pair1": 6,
+        "pair2": 43,
+        "team1": "EU/UK",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M15",
+        "pair1": 6,
+        "pair2": 27,
+        "team1": "EU/UK",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M16",
+        "pair1": 6,
+        "pair2": 31,
+        "team1": "EU/UK",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M17",
+        "pair1": 6,
+        "pair2": 36,
+        "team1": "EU/UK",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M18",
+        "pair1": 14,
+        "pair2": 32,
+        "team1": "FBDA",
+        "team2": "FBDA"
+      },
+      {
+        "match_id": "COMBINED_M19",
+        "pair1": 14,
+        "pair2": 15,
+        "team1": "FBDA",
+        "team2": "Core experience"
+      },
+      {
+        "match_id": "COMBINED_M20",
+        "pair1": 14,
+        "pair2": 19,
+        "team1": "FBDA",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M21",
+        "pair1": 14,
+        "pair2": 43,
+        "team1": "FBDA",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M22",
+        "pair1": 14,
+        "pair2": 27,
+        "team1": "FBDA",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M23",
+        "pair1": 14,
+        "pair2": 31,
+        "team1": "FBDA",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M24",
+        "pair1": 14,
+        "pair2": 36,
+        "team1": "FBDA",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M25",
+        "pair1": 32,
+        "pair2": 15,
+        "team1": "FBDA",
+        "team2": "Core experience"
+      },
+      {
+        "match_id": "COMBINED_M26",
+        "pair1": 32,
+        "pair2": 19,
+        "team1": "FBDA",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M27",
+        "pair1": 32,
+        "pair2": 43,
+        "team1": "FBDA",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M28",
+        "pair1": 32,
+        "pair2": 27,
+        "team1": "FBDA",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M29",
+        "pair1": 32,
+        "pair2": 31,
+        "team1": "FBDA",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M30",
+        "pair1": 32,
+        "pair2": 36,
+        "team1": "FBDA",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M31",
+        "pair1": 15,
+        "pair2": 19,
+        "team1": "Core experience",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M32",
+        "pair1": 15,
+        "pair2": 43,
+        "team1": "Core experience",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M33",
+        "pair1": 15,
+        "pair2": 27,
+        "team1": "Core experience",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M34",
+        "pair1": 15,
+        "pair2": 31,
+        "team1": "Core experience",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M35",
+        "pair1": 15,
+        "pair2": 36,
+        "team1": "Core experience",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M36",
+        "pair1": 19,
+        "pair2": 43,
+        "team1": "MOD",
+        "team2": "MOD"
+      },
+      {
+        "match_id": "COMBINED_M37",
+        "pair1": 19,
+        "pair2": 27,
+        "team1": "MOD",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M38",
+        "pair1": 19,
+        "pair2": 31,
+        "team1": "MOD",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M39",
+        "pair1": 19,
+        "pair2": 36,
+        "team1": "MOD",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M40",
+        "pair1": 43,
+        "pair2": 27,
+        "team1": "MOD",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M41",
+        "pair1": 43,
+        "pair2": 31,
+        "team1": "MOD",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M42",
+        "pair1": 43,
+        "pair2": 36,
+        "team1": "MOD",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M43",
+        "pair1": 27,
+        "pair2": 31,
+        "team1": "Discovery",
+        "team2": "Discovery"
+      },
+      {
+        "match_id": "COMBINED_M44",
+        "pair1": 27,
+        "pair2": 36,
+        "team1": "Discovery",
+        "team2": "NFA"
+      },
+      {
+        "match_id": "COMBINED_M45",
+        "pair1": 31,
+        "pair2": 36,
+        "team1": "Discovery",
+        "team2": "NFA"
+      }
+    ],
+    "qualified_count": 2
+  }
+]

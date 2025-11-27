@@ -162,6 +162,9 @@ def scorecard(idx):
 def manage_participants(idx):
     events = load_events()
     event = events[idx]
+def manage_participants(idx):
+    events = load_events()
+    event = events[idx]
     event_type = event.get('event_type', 'solo')
     
     if request.method == 'POST':
@@ -212,6 +215,16 @@ def manage_participants(idx):
     participants = load_participants(idx)
     return render_template('manage_participants.html', event=event, idx=idx, 
                          participants=participants, event_type=event_type)
+
+@app.route('/schedule/<int:idx>')
+def schedule(idx):
+    events = load_events()
+    event = events[idx]
+    
+    with open('foosball_schedule.json', 'r') as f:
+        schedule_data = json.load(f)
+    
+    return render_template('schedule.html', event_name=event['Event'], schedule=schedule_data)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
