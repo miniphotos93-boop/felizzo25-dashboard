@@ -215,21 +215,91 @@ def manage_participants(idx):
 
 @app.route('/schedule/<int:idx>')
 def schedule(idx):
+    from itertools import combinations
+    from datetime import datetime, timedelta
+    
     events = load_events()
     event = events[idx]
+    participants = load_participants(idx)
     
-    schedule_file = Path(__file__).parent / 'foosball_day_schedule.json'
+    # Create participant lookup
+    pair_lookup = {p['serial_number']: p for p in participants}
     
-    if not schedule_file.exists():
-        return "Schedule not found. Please generate the schedule first.", 404
+    # Group by team
+    teams = {}
+    for pair in participants:
+        team = pair['team_name']
+        if team not in teams:
+            teams[team] = []
+        teams[team].append(pair)
     
-    with open(schedule_file, 'r') as f:
-        schedule_data = json.load(f)
+    # Separate large and small teams
+    large_teams = {k: v for k, v in teams.items() if len(v) >= 4}
+    small_teams = {k: v for k, v in teams.items() if len(v) < 4}
     
-    total_matches = sum(len(d['matches']) for d in schedule_data)
+    # Generate matches
+    all_matches = []
+    
+    # Large teams
+    for team, pairs in large_teams.items():
+        matches = list(combinations(range(len(pairs)), 2))
+        for i, j in matches:
+            pair1 = pairs[i]
+            pair2 = pairs[j]
+            all_matches.append({
+                'match_id': f"{team}_M{len(all_matches)+1}",
+                'group': team,
+                'pair1_num': pair1['serial_number'],
+                'pair1_p1': pair1['participant1_name'],
+                'pair1_p2': pair1['participant2_name'],
+                'pair1_team': pair1['team_name'],
+                'pair2_num': pair2['serial_number'],
+                'pair2_p1': pair2['participant1_name'],
+                'pair2_p2': pair2['participant2_name'],
+                'pair2_team': pair2['team_name']
+            })
+    
+    # Combined small teams
+    combined_group = []
+    for team, pairs in small_teams.items():
+        combined_group.extend(pairs)
+    
+    if combined_group:
+        matches = list(combinations(range(len(combined_group)), 2))
+        for i, j in matches:
+            pair1 = combined_group[i]
+            pair2 = combined_group[j]
+            all_matches.append({
+                'match_id': f"COMBINED_M{len(all_matches)+1}",
+                'group': 'COMBINED_SMALL_TEAMS',
+                'pair1_num': pair1['serial_number'],
+                'pair1_p1': pair1['participant1_name'],
+                'pair1_p2': pair1['participant2_name'],
+                'pair1_team': pair1['team_name'],
+                'pair2_num': pair2['serial_number'],
+                'pair2_p1': pair2['participant1_name'],
+                'pair2_p2': pair2['participant2_name'],
+                'pair2_team': pair2['team_name']
+            })
+    
+    # Distribute across days
+    start_date = datetime(2025, 11, 27)
+    matches_per_day = 15
+    day_schedule = []
+    
+    for day_num in range(0, len(all_matches), matches_per_day):
+        day_matches = all_matches[day_num:day_num + matches_per_day]
+        current_date = start_date + timedelta(days=len(day_schedule))
+        day_schedule.append({
+            'date': current_date.strftime('%Y-%m-%d'),
+            'day_name': current_date.strftime('%A, %B %d'),
+            'matches': day_matches
+        })
+    
+    total_matches = len(all_matches)
     
     return render_template('schedule.html', event_name=event['Event'], 
-                         schedule=schedule_data, total_days=len(schedule_data),
+                         schedule=day_schedule, total_days=len(day_schedule),
                          total_matches=total_matches)
 
 @app.route('/update-match-winner', methods=['POST'])
