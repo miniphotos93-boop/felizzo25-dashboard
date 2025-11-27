@@ -2,76 +2,91 @@
   {
     "serial_number": 1,
     "team_name": "Discovery",
-    "team_members": "Subash, Adithya, Vignesh, Saravana, Susan, Suhasini, Mirunalini"
+    "participant1_name": "Subash, Adithya, Vignesh, Saravana, Susan, Suhasini, Mirunalini",
+    "participant2_name": null
   },
   {
     "serial_number": 2,
     "team_name": "SDL",
-    "team_members": "Balu, Gokul, Keerthana, Vanisha, Hemalatha, Sivakumar, Pradeep, Vinod"
+    "participant1_name": "Balu, Gokul, Keerthana, Vanisha, Hemalatha, Sivakumar, Pradeep, Vinod",
+    "participant2_name": null
   },
   {
     "serial_number": 3,
     "team_name": "Core Experience",
-    "team_members": "Mohan, Mohana, Razia banu, Ramya, Bala, Dilip, Krithika"
+    "participant1_name": "Mohan, Mohana, Razia banu, Ramya, Bala, Dilip, Krithika",
+    "participant2_name": null
   },
   {
     "serial_number": 4,
     "team_name": "3P Apps",
-    "team_members": "Shanmugapriyan, Hamirth, Atshara, Stalin, Surya, Deepika, Udhay"
+    "participant1_name": "Shanmugapriyan, Hamirth, Atshara, Stalin, Surya, Deepika, Udhay",
+    "participant2_name": null
   },
   {
     "serial_number": 5,
     "team_name": "1P Launches",
-    "team_members": "Abishek, Anantha Karthick, Surabi, Elakkiya, Saran, Sangeetha"
+    "participant1_name": "Abishek, Anantha Karthick, Surabi, Elakkiya, Saran, Sangeetha",
+    "participant2_name": null
   },
   {
     "serial_number": 6,
     "team_name": "System Experience",
-    "team_members": "Akash, Aravindh, Arun, Harini, Muralidharan, Nithya sree, Swetha"
+    "participant1_name": "Akash, Aravindh, Arun, Harini, Muralidharan, Nithya sree, Swetha",
+    "participant2_name": null
   },
   {
     "serial_number": 7,
     "team_name": "Vega",
-    "team_members": "Akash, Hariharan, Harish, Mirunalini, Gautam, Keerthana, Mohanram, Rajeswari"
+    "participant1_name": "Akash, Hariharan, Harish, Mirunalini, Gautam, Keerthana, Mohanram, Rajeswari",
+    "participant2_name": null
   },
   {
     "serial_number": 8,
     "team_name": "3P Launches",
-    "team_members": "Richard, Steffi, Sandhiya, Rachel, Balamurugan, Santhosh"
+    "participant1_name": "Richard, Steffi, Sandhiya, Rachel, Balamurugan, Santhosh",
+    "participant2_name": null
   },
   {
     "serial_number": 9,
     "team_name": "SDL",
-    "team_members": "Ijaz, Sriram, Hariprasad, Chandru, Kannan, Nandhini, Arulmozhi"
+    "participant1_name": "Ijaz, Sriram, Hariprasad, Chandru, Kannan, Nandhini, Arulmozhi",
+    "participant2_name": null
   },
   {
     "serial_number": 10,
     "team_name": "Core Experience",
-    "team_members": "Vignesh, Chandran, Poovarasan, Thavithu, Catherin, Aruna, Reshma"
+    "participant1_name": "Vignesh, Chandran, Poovarasan, Thavithu, Catherin, Aruna, Reshma",
+    "participant2_name": null
   },
   {
     "serial_number": 11,
     "team_name": "1P Launches",
-    "team_members": "Dharshini, Kezia, Vashist, Balaji, John, Sandhiya, Keerthi, Vishwa"
+    "participant1_name": "Dharshini, Kezia, Vashist, Balaji, John, Sandhiya, Keerthi, Vishwa",
+    "participant2_name": null
   },
   {
     "serial_number": 12,
     "team_name": "Vega",
-    "team_members": "Raghul, Arun, Ishrat, Abinash, Kanimozhi, Laxmipathy, Vinothini"
+    "participant1_name": "Raghul, Arun, Ishrat, Abinash, Kanimozhi, Laxmipathy, Vinothini",
+    "participant2_name": null
   },
   {
     "serial_number": 13,
     "team_name": "Discovery",
-    "team_members": "Abhirajan, Thirumal Rajesh, Muthu, Sariga, Abitha, Vijayalakshmi"
+    "participant1_name": "Abhirajan, Thirumal Rajesh, Muthu, Sariga, Abitha, Vijayalakshmi",
+    "participant2_name": null
   },
   {
     "serial_number": 14,
     "team_name": "System Experience",
-    "team_members": "Jana, Vignesh, Yogesh, Srini, Kalpana, Sangeetha, Mohanapriya"
+    "participant1_name": "Jana, Vignesh, Yogesh, Srini, Kalpana, Sangeetha, Mohanapriya",
+    "participant2_name": null
   },
   {
     "serial_number": 15,
     "team_name": "SE",
-    "team_members": "Anish, Hemanth, Sudharshan, Rahul, Rohit, Soumya, Sathish"
+    "participant1_name": "Anish, Hemanth, Sudharshan, Rahul, Rohit, Soumya, Sathish",
+    "participant2_name": null
   }
 ]
