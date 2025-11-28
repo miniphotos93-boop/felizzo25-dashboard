@@ -49,6 +49,7 @@
                 min-height: 0;
                 padding: 0;
                 opacity: 0;
+                visibility: hidden;
             }
         }
         
@@ -71,12 +72,14 @@
                 width: 600px;
                 height: 400px;
                 position: relative;
+                z-index: 10;
             }
             1% {
                 position: fixed;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
+                z-index: 1000;
             }
             100% {
                 position: fixed;
@@ -343,37 +346,6 @@
             box-shadow: 0 0 50px rgba(255, 0, 255, 0.8);
         }
         
-        /* Scroll Prompt */
-        .scroll-prompt {
-            margin-top: 60px;
-            text-align: center;
-            animation: fadeInUp 1s ease 1.5s both;
-        }
-        
-        .scroll-text {
-            font-size: 20px;
-            color: #00ffff;
-            font-weight: 600;
-            margin-bottom: 10px;
-            animation: glow 2s ease-in-out infinite;
-        }
-        
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-            50% { text-shadow: 0 0 20px rgba(0, 255, 255, 1), 0 0 30px rgba(255, 0, 255, 0.5); }
-        }
-        
-        .scroll-arrow {
-            font-size: 40px;
-            color: #ff00ff;
-            animation: bounce-arrow 2s ease-in-out infinite;
-        }
-        
-        @keyframes bounce-arrow {
-            0%, 100% { transform: translateY(0); opacity: 1; }
-            50% { transform: translateY(15px); opacity: 0.5; }
-        }
-        
         /* Floating Icons */
         .floating-icon {
             position: absolute;
@@ -609,10 +581,6 @@
         </h1>
         <div class="hero-subtitle">The Ultimate Sports & Cultural Fest</div>
         <a href="/dashboard" class="cta-button">Enter Dashboard →</a>
-        <div class="scroll-prompt">
-            <div class="scroll-text">👇 Who's dominating the leaderboard? Scroll to find out! 👇</div>
-            <div class="scroll-arrow">↓</div>
-        </div>
     </section>
     
     <!-- Stats Section -->
