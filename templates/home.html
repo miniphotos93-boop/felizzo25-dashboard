@@ -64,21 +64,26 @@
             padding: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
                         inset 0 0 20px rgba(0, 0, 0, 0.5);
-            position: fixed;
+            position: relative;
             border: 12px solid #333;
             animation: shrinkAndMove 0.8s ease-in-out 10s forwards;
-            z-index: 1000;
+            z-index: 1;
         }
         
         @keyframes shrinkAndMove {
             0% {
                 width: 600px;
                 height: 400px;
+                position: relative;
+            }
+            1% {
+                position: fixed;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
             100% {
+                position: fixed;
                 width: 150px;
                 height: 100px;
                 top: 20px;
@@ -87,6 +92,7 @@
                 padding: 8px;
                 border-width: 3px;
                 border-radius: 10px;
+                z-index: 1000;
             }
         }
         
