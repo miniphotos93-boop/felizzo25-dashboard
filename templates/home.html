@@ -351,46 +351,6 @@
             border-radius: 10px;
             transition: width 1s ease;
         }
-        
-        /* Upcoming Events */
-        .upcoming-section {
-            padding: 80px 20px;
-            background: rgba(0, 0, 0, 0.8);
-        }
-        
-        .event-list {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .event-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-left: 4px solid #00ffff;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s;
-        }
-        
-        .event-item:hover {
-            border-left-color: #ff00ff;
-            transform: translateX(10px);
-        }
-        
-        .event-name {
-            font-size: 20px;
-            font-weight: bold;
-            color: #fff;
-        }
-        
-        .event-date {
-            color: #00ffff;
-            font-size: 16px;
-        }
     </style>
 </head>
 <body>
@@ -487,22 +447,6 @@
                 <div class="progress-bar">
                     <div class="progress-fill" style="width: {{ team.participation_rate }}%"></div>
                 </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    
-    <!-- Upcoming Events -->
-    <section class="upcoming-section">
-        <h2 class="section-title">📅 Upcoming Events</h2>
-        <div class="event-list">
-            {% for event in upcoming_events %}
-            <div class="event-item">
-                <div>
-                    <div class="event-name">{{ event.name }}</div>
-                    <div class="event-date">{{ event.date }}</div>
-                </div>
-                <a href="/schedule/{{ event.idx }}" style="color: #00ffff; text-decoration: none;">View Schedule →</a>
             </div>
             {% endfor %}
         </div>
