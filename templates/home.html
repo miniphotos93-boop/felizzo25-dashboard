@@ -51,35 +51,37 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientFlow 3s ease infinite;
-            text-shadow: 0 0 80px rgba(255, 0, 255, 0.5);
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
+            gap: 5px;
         }
         
-        .year-counter {
+        .flip-container {
+            perspective: 1000px;
             display: inline-block;
-            width: 150px;
+            width: 80px;
             height: 140px;
-            overflow: hidden;
+        }
+        
+        .flipper {
             position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            animation: flip 2s ease-in-out 1s forwards;
         }
         
-        .year-spinner {
-            display: flex;
-            flex-direction: column;
-            animation: spin 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-        }
-        
-        .year-digit {
-            height: 140px;
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 120px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
             background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
             background-size: 300% 100%;
             -webkit-background-clip: text;
@@ -88,11 +90,14 @@
             animation: gradientFlow 3s ease infinite;
         }
         
-        @keyframes spin {
-            0% { transform: translateY(0); }
-            33% { transform: translateY(-140px); }
-            66% { transform: translateY(-280px); }
-            100% { transform: translateY(-280px); }
+        .back {
+            transform: rotateY(180deg);
+        }
+        
+        @keyframes flip {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(90deg) scale(1.2); }
+            100% { transform: rotateY(180deg) scale(1); }
         }
         
         @keyframes gradientFlow {
@@ -423,11 +428,10 @@
         
         <h1>
             <span>FELIZZO'</span>
-            <div class="year-counter">
-                <div class="year-spinner">
-                    <div class="year-digit">23</div>
-                    <div class="year-digit">24</div>
-                    <div class="year-digit">25</div>
+            <div class="flip-container">
+                <div class="flipper">
+                    <div class="front">23</div>
+                    <div class="back">25</div>
                 </div>
             </div>
         </h1>
