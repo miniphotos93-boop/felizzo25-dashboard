@@ -606,6 +606,8 @@ def submit_carrom_score():
     
     try:
         data = request.json
+        print(f"[CARROM API] Received POST request: {data}")
+        print(f"[CARROM API] Headers: {dict(request.headers)}")
         
         # Validate required fields
         if 'match_id' not in data or 'winner' not in data:
@@ -636,6 +638,7 @@ def submit_carrom_score():
             json.dump(results, f, indent=2)
         
         result_text = 'Draw' if winner == 0 else f'Team {winner} wins'
+        print(f"[CARROM API] Successfully saved: {match_id} -> {result_text}")
         
         response = jsonify({
             'status': 'success',
@@ -647,6 +650,7 @@ def submit_carrom_score():
         return response
         
     except Exception as e:
+        print(f"[CARROM API] Error: {str(e)}")
         response = jsonify({'status': 'error', 'message': str(e)})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response, 500
@@ -664,6 +668,40 @@ def get_carrom_scores():
             return jsonify({'status': 'success', 'results': {}})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/carrom/test', methods=['GET'])
+def test_carrom_data():
+    """Test endpoint to view all carrom match data"""
+    try:
+        # Load schedule
+        schedule_file = Path(__file__).parent / 'participants_data' / 'carrom_schedule.json'
+        results_file = Path(__file__).parent / 'carrom_results.json'
+        
+        schedule = []
+        results = {}
+        
+        if schedule_file.exists():
+            with open(schedule_file, 'r') as f:
+                schedule = json.load(f)
+        
+        if results_file.exists():
+            with open(results_file, 'r') as f:
+                results = json.load(f)
+        
+        response = jsonify({
+            'status': 'success',
+            'total_matches': len(schedule),
+            'completed_matches': len(results),
+            'schedule': schedule[:10],  # First 10 matches
+            'results': results
+        })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+        
+    except Exception as e:
+        response = jsonify({'status': 'error', 'message': str(e)})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 500
 
 @app.route('/font-preview')
 def font_preview():
