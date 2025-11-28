@@ -332,17 +332,6 @@ def schedule(idx):
         
         # Handle Foosball (existing code)
         participants = load_participants(idx)
-                    'group_a': group_a_day,
-                    'group_b': group_b_day
-                })
-                
-                current_date += timedelta(days=1)
-            
-            total_matches = len(all_matches)
-            return render_template('tugofwar_schedule.html', event_name=event_name,
-                                 schedule=day_schedule, total_days=len(day_schedule),
-                                 total_matches=total_matches)
-        
         # Handle Foosball (existing code)
         participants = load_participants(idx)
         
