@@ -11,7 +11,7 @@ PARTICIPANTS_DIR = Path(__file__).parent / "participants_data"
 PARTICIPANTS_DIR.mkdir(exist_ok=True)
 
 # Admin users list
-ADMINS = ['sharikan', 'admin1', 'admin2']  # Add admin usernames here
+ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka']  # Add admin usernames here
 
 def admin_required(f):
     @wraps(f)
