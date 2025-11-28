@@ -211,9 +211,35 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradientFlow 3s ease infinite, shrinkText 0.8s ease-in-out 10s forwards;
+            animation: gradientFlow 3s ease infinite, shrinkText 0.8s ease-in-out 10s forwards, changeText 8s ease-in-out forwards;
             z-index: 2;
             position: relative;
+        }
+        
+        @keyframes changeText {
+            0%, 35% { 
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+            36%, 44% { 
+                opacity: 0;
+                transform: scale(0.8);
+                filter: blur(20px);
+            }
+            45% {
+                opacity: 0;
+            }
+            46% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
         }
         
         @keyframes shrinkText {
@@ -301,12 +327,6 @@
                 transform: scale(1);
                 filter: blur(0);
             }
-        }
-        
-        /* Channel change animation */
-        .tv-content::before {
-            content: "FELIZZO'23";
-            animation: channelChange 8s ease-in-out forwards;
         }
         
         /* Scanlines effect */
@@ -652,7 +672,7 @@
             </div>
             
             <div class="tv-screen">
-                <div class="tv-content"></div>
+                <div class="tv-content" data-text="FELIZZO'23">FELIZZO'23</div>
                 <div class="static-overlay"></div>
                 <div class="scanlines"></div>
             </div>
@@ -733,4 +753,9 @@
         </div>
     </section>
 </body>
+<script>
+    setTimeout(() => {
+        document.querySelector('.tv-content').textContent = "FELIZZO'25";
+    }, 3600);
+</script>
 </html>
