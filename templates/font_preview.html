@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Font Preview</title>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Bungee&family=Black+Ops+One&family=Righteous&family=Audiowide&family=Monoton&family=Permanent+Marker&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #000;
+            color: #fff;
+            padding: 40px;
+            font-family: Arial;
+        }
+        .font-sample {
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .font-sample:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.02);
+        }
+        .font-name {
+            color: #00ffff;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .sample-text {
+            font-size: 80px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .font1 { font-family: 'Russo One', sans-serif; }
+        .font2 { font-family: 'Bungee', cursive; }
+        .font3 { font-family: 'Black Ops One', cursive; }
+        .font4 { font-family: 'Righteous', cursive; }
+        .font5 { font-family: 'Audiowide', cursive; }
+        .font6 { font-family: 'Monoton', cursive; }
+        .font7 { font-family: 'Permanent Marker', cursive; }
+        .font8 { font-family: 'Bebas Neue', cursive; }
+    </style>
+</head>
+<body>
+    <h1 style="color: #00ffff; font-size: 32px;">Click on a font to select it</h1>
+    
+    <div class="font-sample" onclick="selectFont(1)">
+        <div class="font-name">1. Russo One - Bold, industrial, modern</div>
+        <div class="sample-text font1">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(2)">
+        <div class="font-name">2. Bungee - Chunky, urban, street style</div>
+        <div class="sample-text font2">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(3)">
+        <div class="font-name">3. Black Ops One - Military stencil, aggressive</div>
+        <div class="sample-text font3">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(4)">
+        <div class="font-name">4. Righteous - Rounded, futuristic, smooth</div>
+        <div class="sample-text font4">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(5)">
+        <div class="font-name">5. Audiowide - Tech, digital, sci-fi</div>
+        <div class="sample-text font5">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(6)">
+        <div class="font-name">6. Monoton - Retro neon, 80s style</div>
+        <div class="sample-text font6">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(7)">
+        <div class="font-name">7. Permanent Marker - Hand-drawn, energetic</div>
+        <div class="sample-text font7">FELIZZO'25</div>
+    </div>
+    
+    <div class="font-sample" onclick="selectFont(8)">
+        <div class="font-name">8. Bebas Neue - Tall, condensed, sporty</div>
+        <div class="sample-text font8">FELIZZO'25</div>
+    </div>
+    
+    <script>
+        function selectFont(num) {
+            alert('You selected font #' + num + '. Tell Kiro to use this font!');
+        }
+    </script>
+</body>
+</html>

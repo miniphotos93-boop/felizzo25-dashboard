@@ -649,5 +649,9 @@ def get_carrom_scores():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/font-preview')
+def font_preview():
+    return render_template('font_preview.html')
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
