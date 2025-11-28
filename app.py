@@ -674,7 +674,7 @@ def test_carrom_data():
     """Test endpoint to view all carrom match data"""
     try:
         # Load schedule
-        schedule_file = Path(__file__).parent / 'participants_data' / 'carrom_schedule.json'
+        schedule_file = Path(__file__).parent / 'carrom_schedule.json'
         results_file = Path(__file__).parent / 'carrom_results.json'
         
         schedule = []
