@@ -40,6 +40,203 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            animation: collapseHero 1s ease-in-out 8s forwards;
+        }
+        
+        @keyframes collapseHero {
+            to {
+                height: 0;
+                min-height: 0;
+                padding: 0;
+                opacity: 0;
+            }
+        }
+        
+        /* Retro TV */
+        .retro-tv {
+            width: 600px;
+            height: 400px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            position: relative;
+            border: 12px solid #333;
+            animation: shrinkTV 1s ease-in-out 8s forwards;
+            z-index: 10;
+        }
+        
+        @keyframes shrinkTV {
+            0% {
+                width: 600px;
+                height: 400px;
+                position: relative;
+            }
+            1% {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            100% {
+                position: fixed;
+                width: 120px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+                transform: translate(0, 0);
+                padding: 8px;
+                border-width: 3px;
+                border-radius: 10px;
+                z-index: 1000;
+            }
+        }
+        
+        .retro-tv a {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+        }
+        
+        .antenna-left, .antenna-right {
+            position: absolute;
+            top: -80px;
+            width: 4px;
+            height: 80px;
+            background: linear-gradient(to top, #555, #aaa);
+            border-radius: 3px;
+            animation: shrinkAntenna 1s ease-in-out 8s forwards;
+        }
+        
+        @keyframes shrinkAntenna {
+            0% {
+                top: -80px;
+                width: 4px;
+                height: 80px;
+            }
+            100% {
+                top: -20px;
+                width: 2px;
+                height: 20px;
+            }
+        }
+        
+        .antenna-left {
+            left: 120px;
+            transform: rotate(-30deg);
+            transform-origin: bottom;
+            animation: shrinkAntennaLeft 1s ease-in-out 8s forwards;
+        }
+        
+        @keyframes shrinkAntennaLeft {
+            100% {
+                left: 25px;
+            }
+        }
+        
+        .antenna-right {
+            right: 120px;
+            transform: rotate(30deg);
+            transform-origin: bottom;
+            animation: shrinkAntennaRight 1s ease-in-out 8s forwards;
+        }
+        
+        @keyframes shrinkAntennaRight {
+            100% {
+                right: 25px;
+            }
+        }
+        
+        .antenna-ball {
+            position: absolute;
+            top: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle at 30% 30%, #ccc, #666);
+            border-radius: 50%;
+            animation: shrinkBall 1s ease-in-out 8s forwards;
+        }
+        
+        @keyframes shrinkBall {
+            100% {
+                width: 4px;
+                height: 4px;
+                top: -3px;
+            }
+        }
+        
+        .tv-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tv-content {
+            font-family: 'Fredoka One', cursive;
+            font-size: 60px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 3s ease infinite, shrinkText 1s ease-in-out 8s forwards;
+            z-index: 2;
+        }
+        
+        @keyframes shrinkText {
+            100% {
+                font-size: 12px;
+            }
+        }
+        
+        .static-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            opacity: 0;
+            z-index: 5;
+            pointer-events: none;
+            animation: staticEffect 7s steps(10) forwards;
+        }
+        
+        @keyframes staticEffect {
+            0%, 40% { 
+                opacity: 0;
+            }
+            41%, 43% { 
+                opacity: 0.9;
+                background: repeating-linear-gradient(0deg, #fff 0px, #000 2px, #fff 4px);
+            }
+            44%, 46% {
+                opacity: 1;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="2" numOctaves="5" /></filter><rect width="200" height="200" filter="url(%23noise)"/></svg>');
+            }
+            47%, 100% { 
+                opacity: 0;
+            }
+        }
+        
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15) 1px, transparent 1px, transparent 3px);
+            pointer-events: none;
+            z-index: 4;
         }
         
         .hero h1 {
@@ -52,7 +249,7 @@
             background-clip: text;
             animation: gradientFlow 3s ease infinite;
             text-shadow: 0 0 80px rgba(255, 0, 255, 0.5);
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             gap: 10px;
@@ -112,6 +309,7 @@
             color: #00ffff;
             margin-top: 20px;
             animation: fadeInUp 1s ease 0.5s both;
+            display: none;
         }
         
         @keyframes fadeInUp {
@@ -130,7 +328,7 @@
             font-weight: bold;
             cursor: pointer;
             text-decoration: none;
-            display: inline-block;
+            display: none;
             animation: pulse 2s ease-in-out infinite, fadeInUp 1s ease 1s both;
             box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
         }
@@ -383,6 +581,22 @@
         <div class="floating-icon icon-23">🔥</div>
         <div class="floating-icon icon-24">⚡</div>
         
+        <div class="retro-tv">
+            <div class="antenna-left">
+                <div class="antenna-ball"></div>
+            </div>
+            <div class="antenna-right">
+                <div class="antenna-ball"></div>
+            </div>
+            <a href="/dashboard">
+                <div class="tv-screen">
+                    <div class="tv-content">FELIZZO'23</div>
+                    <div class="static-overlay"></div>
+                    <div class="scanlines"></div>
+                </div>
+            </a>
+        </div>
+        
         <h1>
             <span>FELIZZO'</span>
             <div class="year-counter">
@@ -452,4 +666,9 @@
         </div>
     </section>
 </body>
+<script>
+    setTimeout(() => {
+        document.querySelector('.tv-content').textContent = "FELIZZO'25";
+    }, 3000);
+</script>
 </html>
