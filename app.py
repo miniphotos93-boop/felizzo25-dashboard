@@ -591,7 +591,10 @@ def submit_carrom_score():
         "winner": 1
     }
     
-    Where winner is 1 for Team 1 or 2 for Team 2
+    Where winner is:
+    - 1 for Team 1 wins
+    - 2 for Team 2 wins
+    - 0 for Draw
     """
     try:
         data = request.json
@@ -602,6 +605,10 @@ def submit_carrom_score():
         
         match_id = data['match_id']
         winner = data['winner']
+        
+        # Validate winner value
+        if winner not in [0, 1, 2]:
+            return jsonify({'status': 'error', 'message': 'Winner must be 0 (draw), 1 (team 1), or 2 (team 2)'}), 400
         
         # Save to carrom results (same format as foosball)
         results_file = Path(__file__).parent / 'carrom_results.json'
@@ -616,9 +623,11 @@ def submit_carrom_score():
         with open(results_file, 'w') as f:
             json.dump(results, f, indent=2)
         
+        result_text = 'Draw' if winner == 0 else f'Team {winner} wins'
+        
         return jsonify({
             'status': 'success',
-            'message': 'Winner submitted successfully',
+            'message': f'Result submitted: {result_text}',
             'match_id': match_id,
             'winner': winner
         })
