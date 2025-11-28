@@ -212,8 +212,8 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientFlow 3s ease infinite, shrinkText 0.8s ease-in-out 10s forwards;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
             z-index: 2;
+            position: relative;
         }
         
         @keyframes shrinkText {
@@ -303,6 +303,7 @@
             }
         }
         
+        /* Channel change animation */
         .tv-content::before {
             content: "FELIZZO'23";
             animation: channelChange 8s ease-in-out forwards;
