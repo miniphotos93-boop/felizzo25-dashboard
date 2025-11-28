@@ -254,31 +254,81 @@ def schedule(idx):
                     match_num += 1
                 return matches
             
+            def distribute_matches_fairly(matches, matches_per_day):
+                """Distribute matches so no team plays back-to-back on same day"""
+                days = []
+                remaining = matches.copy()
+                
+                while remaining:
+                    day_matches = []
+                    used_teams = set()
+                    
+                    # Try to fill the day without back-to-back matches
+                    for match in remaining[:]:
+                        team1 = match['team1_serial']
+                        team2 = match['team2_serial']
+                        
+                        # Check if either team already played today
+                        if team1 not in used_teams and team2 not in used_teams:
+                            day_matches.append(match)
+                            used_teams.add(team1)
+                            used_teams.add(team2)
+                            remaining.remove(match)
+                            
+                            if len(day_matches) >= matches_per_day:
+                                break
+                    
+                    # If we couldn't fill the day, just add remaining matches
+                    if not day_matches and remaining:
+                        day_matches = remaining[:matches_per_day]
+                        remaining = remaining[matches_per_day:]
+                    
+                    if day_matches:
+                        days.append(day_matches)
+                
+                return days
+            
             group_a_matches = generate_round_robin(group_a, "Group A")
             group_b_matches = generate_round_robin(group_b, "Group B")
             
-            # Interleave matches
-            all_matches = []
-            max_matches = max(len(group_a_matches), len(group_b_matches))
-            for i in range(max_matches):
-                if i < len(group_a_matches):
-                    all_matches.append(group_a_matches[i])
-                if i < len(group_b_matches):
-                    all_matches.append(group_b_matches[i])
+            # Distribute matches fairly
+            matches_per_day = 3  # 3 per group
+            group_a_days = distribute_matches_fairly(group_a_matches, matches_per_day)
+            group_b_days = distribute_matches_fairly(group_b_matches, matches_per_day)
             
-            # Distribute across weekdays
+            # Create day schedule
             start_date = datetime(2025, 11, 28)
-            matches_per_day = 6
-            day_schedule = []
             current_date = start_date
+            day_schedule = []
             
-            for day_start in range(0, len(all_matches), matches_per_day):
+            max_days = max(len(group_a_days), len(group_b_days))
+            
+            for day_idx in range(max_days):
+                # Skip weekends
                 while current_date.weekday() >= 5:
                     current_date += timedelta(days=1)
                 
-                day_matches = all_matches[day_start:day_start + matches_per_day]
+                group_a_day = group_a_days[day_idx] if day_idx < len(group_a_days) else []
+                group_b_day = group_b_days[day_idx] if day_idx < len(group_b_days) else []
                 
-                for match in day_matches:
+                # Add date to each match
+                for match in group_a_day + group_b_day:
+                    match['date'] = current_date.strftime('%Y-%m-%d')
+                    match['day_name'] = current_date.strftime('%A, %B %d')
+                
+                day_schedule.append({
+                    'date': current_date.strftime('%Y-%m-%d'),
+                    'day_name': current_date.strftime('%A, %B %d'),
+                    'group_a': group_a_day,
+                    'group_b': group_b_day
+                })
+                
+                current_date += timedelta(days=1)
+            
+            total_matches = len(group_a_matches) + len(group_b_matches)
+            return render_template('tugofwar_schedule.html', event_name=event_name,
+                                 schedule=day_schedule, total_days=len(day_schedule),
+                                 total_matches=total_matches)
                     match['date'] = current_date.strftime('%Y-%m-%d')
                     match['day_name'] = current_date.strftime('%A, %B %d')
                 
