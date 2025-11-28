@@ -213,11 +213,7 @@
         }
         
         @keyframes staticEffect {
-            0%, 5% { 
-                opacity: 0.8;
-                background: repeating-linear-gradient(0deg, #fff 0px, #000 2px, #fff 4px);
-            }
-            6%, 35% { 
+            0%, 35% { 
                 opacity: 0;
             }
             36%, 38% { 
@@ -231,6 +227,62 @@
             42%, 100% { 
                 opacity: 0;
             }
+        }
+        
+        /* Remote Control */
+        .remote {
+            position: fixed;
+            bottom: -200px;
+            right: 100px;
+            width: 80px;
+            height: 200px;
+            background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            animation: remoteSlideIn 1s ease-out 0.5s forwards, remoteSlideOut 0.8s ease-in 2.5s forwards;
+            z-index: 999;
+        }
+        
+        @keyframes remoteSlideIn {
+            to {
+                bottom: 50px;
+            }
+        }
+        
+        @keyframes remoteSlideOut {
+            to {
+                bottom: -200px;
+            }
+        }
+        
+        .remote-button {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle at 30% 30%, #ff0080, #ff00ff);
+            border-radius: 50%;
+            margin: 10px auto;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            animation: buttonPress 0.3s ease-in-out 1.8s;
+        }
+        
+        @keyframes buttonPress {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            }
+            50% {
+                transform: scale(0.9);
+                box-shadow: 0 0 40px rgba(255, 0, 255, 1);
+            }
+        }
+        
+        .remote-label {
+            text-align: center;
+            font-size: 10px;
+            color: #00ffff;
+            margin-top: 5px;
+            font-weight: bold;
         }
         
         .scanlines {
@@ -568,6 +620,11 @@
         <div class="hero-subtitle">The Ultimate Sports & Cultural Fest</div>
         <a href="/dashboard" class="cta-button">Enter Dashboard →</a>
     </section>
+    
+    <div class="remote">
+        <div class="remote-button"></div>
+        <div class="remote-label">CH</div>
+    </div>
     
     <div class="retro-tv">
         <div class="antenna-left">
