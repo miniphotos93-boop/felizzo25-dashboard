@@ -208,11 +208,31 @@
     {% endfor %}
     
     <script>
+        // Load winners from localStorage on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedWinners = JSON.parse(localStorage.getItem('sevenstones_winners') || '{}');
+            
+            document.querySelectorAll('.winner-btn').forEach(btn => {
+                const matchId = btn.getAttribute('onclick').match(/'([^']+)'/)[1];
+                const winner = btn.getAttribute('onclick').match(/,\s*(\d+)/)[1];
+                
+                if (savedWinners[matchId] == winner) {
+                    btn.classList.add('selected');
+                }
+            });
+        });
+        
         function selectWinner(matchId, winner, btn) {
             const buttons = btn.parentElement.querySelectorAll('.winner-btn');
             buttons.forEach(b => b.classList.remove('selected'));
             btn.classList.add('selected');
             
+            // Save to localStorage
+            const savedWinners = JSON.parse(localStorage.getItem('sevenstones_winners') || '{}');
+            savedWinners[matchId] = winner;
+            localStorage.setItem('sevenstones_winners', JSON.stringify(savedWinners));
+            
+            // Also save to server
             fetch('/update-match-winner', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
