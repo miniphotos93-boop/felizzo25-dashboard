@@ -580,7 +580,7 @@ def update_match_winner():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
-@app.route('/api/carrom/submit-score', methods=['POST'])
+@app.route('/api/carrom/submit-score', methods=['POST', 'OPTIONS'])
 def submit_carrom_score():
     """
     API endpoint to submit Carrom match winner
@@ -596,19 +596,31 @@ def submit_carrom_score():
     - 2 for Team 2 wins
     - 0 for Draw
     """
+    # Handle preflight OPTIONS request
+    if request.method == 'OPTIONS':
+        response = jsonify({'status': 'ok'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response
+    
     try:
         data = request.json
         
         # Validate required fields
         if 'match_id' not in data or 'winner' not in data:
-            return jsonify({'status': 'error', 'message': 'Missing match_id or winner'}), 400
+            response = jsonify({'status': 'error', 'message': 'Missing match_id or winner'})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 400
         
         match_id = data['match_id']
         winner = data['winner']
         
         # Validate winner value
         if winner not in [0, 1, 2]:
-            return jsonify({'status': 'error', 'message': 'Winner must be 0 (draw), 1 (team 1), or 2 (team 2)'}), 400
+            response = jsonify({'status': 'error', 'message': 'Winner must be 0 (draw), 1 (team 1), or 2 (team 2)'})
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response, 400
         
         # Save to carrom results (same format as foosball)
         results_file = Path(__file__).parent / 'carrom_results.json'
@@ -625,15 +637,19 @@ def submit_carrom_score():
         
         result_text = 'Draw' if winner == 0 else f'Team {winner} wins'
         
-        return jsonify({
+        response = jsonify({
             'status': 'success',
             'message': f'Result submitted: {result_text}',
             'match_id': match_id,
             'winner': winner
         })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
         
     except Exception as e:
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+        response = jsonify({'status': 'error', 'message': str(e)})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 500
 
 @app.route('/api/carrom/scores', methods=['GET'])
 def get_carrom_scores():
