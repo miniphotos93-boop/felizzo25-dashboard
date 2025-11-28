@@ -583,66 +583,44 @@ def update_match_winner():
 @app.route('/api/carrom/submit-score', methods=['POST'])
 def submit_carrom_score():
     """
-    API endpoint to submit Carrom match scores
+    API endpoint to submit Carrom match winner
     
     Expected JSON format:
     {
-        "match_id": "string (e.g., 'CARROM_M1')",
-        "date": "YYYY-MM-DD",
-        "pair1_serial": 1,
-        "pair2_serial": 2,
-        "pair1_score": 25,
-        "pair2_score": 18,
-        "winner": 1 or 2,
-        "notes": "optional notes"
+        "match_id": "SDL_M1",
+        "winner": 1
     }
+    
+    Where winner is 1 for Team 1 or 2 for Team 2
     """
     try:
         data = request.json
         
         # Validate required fields
-        required_fields = ['match_id', 'date', 'pair1_serial', 'pair2_serial', 
-                          'pair1_score', 'pair2_score', 'winner']
-        for field in required_fields:
-            if field not in data:
-                return jsonify({'status': 'error', 'message': f'Missing required field: {field}'}), 400
+        if 'match_id' not in data or 'winner' not in data:
+            return jsonify({'status': 'error', 'message': 'Missing match_id or winner'}), 400
         
-        # Load existing scores
-        scores_file = Path(__file__).parent / 'carrom_scores.json'
+        match_id = data['match_id']
+        winner = data['winner']
+        
+        # Save to carrom results (same format as foosball)
+        results_file = Path(__file__).parent / 'carrom_results.json'
         try:
-            with open(scores_file, 'r') as f:
-                scores = json.load(f)
+            with open(results_file, 'r') as f:
+                results = json.load(f)
         except:
-            scores = []
+            results = {}
         
-        # Add new score
-        score_entry = {
-            'match_id': data['match_id'],
-            'date': data['date'],
-            'pair1_serial': data['pair1_serial'],
-            'pair2_serial': data['pair2_serial'],
-            'pair1_score': data['pair1_score'],
-            'pair2_score': data['pair2_score'],
-            'winner': data['winner'],
-            'notes': data.get('notes', ''),
-            'timestamp': datetime.now().isoformat()
-        }
+        results[match_id] = winner
         
-        # Update if exists, otherwise append
-        existing_idx = next((i for i, s in enumerate(scores) if s['match_id'] == data['match_id']), None)
-        if existing_idx is not None:
-            scores[existing_idx] = score_entry
-        else:
-            scores.append(score_entry)
-        
-        # Save scores
-        with open(scores_file, 'w') as f:
-            json.dump(scores, f, indent=2)
+        with open(results_file, 'w') as f:
+            json.dump(results, f, indent=2)
         
         return jsonify({
             'status': 'success',
-            'message': 'Score submitted successfully',
-            'match_id': data['match_id']
+            'message': 'Winner submitted successfully',
+            'match_id': match_id,
+            'winner': winner
         })
         
     except Exception as e:
@@ -650,15 +628,15 @@ def submit_carrom_score():
 
 @app.route('/api/carrom/scores', methods=['GET'])
 def get_carrom_scores():
-    """Get all Carrom scores"""
+    """Get all Carrom match winners"""
     try:
-        scores_file = Path(__file__).parent / 'carrom_scores.json'
-        if scores_file.exists():
-            with open(scores_file, 'r') as f:
-                scores = json.load(f)
-            return jsonify({'status': 'success', 'scores': scores})
+        results_file = Path(__file__).parent / 'carrom_results.json'
+        if results_file.exists():
+            with open(results_file, 'r') as f:
+                results = json.load(f)
+            return jsonify({'status': 'success', 'results': results})
         else:
-            return jsonify({'status': 'success', 'scores': []})
+            return jsonify({'status': 'success', 'results': {}})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
