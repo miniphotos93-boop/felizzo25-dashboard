@@ -44,47 +44,50 @@
         
         /* Retro TV */
         .retro-tv {
-            width: 800px;
-            height: 500px;
+            width: 600px;
+            height: 400px;
             background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            border-radius: 40px;
-            padding: 40px;
+            border-radius: 30px;
+            padding: 30px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
                         inset 0 0 20px rgba(0, 0, 0, 0.5);
             position: relative;
-            border: 15px solid #333;
+            border: 12px solid #333;
         }
         
         /* TV Antennas */
         .antenna-left, .antenna-right {
             position: absolute;
-            top: -80px;
-            width: 4px;
-            height: 100px;
-            background: linear-gradient(to top, #666, #999);
-            border-radius: 2px;
+            top: -120px;
+            width: 5px;
+            height: 120px;
+            background: linear-gradient(to top, #555, #aaa);
+            border-radius: 3px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
         }
         
         .antenna-left {
-            left: 200px;
-            transform: rotate(-30deg);
-            transform-origin: bottom;
+            left: 150px;
+            transform: rotate(-35deg);
+            transform-origin: bottom center;
         }
         
         .antenna-right {
-            right: 200px;
-            transform: rotate(30deg);
-            transform-origin: bottom;
+            right: 150px;
+            transform: rotate(35deg);
+            transform-origin: bottom center;
         }
         
         .antenna-ball {
             position: absolute;
-            top: -10px;
-            left: -4px;
-            width: 12px;
-            height: 12px;
-            background: #999;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            background: radial-gradient(circle at 30% 30%, #ccc, #666);
             border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
         
         /* TV Screen */
@@ -92,7 +95,7 @@
             width: 100%;
             height: 100%;
             background: #000;
-            border-radius: 20px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -119,7 +122,7 @@
         /* TV Content */
         .tv-content {
             font-family: 'Permanent Marker', cursive;
-            font-size: 100px;
+            font-size: 70px;
             background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
             background-size: 300% 100%;
             -webkit-background-clip: text;
@@ -137,41 +140,70 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.1),
-                rgba(0, 0, 0, 0.1) 1px,
-                transparent 1px,
-                transparent 2px
-            );
+            background: black;
             opacity: 0;
-            z-index: 3;
+            z-index: 5;
             pointer-events: none;
-            animation: staticEffect 6s steps(1) forwards;
+            animation: staticEffect 8s steps(10) forwards;
         }
         
         @keyframes staticEffect {
-            0%, 30% { opacity: 0; }
-            31%, 35% { 
-                opacity: 1;
-                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.5"/></svg>');
+            0%, 35% { 
+                opacity: 0;
+                background: black;
             }
-            36%, 100% { opacity: 0; }
+            36%, 38% { 
+                opacity: 0.9;
+                background: repeating-linear-gradient(
+                    0deg,
+                    #fff 0px,
+                    #000 2px,
+                    #fff 4px
+                );
+                animation: glitch 0.1s infinite;
+            }
+            39%, 41% {
+                opacity: 1;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="2" numOctaves="5" /></filter><rect width="200" height="200" filter="url(%23noise)"/></svg>');
+                background-size: 100px 100px;
+            }
+            42%, 44% {
+                opacity: 0.8;
+                background: repeating-linear-gradient(
+                    90deg,
+                    #fff 0px,
+                    #000 3px,
+                    #fff 6px
+                );
+            }
+            45%, 100% { 
+                opacity: 0;
+                background: black;
+            }
+        }
+        
+        @keyframes glitch {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-3px); }
+            100% { transform: translateX(0); }
         }
         
         /* Channel change animation */
         @keyframes channelChange {
-            0%, 30% { 
+            0%, 35% { 
                 content: "FELIZZO'23";
                 opacity: 1;
                 transform: scale(1);
+                filter: blur(0);
             }
-            31%, 35% { 
+            36%, 44% { 
                 opacity: 0;
-                transform: scale(1.2) translateY(-20px);
-                filter: blur(10px);
+                transform: scale(0.8);
+                filter: blur(20px);
             }
-            36%, 100% { 
+            45%, 100% { 
                 content: "FELIZZO'25";
                 opacity: 1;
                 transform: scale(1);
@@ -181,7 +213,7 @@
         
         .tv-content::before {
             content: "FELIZZO'23";
-            animation: channelChange 6s ease-in-out forwards;
+            animation: channelChange 8s ease-in-out forwards;
         }
         
         /* Scanlines effect */
