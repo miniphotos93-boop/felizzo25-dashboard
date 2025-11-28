@@ -580,5 +580,87 @@ def update_match_winner():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/api/carrom/submit-score', methods=['POST'])
+def submit_carrom_score():
+    """
+    API endpoint to submit Carrom match scores
+    
+    Expected JSON format:
+    {
+        "match_id": "string (e.g., 'CARROM_M1')",
+        "date": "YYYY-MM-DD",
+        "pair1_serial": 1,
+        "pair2_serial": 2,
+        "pair1_score": 25,
+        "pair2_score": 18,
+        "winner": 1 or 2,
+        "notes": "optional notes"
+    }
+    """
+    try:
+        data = request.json
+        
+        # Validate required fields
+        required_fields = ['match_id', 'date', 'pair1_serial', 'pair2_serial', 
+                          'pair1_score', 'pair2_score', 'winner']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'status': 'error', 'message': f'Missing required field: {field}'}), 400
+        
+        # Load existing scores
+        scores_file = Path(__file__).parent / 'carrom_scores.json'
+        try:
+            with open(scores_file, 'r') as f:
+                scores = json.load(f)
+        except:
+            scores = []
+        
+        # Add new score
+        score_entry = {
+            'match_id': data['match_id'],
+            'date': data['date'],
+            'pair1_serial': data['pair1_serial'],
+            'pair2_serial': data['pair2_serial'],
+            'pair1_score': data['pair1_score'],
+            'pair2_score': data['pair2_score'],
+            'winner': data['winner'],
+            'notes': data.get('notes', ''),
+            'timestamp': datetime.now().isoformat()
+        }
+        
+        # Update if exists, otherwise append
+        existing_idx = next((i for i, s in enumerate(scores) if s['match_id'] == data['match_id']), None)
+        if existing_idx is not None:
+            scores[existing_idx] = score_entry
+        else:
+            scores.append(score_entry)
+        
+        # Save scores
+        with open(scores_file, 'w') as f:
+            json.dump(scores, f, indent=2)
+        
+        return jsonify({
+            'status': 'success',
+            'message': 'Score submitted successfully',
+            'match_id': data['match_id']
+        })
+        
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/carrom/scores', methods=['GET'])
+def get_carrom_scores():
+    """Get all Carrom scores"""
+    try:
+        scores_file = Path(__file__).parent / 'carrom_scores.json'
+        if scores_file.exists():
+            with open(scores_file, 'r') as f:
+                scores = json.load(f)
+            return jsonify({'status': 'success', 'scores': scores})
+        else:
+            return jsonify({'status': 'success', 'scores': []})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
