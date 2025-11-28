@@ -1,12 +1,25 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, redirect, jsonify
+from flask import Flask, render_template, request, redirect, jsonify, session
+from functools import wraps
 import json
 from pathlib import Path
 
 app = Flask(__name__)
+app.secret_key = 'your-secret-key-change-this'  # Change this!
 EVENTS_FILE = Path(__file__).parent / "event_tracker.json"
 PARTICIPANTS_DIR = Path(__file__).parent / "participants_data"
 PARTICIPANTS_DIR.mkdir(exist_ok=True)
+
+# Admin users list
+ADMINS = ['sharikan', 'admin1', 'admin2']  # Add admin usernames here
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if 'username' not in session or session['username'] not in ADMINS:
+            return redirect('/login')
+        return f(*args, **kwargs)
+    return decorated
 
 # Event type mapping
 EVENT_TYPES = {
@@ -48,6 +61,21 @@ def save_participants(idx, participants):
     file = get_participants_file(idx)
     with open(file, 'w') as f:
         json.dump(participants, f, indent=2)
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        if username in ADMINS:
+            session['username'] = username
+            return redirect('/dashboard')
+        return render_template('login.html', error='Access denied. Admin only.')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect('/')
 
 @app.route('/')
 def home():
@@ -110,6 +138,7 @@ def home():
                          upcoming_events=upcoming_events[:5])
 
 @app.route('/dashboard')
+@admin_required
 def dashboard():
     events = load_events()
     completed = sum(1 for e in events if e['Status'] == 'Completed')
@@ -119,6 +148,7 @@ def dashboard():
                          in_progress=in_progress, planned=planned, total=len(events))
 
 @app.route('/update/<int:idx>', methods=['GET', 'POST'])
+@admin_required
 def update(idx):
     events = load_events()
     if request.method == 'POST':
@@ -219,6 +249,7 @@ def scorecard(idx):
                          aggregates=aggregates, top_2=top_2)
 
 @app.route('/manage-participants/<int:idx>', methods=['GET', 'POST'])
+@admin_required
 def manage_participants(idx):
     events = load_events()
     event = events[idx]
