@@ -1,0 +1,818 @@
+[
+  {
+    "date": "2025-11-28",
+    "day_name": "Friday, November 28",
+    "group_a": [
+      {
+        "match_id": "Group A_M1",
+        "match_number": 1,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 2,
+        "team2_name": "3P Apps",
+        "team2_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "date": "2025-11-28",
+        "day_name": "Friday, November 28"
+      },
+      {
+        "match_id": "Group A_M14",
+        "match_number": 14,
+        "group": "Group A",
+        "team1_serial": 3,
+        "team1_name": "Discovery",
+        "team1_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "team2_serial": 4,
+        "team2_name": "MOD",
+        "team2_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "date": "2025-11-28",
+        "day_name": "Friday, November 28"
+      },
+      {
+        "match_id": "Group A_M23",
+        "match_number": 23,
+        "group": "Group A",
+        "team1_serial": 5,
+        "team1_name": "Vega",
+        "team1_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "team2_serial": 6,
+        "team2_name": "Core Experience",
+        "team2_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "date": "2025-11-28",
+        "day_name": "Friday, November 28"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M1",
+        "match_number": 1,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 10,
+        "team2_name": "3P Apps",
+        "team2_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "date": "2025-11-28",
+        "day_name": "Friday, November 28"
+      },
+      {
+        "match_id": "Group B_M14",
+        "match_number": 14,
+        "group": "Group B",
+        "team1_serial": 11,
+        "team1_name": "Discovery",
+        "team1_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "team2_serial": 12,
+        "team2_name": "MOD",
+        "team2_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "date": "2025-11-28",
+        "day_name": "Friday, November 28"
+      },
+      {
+        "match_id": "Group B_M23",
+        "match_number": 23,
+        "group": "Group B",
+        "team1_serial": 13,
+        "team1_name": "Vega",
+        "team1_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "team2_serial": 14,
+        "team2_name": "SE",
+        "team2_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "date": "2025-11-28",
+        "day_name": "Friday, November 28"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-01",
+    "day_name": "Monday, December 01",
+    "group_a": [
+      {
+        "match_id": "Group A_M2",
+        "match_number": 2,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 3,
+        "team2_name": "Discovery",
+        "team2_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "date": "2025-12-01",
+        "day_name": "Monday, December 01"
+      },
+      {
+        "match_id": "Group A_M9",
+        "match_number": 9,
+        "group": "Group A",
+        "team1_serial": 2,
+        "team1_name": "3P Apps",
+        "team1_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "team2_serial": 4,
+        "team2_name": "MOD",
+        "team2_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "date": "2025-12-01",
+        "day_name": "Monday, December 01"
+      },
+      {
+        "match_id": "Group A_M24",
+        "match_number": 24,
+        "group": "Group A",
+        "team1_serial": 5,
+        "team1_name": "Vega",
+        "team1_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "team2_serial": 7,
+        "team2_name": "System Experience",
+        "team2_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "date": "2025-12-01",
+        "day_name": "Monday, December 01"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M2",
+        "match_number": 2,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 11,
+        "team2_name": "Discovery",
+        "team2_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "date": "2025-12-01",
+        "day_name": "Monday, December 01"
+      },
+      {
+        "match_id": "Group B_M9",
+        "match_number": 9,
+        "group": "Group B",
+        "team1_serial": 10,
+        "team1_name": "3P Apps",
+        "team1_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "team2_serial": 12,
+        "team2_name": "MOD",
+        "team2_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "date": "2025-12-01",
+        "day_name": "Monday, December 01"
+      },
+      {
+        "match_id": "Group B_M24",
+        "match_number": 24,
+        "group": "Group B",
+        "team1_serial": 13,
+        "team1_name": "Vega",
+        "team1_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "team2_serial": 15,
+        "team2_name": "3P Launches",
+        "team2_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "date": "2025-12-01",
+        "day_name": "Monday, December 01"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-02",
+    "day_name": "Tuesday, December 02",
+    "group_a": [
+      {
+        "match_id": "Group A_M3",
+        "match_number": 3,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 4,
+        "team2_name": "MOD",
+        "team2_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "date": "2025-12-02",
+        "day_name": "Tuesday, December 02"
+      },
+      {
+        "match_id": "Group A_M8",
+        "match_number": 8,
+        "group": "Group A",
+        "team1_serial": 2,
+        "team1_name": "3P Apps",
+        "team1_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "team2_serial": 3,
+        "team2_name": "Discovery",
+        "team2_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "date": "2025-12-02",
+        "day_name": "Tuesday, December 02"
+      },
+      {
+        "match_id": "Group A_M25",
+        "match_number": 25,
+        "group": "Group A",
+        "team1_serial": 5,
+        "team1_name": "Vega",
+        "team1_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-02",
+        "day_name": "Tuesday, December 02"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M3",
+        "match_number": 3,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 12,
+        "team2_name": "MOD",
+        "team2_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "date": "2025-12-02",
+        "day_name": "Tuesday, December 02"
+      },
+      {
+        "match_id": "Group B_M8",
+        "match_number": 8,
+        "group": "Group B",
+        "team1_serial": 10,
+        "team1_name": "3P Apps",
+        "team1_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "team2_serial": 11,
+        "team2_name": "Discovery",
+        "team2_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "date": "2025-12-02",
+        "day_name": "Tuesday, December 02"
+      },
+      {
+        "match_id": "Group B_M25",
+        "match_number": 25,
+        "group": "Group B",
+        "team1_serial": 13,
+        "team1_name": "Vega",
+        "team1_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-02",
+        "day_name": "Tuesday, December 02"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-03",
+    "day_name": "Wednesday, December 03",
+    "group_a": [
+      {
+        "match_id": "Group A_M4",
+        "match_number": 4,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 5,
+        "team2_name": "Vega",
+        "team2_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "date": "2025-12-03",
+        "day_name": "Wednesday, December 03"
+      },
+      {
+        "match_id": "Group A_M11",
+        "match_number": 11,
+        "group": "Group A",
+        "team1_serial": 2,
+        "team1_name": "3P Apps",
+        "team1_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "team2_serial": 6,
+        "team2_name": "Core Experience",
+        "team2_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "date": "2025-12-03",
+        "day_name": "Wednesday, December 03"
+      },
+      {
+        "match_id": "Group A_M17",
+        "match_number": 17,
+        "group": "Group A",
+        "team1_serial": 3,
+        "team1_name": "Discovery",
+        "team1_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "team2_serial": 7,
+        "team2_name": "System Experience",
+        "team2_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "date": "2025-12-03",
+        "day_name": "Wednesday, December 03"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M4",
+        "match_number": 4,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 13,
+        "team2_name": "Vega",
+        "team2_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "date": "2025-12-03",
+        "day_name": "Wednesday, December 03"
+      },
+      {
+        "match_id": "Group B_M11",
+        "match_number": 11,
+        "group": "Group B",
+        "team1_serial": 10,
+        "team1_name": "3P Apps",
+        "team1_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "team2_serial": 14,
+        "team2_name": "SE",
+        "team2_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "date": "2025-12-03",
+        "day_name": "Wednesday, December 03"
+      },
+      {
+        "match_id": "Group B_M17",
+        "match_number": 17,
+        "group": "Group B",
+        "team1_serial": 11,
+        "team1_name": "Discovery",
+        "team1_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "team2_serial": 15,
+        "team2_name": "3P Launches",
+        "team2_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "date": "2025-12-03",
+        "day_name": "Wednesday, December 03"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-04",
+    "day_name": "Thursday, December 04",
+    "group_a": [
+      {
+        "match_id": "Group A_M5",
+        "match_number": 5,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 6,
+        "team2_name": "Core Experience",
+        "team2_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "date": "2025-12-04",
+        "day_name": "Thursday, December 04"
+      },
+      {
+        "match_id": "Group A_M10",
+        "match_number": 10,
+        "group": "Group A",
+        "team1_serial": 2,
+        "team1_name": "3P Apps",
+        "team1_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "team2_serial": 5,
+        "team2_name": "Vega",
+        "team2_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "date": "2025-12-04",
+        "day_name": "Thursday, December 04"
+      },
+      {
+        "match_id": "Group A_M18",
+        "match_number": 18,
+        "group": "Group A",
+        "team1_serial": 3,
+        "team1_name": "Discovery",
+        "team1_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-04",
+        "day_name": "Thursday, December 04"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M5",
+        "match_number": 5,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 14,
+        "team2_name": "SE",
+        "team2_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "date": "2025-12-04",
+        "day_name": "Thursday, December 04"
+      },
+      {
+        "match_id": "Group B_M10",
+        "match_number": 10,
+        "group": "Group B",
+        "team1_serial": 10,
+        "team1_name": "3P Apps",
+        "team1_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "team2_serial": 13,
+        "team2_name": "Vega",
+        "team2_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "date": "2025-12-04",
+        "day_name": "Thursday, December 04"
+      },
+      {
+        "match_id": "Group B_M18",
+        "match_number": 18,
+        "group": "Group B",
+        "team1_serial": 11,
+        "team1_name": "Discovery",
+        "team1_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-04",
+        "day_name": "Thursday, December 04"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-05",
+    "day_name": "Friday, December 05",
+    "group_a": [
+      {
+        "match_id": "Group A_M6",
+        "match_number": 6,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 7,
+        "team2_name": "System Experience",
+        "team2_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "date": "2025-12-05",
+        "day_name": "Friday, December 05"
+      },
+      {
+        "match_id": "Group A_M13",
+        "match_number": 13,
+        "group": "Group A",
+        "team1_serial": 2,
+        "team1_name": "3P Apps",
+        "team1_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-05",
+        "day_name": "Friday, December 05"
+      },
+      {
+        "match_id": "Group A_M15",
+        "match_number": 15,
+        "group": "Group A",
+        "team1_serial": 3,
+        "team1_name": "Discovery",
+        "team1_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "team2_serial": 5,
+        "team2_name": "Vega",
+        "team2_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "date": "2025-12-05",
+        "day_name": "Friday, December 05"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M6",
+        "match_number": 6,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 15,
+        "team2_name": "3P Launches",
+        "team2_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "date": "2025-12-05",
+        "day_name": "Friday, December 05"
+      },
+      {
+        "match_id": "Group B_M13",
+        "match_number": 13,
+        "group": "Group B",
+        "team1_serial": 10,
+        "team1_name": "3P Apps",
+        "team1_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-05",
+        "day_name": "Friday, December 05"
+      },
+      {
+        "match_id": "Group B_M15",
+        "match_number": 15,
+        "group": "Group B",
+        "team1_serial": 11,
+        "team1_name": "Discovery",
+        "team1_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "team2_serial": 13,
+        "team2_name": "Vega",
+        "team2_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "date": "2025-12-05",
+        "day_name": "Friday, December 05"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-08",
+    "day_name": "Monday, December 08",
+    "group_a": [
+      {
+        "match_id": "Group A_M7",
+        "match_number": 7,
+        "group": "Group A",
+        "team1_serial": 1,
+        "team1_name": "SDL",
+        "team1_members": "ijaz, Sriram, Hariprasad, HemA, Chandru, Keerthana, Arulmozhi",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-08",
+        "day_name": "Monday, December 08"
+      },
+      {
+        "match_id": "Group A_M12",
+        "match_number": 12,
+        "group": "Group A",
+        "team1_serial": 2,
+        "team1_name": "3P Apps",
+        "team1_members": "Hamrith, Stalin, Hamrith, Karthickraja, Deepika, Surya, Preethi",
+        "team2_serial": 7,
+        "team2_name": "System Experience",
+        "team2_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "date": "2025-12-08",
+        "day_name": "Monday, December 08"
+      },
+      {
+        "match_id": "Group A_M16",
+        "match_number": 16,
+        "group": "Group A",
+        "team1_serial": 3,
+        "team1_name": "Discovery",
+        "team1_members": "Balaji giri, Thirumal, Abirajan, Saravana, Sariga, Yasmi, Roselin",
+        "team2_serial": 6,
+        "team2_name": "Core Experience",
+        "team2_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "date": "2025-12-08",
+        "day_name": "Monday, December 08"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M7",
+        "match_number": 7,
+        "group": "Group B",
+        "team1_serial": 9,
+        "team1_name": "SDL",
+        "team1_members": "Balu, Vanisha, Vinod, Deepika, Kannan, Gokulnath, Dharshini, Pradeep",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-08",
+        "day_name": "Monday, December 08"
+      },
+      {
+        "match_id": "Group B_M12",
+        "match_number": 12,
+        "group": "Group B",
+        "team1_serial": 10,
+        "team1_name": "3P Apps",
+        "team1_members": "Elavarasan, Akshay, Muthukumaran, Tejas, Atshara, Aarthi, Haripriya",
+        "team2_serial": 15,
+        "team2_name": "3P Launches",
+        "team2_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "date": "2025-12-08",
+        "day_name": "Monday, December 08"
+      },
+      {
+        "match_id": "Group B_M16",
+        "match_number": 16,
+        "group": "Group B",
+        "team1_serial": 11,
+        "team1_name": "Discovery",
+        "team1_members": "Abitha, Adithya, Subash, Vignesh, Kevin, Suhasini, Vijaylakshmi",
+        "team2_serial": 14,
+        "team2_name": "SE",
+        "team2_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "date": "2025-12-08",
+        "day_name": "Monday, December 08"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-09",
+    "day_name": "Tuesday, December 09",
+    "group_a": [
+      {
+        "match_id": "Group A_M19",
+        "match_number": 19,
+        "group": "Group A",
+        "team1_serial": 4,
+        "team1_name": "MOD",
+        "team1_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "team2_serial": 5,
+        "team2_name": "Vega",
+        "team2_members": "Akash, Mohan, Hariharan, Murali, Vedha, Rajeswari",
+        "date": "2025-12-09",
+        "day_name": "Tuesday, December 09"
+      },
+      {
+        "match_id": "Group A_M26",
+        "match_number": 26,
+        "group": "Group A",
+        "team1_serial": 6,
+        "team1_name": "Core Experience",
+        "team1_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "team2_serial": 7,
+        "team2_name": "System Experience",
+        "team2_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "date": "2025-12-09",
+        "day_name": "Tuesday, December 09"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M19",
+        "match_number": 19,
+        "group": "Group B",
+        "team1_serial": 12,
+        "team1_name": "MOD",
+        "team1_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "team2_serial": 13,
+        "team2_name": "Vega",
+        "team2_members": "Raghul, Harish, Laxmipathy, Arun, Ishrat, Kanimozhi, Vinothini, Abinash",
+        "date": "2025-12-09",
+        "day_name": "Tuesday, December 09"
+      },
+      {
+        "match_id": "Group B_M26",
+        "match_number": 26,
+        "group": "Group B",
+        "team1_serial": 14,
+        "team1_name": "SE",
+        "team1_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "team2_serial": 15,
+        "team2_name": "3P Launches",
+        "team2_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "date": "2025-12-09",
+        "day_name": "Tuesday, December 09"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-10",
+    "day_name": "Wednesday, December 10",
+    "group_a": [
+      {
+        "match_id": "Group A_M20",
+        "match_number": 20,
+        "group": "Group A",
+        "team1_serial": 4,
+        "team1_name": "MOD",
+        "team1_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "team2_serial": 6,
+        "team2_name": "Core Experience",
+        "team2_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "date": "2025-12-10",
+        "day_name": "Wednesday, December 10"
+      },
+      {
+        "match_id": "Group A_M28",
+        "match_number": 28,
+        "group": "Group A",
+        "team1_serial": 7,
+        "team1_name": "System Experience",
+        "team1_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-10",
+        "day_name": "Wednesday, December 10"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M20",
+        "match_number": 20,
+        "group": "Group B",
+        "team1_serial": 12,
+        "team1_name": "MOD",
+        "team1_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "team2_serial": 14,
+        "team2_name": "SE",
+        "team2_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "date": "2025-12-10",
+        "day_name": "Wednesday, December 10"
+      },
+      {
+        "match_id": "Group B_M28",
+        "match_number": 28,
+        "group": "Group B",
+        "team1_serial": 15,
+        "team1_name": "3P Launches",
+        "team1_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-10",
+        "day_name": "Wednesday, December 10"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-11",
+    "day_name": "Thursday, December 11",
+    "group_a": [
+      {
+        "match_id": "Group A_M21",
+        "match_number": 21,
+        "group": "Group A",
+        "team1_serial": 4,
+        "team1_name": "MOD",
+        "team1_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "team2_serial": 7,
+        "team2_name": "System Experience",
+        "team2_members": "Murali, Jana, Akash, Aravind, Nithya, Harini, Swetha",
+        "date": "2025-12-11",
+        "day_name": "Thursday, December 11"
+      },
+      {
+        "match_id": "Group A_M27",
+        "match_number": 27,
+        "group": "Group A",
+        "team1_serial": 6,
+        "team1_name": "Core Experience",
+        "team1_members": "Mohana, Manopriya, Dilip, Bala, Vignesh, Chandran",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-11",
+        "day_name": "Thursday, December 11"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M21",
+        "match_number": 21,
+        "group": "Group B",
+        "team1_serial": 12,
+        "team1_name": "MOD",
+        "team1_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "team2_serial": 15,
+        "team2_name": "3P Launches",
+        "team2_members": "Santhosh, Kaushik, Balaji, Sandhya, Pavithra, Pravin",
+        "date": "2025-12-11",
+        "day_name": "Thursday, December 11"
+      },
+      {
+        "match_id": "Group B_M27",
+        "match_number": 27,
+        "group": "Group B",
+        "team1_serial": 14,
+        "team1_name": "SE",
+        "team1_members": "Anish, Sudharshan, Sathish, Soumya, Hemanth, dhanush, Rohit",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-11",
+        "day_name": "Thursday, December 11"
+      }
+    ]
+  },
+  {
+    "date": "2025-12-12",
+    "day_name": "Friday, December 12",
+    "group_a": [
+      {
+        "match_id": "Group A_M22",
+        "match_number": 22,
+        "group": "Group A",
+        "team1_serial": 4,
+        "team1_name": "MOD",
+        "team1_members": "Priyanka, Ashik, Shiva, Kalki, Arvind, Nethra, Murugan",
+        "team2_serial": 8,
+        "team2_name": "3P Launches",
+        "team2_members": "Steffi, Rachel, Raji, Syed, Hareesh, Richard",
+        "date": "2025-12-12",
+        "day_name": "Friday, December 12"
+      }
+    ],
+    "group_b": [
+      {
+        "match_id": "Group B_M22",
+        "match_number": 22,
+        "group": "Group B",
+        "team1_serial": 12,
+        "team1_name": "MOD",
+        "team1_members": "Harish, Durga, Blessy, Pavithra, Sughosh",
+        "team2_serial": 16,
+        "team2_name": "1P Launches",
+        "team2_members": "Shahid, Abishek, Sangeetha, Surabhi, Elakkiya, Harthick",
+        "date": "2025-12-12",
+        "day_name": "Friday, December 12"
+      }
+    ]
+  }
+]

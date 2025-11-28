@@ -344,7 +344,7 @@
                     {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing'] %}
                     <a href="/scorecard/{{ loop.index0 }}" class="btn" style="background: linear-gradient(135deg, #ffd700, #ffed4e); color: #000; margin-bottom: 10px; display: block; text-align: center;">Scorecard</a>
                     {% endif %}
-                    {% if event.Event in ['Foosball', 'Tug of War'] %}
+                    {% if event.Event in ['Foosball', 'Tug of War', 'Seven Stones'] %}
                     <a href="/schedule/{{ loop.index0 }}" class="btn" style="background: linear-gradient(135deg, #00ffff, #00ff88); color: #000; margin-bottom: 10px; display: block; text-align: center;">Schedule</a>
                     {% endif %}
                     <a href="/manage-participants/{{ loop.index0 }}" class="btn" style="margin-bottom: 10px; display: block; text-align: center;">Manage Participants</a>

@@ -224,7 +224,7 @@ def schedule(idx):
         event_name = event['Event']
         
         # Handle Tug of War separately
-        if event_name == 'Tug of War':
+        if event_name in ['Tug of War', 'Seven Stones']:
             participants = load_participants(idx)
             
             if not participants:
@@ -326,7 +326,8 @@ def schedule(idx):
                 current_date += timedelta(days=1)
             
             total_matches = len(group_a_matches) + len(group_b_matches)
-            return render_template('tugofwar_schedule.html', event_name=event_name,
+            template_name = 'tugofwar_schedule.html' if event_name == 'Tug of War' else 'sevenstones_schedule.html'
+            return render_template(template_name, event_name=event_name,
                                  schedule=day_schedule, total_days=len(day_schedule),
                                  total_matches=total_matches)
         
