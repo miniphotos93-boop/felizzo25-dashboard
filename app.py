@@ -329,15 +329,9 @@ def schedule(idx):
             return render_template('tugofwar_schedule.html', event_name=event_name,
                                  schedule=day_schedule, total_days=len(day_schedule),
                                  total_matches=total_matches)
-                    match['date'] = current_date.strftime('%Y-%m-%d')
-                    match['day_name'] = current_date.strftime('%A, %B %d')
-                
-                group_a_day = [m for m in day_matches if m['group'] == 'Group A']
-                group_b_day = [m for m in day_matches if m['group'] == 'Group B']
-                
-                day_schedule.append({
-                    'date': current_date.strftime('%Y-%m-%d'),
-                    'day_name': current_date.strftime('%A, %B %d'),
+        
+        # Handle Foosball (existing code)
+        participants = load_participants(idx)
                     'group_a': group_a_day,
                     'group_b': group_b_day
                 })
