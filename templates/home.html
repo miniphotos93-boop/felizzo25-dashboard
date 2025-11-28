@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Felizzo'25 - Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Poppins:wght@400;600&family=Permanent+Marker&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -42,57 +42,164 @@
             overflow: hidden;
         }
         
-        .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 120px;
-            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
-            background-size: 300% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: gradientFlow 3s ease infinite;
-            text-shadow: 0 0 80px rgba(255, 0, 255, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .year-counter {
-            display: inline-block;
-            width: 150px;
-            height: 140px;
-            overflow: hidden;
+        /* Retro TV */
+        .retro-tv {
+            width: 800px;
+            height: 500px;
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            border-radius: 40px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
+                        inset 0 0 20px rgba(0, 0, 0, 0.5);
             position: relative;
+            border: 15px solid #333;
         }
         
-        .year-spinner {
-            display: flex;
-            flex-direction: column;
-            animation: spin 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
+        /* TV Antennas */
+        .antenna-left, .antenna-right {
+            position: absolute;
+            top: -80px;
+            width: 4px;
+            height: 100px;
+            background: linear-gradient(to top, #666, #999);
+            border-radius: 2px;
         }
         
-        .year-digit {
-            height: 140px;
+        .antenna-left {
+            left: 200px;
+            transform: rotate(-30deg);
+            transform-origin: bottom;
+        }
+        
+        .antenna-right {
+            right: 200px;
+            transform: rotate(30deg);
+            transform-origin: bottom;
+        }
+        
+        .antenna-ball {
+            position: absolute;
+            top: -10px;
+            left: -4px;
+            width: 12px;
+            height: 12px;
+            background: #999;
+            border-radius: 50%;
+        }
+        
+        /* TV Screen */
+        .tv-screen {
+            width: 100%;
+            height: 100%;
+            background: #000;
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 120px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 50px rgba(0, 255, 255, 0.1);
+        }
+        
+        /* Screen glare effect */
+        .tv-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                transparent 100%);
+            pointer-events: none;
+        }
+        
+        /* TV Content */
+        .tv-content {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 100px;
             background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: gradientFlow 3s ease infinite;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            z-index: 2;
         }
         
-        @keyframes spin {
-            0% { transform: translateY(0); }
-            33% { transform: translateY(-140px); }
-            66% { transform: translateY(-280px); }
-            100% { transform: translateY(-280px); }
+        /* Static/Distortion overlay */
+        .static-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.1),
+                rgba(0, 0, 0, 0.1) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            opacity: 0;
+            z-index: 3;
+            pointer-events: none;
+            animation: staticEffect 6s steps(1) forwards;
+        }
+        
+        @keyframes staticEffect {
+            0%, 30% { opacity: 0; }
+            31%, 35% { 
+                opacity: 1;
+                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.5"/></svg>');
+            }
+            36%, 100% { opacity: 0; }
+        }
+        
+        /* Channel change animation */
+        @keyframes channelChange {
+            0%, 30% { 
+                content: "FELIZZO'23";
+                opacity: 1;
+                transform: scale(1);
+            }
+            31%, 35% { 
+                opacity: 0;
+                transform: scale(1.2) translateY(-20px);
+                filter: blur(10px);
+            }
+            36%, 100% { 
+                content: "FELIZZO'25";
+                opacity: 1;
+                transform: scale(1);
+                filter: blur(0);
+            }
+        }
+        
+        .tv-content::before {
+            content: "FELIZZO'23";
+            animation: channelChange 6s ease-in-out forwards;
+        }
+        
+        /* Scanlines effect */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            pointer-events: none;
+            z-index: 4;
         }
         
         @keyframes gradientFlow {
@@ -397,40 +504,25 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="floating-icon icon-1">🏆</div>
-        <div class="floating-icon icon-2">💃</div>
-        <div class="floating-icon icon-3">🎤</div>
-        <div class="floating-icon icon-4">🎨</div>
-        <div class="floating-icon icon-5">📸</div>
-        <div class="floating-icon icon-6">🎬</div>
-        <div class="floating-icon icon-7">✨</div>
-        <div class="floating-icon icon-8">🎭</div>
-        <div class="floating-icon icon-9">🎪</div>
-        <div class="floating-icon icon-10">🎵</div>
-        <div class="floating-icon icon-11">🎸</div>
-        <div class="floating-icon icon-12">🎹</div>
-        <div class="floating-icon icon-13">🖼️</div>
-        <div class="floating-icon icon-14">🎯</div>
-        <div class="floating-icon icon-15">♟️</div>
-        <div class="floating-icon icon-16">🏓</div>
-        <div class="floating-icon icon-17">🎱</div>
-        <div class="floating-icon icon-18">🎮</div>
-        <div class="floating-icon icon-19">💎</div>
-        <div class="floating-icon icon-20">⭐</div>
-        <div class="floating-icon icon-21">🌟</div>
-        <div class="floating-icon icon-22">💫</div>
-        <div class="floating-icon icon-23">🔥</div>
-        <div class="floating-icon icon-24">⚡</div>
+        <div class="floating-icon icon-2">🎮</div>
+        <div class="floating-icon icon-3">⚡</div>
+        <div class="floating-icon icon-4">🎯</div>
         
-        <h1>
-            <span>FELIZZO'</span>
-            <div class="year-counter">
-                <div class="year-spinner">
-                    <div class="year-digit">23</div>
-                    <div class="year-digit">24</div>
-                    <div class="year-digit">25</div>
-                </div>
+        <div class="retro-tv">
+            <div class="antenna-left">
+                <div class="antenna-ball"></div>
             </div>
-        </h1>
+            <div class="antenna-right">
+                <div class="antenna-ball"></div>
+            </div>
+            
+            <div class="tv-screen">
+                <div class="tv-content"></div>
+                <div class="static-overlay"></div>
+                <div class="scanlines"></div>
+            </div>
+        </div>
+        
         <div class="hero-subtitle">The Ultimate Sports & Cultural Fest</div>
         <a href="/dashboard" class="cta-button">Enter Dashboard →</a>
         <div class="scroll-prompt">
