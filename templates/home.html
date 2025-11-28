@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Felizzo'25 - Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Poppins:wght@400;600&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -40,317 +40,59 @@
             align-items: center;
             position: relative;
             overflow: hidden;
-            animation: shrinkHero 0.8s ease-in-out 10s forwards;
         }
         
-        @keyframes shrinkHero {
-            0% {
-                height: 100vh;
-            }
-            100% {
-                height: 0;
-                min-height: 0;
-                padding: 0;
-                margin: 0;
-            }
-        }
-        
-        /* Retro TV */
-        .retro-tv {
-            width: 600px;
-            height: 400px;
-            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            border-radius: 30px;
-            padding: 30px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8),
-                        inset 0 0 20px rgba(0, 0, 0, 0.5);
-            position: relative;
-            border: 12px solid #333;
-            animation: shrinkAndMove 0.8s ease-in-out 10s forwards;
-            z-index: 1;
-        }
-        
-        @keyframes shrinkAndMove {
-            0% {
-                width: 600px;
-                height: 400px;
-                position: relative;
-            }
-            1% {
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-            100% {
-                position: fixed;
-                width: 150px;
-                height: 100px;
-                top: 20px;
-                left: 20px;
-                transform: translate(0, 0);
-                padding: 8px;
-                border-width: 3px;
-                border-radius: 10px;
-                z-index: 1000;
-            }
-        }
-        
-        /* TV Antennas */
-        .antenna-left, .antenna-right {
-            position: absolute;
-            top: -120px;
-            width: 5px;
-            height: 120px;
-            background: linear-gradient(to top, #555, #aaa);
-            border-radius: 3px;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-            animation: shrinkAntenna 0.8s ease-in-out 10s forwards;
-        }
-        
-        @keyframes shrinkAntenna {
-            0% {
-                top: -120px;
-                width: 5px;
-                height: 120px;
-            }
-            100% {
-                top: -30px;
-                width: 2px;
-                height: 30px;
-            }
-        }
-        
-        .antenna-left {
-            left: 150px;
-            transform: rotate(-35deg);
-            transform-origin: bottom center;
-            animation: shrinkAntennaLeft 0.8s ease-in-out 10s forwards;
-        }
-        
-        @keyframes shrinkAntennaLeft {
-            0% {
-                left: 150px;
-            }
-            100% {
-                left: 38px;
-            }
-        }
-        
-        .antenna-right {
-            right: 150px;
-            transform: rotate(35deg);
-            transform-origin: bottom center;
-            animation: shrinkAntennaRight 0.8s ease-in-out 10s forwards;
-        }
-        
-        @keyframes shrinkAntennaRight {
-            0% {
-                right: 150px;
-            }
-            100% {
-                right: 38px;
-            }
-        }
-        
-        .antenna-ball {
-            position: absolute;
-            top: -8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 14px;
-            height: 14px;
-            background: radial-gradient(circle at 30% 30%, #ccc, #666);
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            animation: shrinkBall 0.8s ease-in-out 10s forwards;
-        }
-        
-        @keyframes shrinkBall {
-            0% {
-                width: 14px;
-                height: 14px;
-                top: -8px;
-            }
-            100% {
-                width: 4px;
-                height: 4px;
-                top: -3px;
-            }
-        }
-        
-        /* TV Screen */
-        .tv-screen {
-            width: 100%;
-            height: 100%;
-            background: #000;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: inset 0 0 50px rgba(0, 255, 255, 0.1);
-        }
-        
-        /* Screen glare effect */
-        .tv-screen::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, 
-                transparent 0%, 
-                rgba(255, 255, 255, 0.05) 50%, 
-                transparent 100%);
-            pointer-events: none;
-        }
-        
-        /* TV Content */
-        .tv-content {
-            font-family: 'Permanent Marker', cursive;
-            font-size: 70px;
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 120px;
             background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
             background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: gradientFlow 3s ease infinite, shrinkText 0.8s ease-in-out 10s forwards, changeText 8s ease-in-out forwards;
-            z-index: 2;
+            animation: gradientFlow 3s ease infinite;
+            text-shadow: 0 0 80px rgba(255, 0, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .year-counter {
+            display: inline-block;
+            width: 150px;
+            height: 140px;
+            overflow: hidden;
             position: relative;
         }
         
-        @keyframes changeText {
-            0%, 35% { 
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
-            36%, 44% { 
-                opacity: 0;
-                transform: scale(0.8);
-                filter: blur(20px);
-            }
-            45% {
-                opacity: 0;
-            }
-            46% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
+        .year-spinner {
+            display: flex;
+            flex-direction: column;
+            animation: spin 3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
         }
         
-        @keyframes shrinkText {
-            0% {
-                font-size: 70px;
-            }
-            100% {
-                font-size: 14px;
-            }
+        .year-digit {
+            height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientFlow 3s ease infinite;
         }
         
-        /* Static/Distortion overlay */
-        .static-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black;
-            opacity: 0;
-            z-index: 5;
-            pointer-events: none;
-            animation: staticEffect 8s steps(10) forwards;
-        }
-        
-        @keyframes staticEffect {
-            0%, 35% { 
-                opacity: 0;
-                background: black;
-            }
-            36%, 38% { 
-                opacity: 0.9;
-                background: repeating-linear-gradient(
-                    0deg,
-                    #fff 0px,
-                    #000 2px,
-                    #fff 4px
-                );
-                animation: glitch 0.1s infinite;
-            }
-            39%, 41% {
-                opacity: 1;
-                background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="2" numOctaves="5" /></filter><rect width="200" height="200" filter="url(%23noise)"/></svg>');
-                background-size: 100px 100px;
-            }
-            42%, 44% {
-                opacity: 0.8;
-                background: repeating-linear-gradient(
-                    90deg,
-                    #fff 0px,
-                    #000 3px,
-                    #fff 6px
-                );
-            }
-            45%, 100% { 
-                opacity: 0;
-                background: black;
-            }
-        }
-        
-        @keyframes glitch {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            50% { transform: translateX(5px); }
-            75% { transform: translateX(-3px); }
-            100% { transform: translateX(0); }
-        }
-        
-        /* Channel change animation */
-        @keyframes channelChange {
-            0%, 35% { 
-                content: "FELIZZO'23";
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
-            36%, 44% { 
-                opacity: 0;
-                transform: scale(0.8);
-                filter: blur(20px);
-            }
-            45%, 100% { 
-                content: "FELIZZO'25";
-                opacity: 1;
-                transform: scale(1);
-                filter: blur(0);
-            }
-        }
-        
-        /* Scanlines effect */
-        .scanlines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 3px
-            );
-            pointer-events: none;
-            z-index: 4;
+        @keyframes spin {
+            0% { transform: translateY(0); }
+            33% { transform: translateY(-140px); }
+            66% { transform: translateY(-280px); }
+            100% { transform: translateY(-280px); }
         }
         
         @keyframes gradientFlow {
@@ -367,17 +109,7 @@
             font-size: 32px;
             color: #00ffff;
             margin-top: 20px;
-            animation: fadeInUp 1s ease 0.5s both, fadeOutHero 0.8s ease-in-out 10s forwards;
-        }
-        
-        @keyframes fadeOutHero {
-            0% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0;
-                visibility: hidden;
-            }
+            animation: fadeInUp 1s ease 0.5s both;
         }
         
         @keyframes fadeInUp {
@@ -397,7 +129,7 @@
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
-            animation: pulse 2s ease-in-out infinite, fadeInUp 1s ease 1s both, fadeOutHero 0.8s ease-in-out 10s forwards;
+            animation: pulse 2s ease-in-out infinite, fadeInUp 1s ease 1s both;
             box-shadow: 0 0 30px rgba(255, 0, 255, 0.5);
         }
         
@@ -415,7 +147,7 @@
         .scroll-prompt {
             margin-top: 60px;
             text-align: center;
-            animation: fadeInUp 1s ease 1.5s both, fadeOutHero 0.8s ease-in-out 10s forwards;
+            animation: fadeInUp 1s ease 1.5s both;
         }
         
         .scroll-text {
@@ -665,25 +397,40 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="floating-icon icon-1">🏆</div>
-        <div class="floating-icon icon-2">🎮</div>
-        <div class="floating-icon icon-3">⚡</div>
-        <div class="floating-icon icon-4">🎯</div>
+        <div class="floating-icon icon-2">💃</div>
+        <div class="floating-icon icon-3">🎤</div>
+        <div class="floating-icon icon-4">🎨</div>
+        <div class="floating-icon icon-5">📸</div>
+        <div class="floating-icon icon-6">🎬</div>
+        <div class="floating-icon icon-7">✨</div>
+        <div class="floating-icon icon-8">🎭</div>
+        <div class="floating-icon icon-9">🎪</div>
+        <div class="floating-icon icon-10">🎵</div>
+        <div class="floating-icon icon-11">🎸</div>
+        <div class="floating-icon icon-12">🎹</div>
+        <div class="floating-icon icon-13">🖼️</div>
+        <div class="floating-icon icon-14">🎯</div>
+        <div class="floating-icon icon-15">♟️</div>
+        <div class="floating-icon icon-16">🏓</div>
+        <div class="floating-icon icon-17">🎱</div>
+        <div class="floating-icon icon-18">🎮</div>
+        <div class="floating-icon icon-19">💎</div>
+        <div class="floating-icon icon-20">⭐</div>
+        <div class="floating-icon icon-21">🌟</div>
+        <div class="floating-icon icon-22">💫</div>
+        <div class="floating-icon icon-23">🔥</div>
+        <div class="floating-icon icon-24">⚡</div>
         
-        <div class="retro-tv">
-            <div class="antenna-left">
-                <div class="antenna-ball"></div>
+        <h1>
+            <span>FELIZZO'</span>
+            <div class="year-counter">
+                <div class="year-spinner">
+                    <div class="year-digit">23</div>
+                    <div class="year-digit">24</div>
+                    <div class="year-digit">25</div>
+                </div>
             </div>
-            <div class="antenna-right">
-                <div class="antenna-ball"></div>
-            </div>
-            
-            <div class="tv-screen">
-                <div class="tv-content" data-text="FELIZZO'23">FELIZZO'23</div>
-                <div class="static-overlay"></div>
-                <div class="scanlines"></div>
-            </div>
-        </div>
-        
+        </h1>
         <div class="hero-subtitle">The Ultimate Sports & Cultural Fest</div>
         <a href="/dashboard" class="cta-button">Enter Dashboard →</a>
         <div class="scroll-prompt">
@@ -759,9 +506,4 @@
         </div>
     </section>
 </body>
-<script>
-    setTimeout(() => {
-        document.querySelector('.tv-content').textContent = "FELIZZO'25";
-    }, 3600);
-</script>
 </html>
