@@ -73,7 +73,12 @@
             align-items: center;
             justify-content: center;
             font-size: 120px;
-            animation: spinYear 3s ease-in-out forwards;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080, #00ff88);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: spinYear 3s ease-in-out forwards, gradientFlow 3s ease infinite;
             transform-style: preserve-3d;
         }
         
