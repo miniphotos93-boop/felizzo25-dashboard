@@ -230,30 +230,43 @@
         }
         
         /* Remote Control */
-        .remote {
+        .remote-container {
             position: fixed;
-            bottom: -200px;
-            right: 100px;
+            bottom: -300px;
+            right: 80px;
+            animation: handSlideIn 1s ease-out 0.5s forwards, handSlideOut 0.8s ease-in 2.5s forwards;
+            z-index: 999;
+        }
+        
+        @keyframes handSlideIn {
+            to {
+                bottom: -50px;
+            }
+        }
+        
+        @keyframes handSlideOut {
+            to {
+                bottom: -300px;
+            }
+        }
+        
+        .hand {
+            font-size: 120px;
+            position: absolute;
+            bottom: -40px;
+            right: -20px;
+            transform: rotate(-15deg);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+        }
+        
+        .remote {
             width: 80px;
             height: 200px;
             background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
             border-radius: 15px;
             padding: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            animation: remoteSlideIn 1s ease-out 0.5s forwards, remoteSlideOut 0.8s ease-in 2.5s forwards;
-            z-index: 999;
-        }
-        
-        @keyframes remoteSlideIn {
-            to {
-                bottom: 50px;
-            }
-        }
-        
-        @keyframes remoteSlideOut {
-            to {
-                bottom: -200px;
-            }
+            position: relative;
         }
         
         .remote-button {
@@ -264,6 +277,7 @@
             margin: 10px auto;
             box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
             animation: buttonPress 0.3s ease-in-out 1.8s;
+            position: relative;
         }
         
         @keyframes buttonPress {
@@ -272,8 +286,8 @@
                 box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
             }
             50% {
-                transform: scale(0.9);
-                box-shadow: 0 0 40px rgba(255, 0, 255, 1);
+                transform: scale(0.85);
+                box-shadow: 0 0 40px rgba(255, 0, 255, 1), inset 0 2px 5px rgba(0, 0, 0, 0.5);
             }
         }
         
@@ -621,9 +635,12 @@
         <a href="/dashboard" class="cta-button">Enter Dashboard →</a>
     </section>
     
-    <div class="remote">
-        <div class="remote-button"></div>
-        <div class="remote-label">CH</div>
+    <div class="remote-container">
+        <div class="remote">
+            <div class="remote-button"></div>
+            <div class="remote-label">CH</div>
+        </div>
+        <div class="hand">👆</div>
     </div>
     
     <div class="retro-tv">
