@@ -50,6 +50,66 @@ def save_participants(idx, participants):
         json.dump(participants, f, indent=2)
 
 @app.route('/')
+def home():
+    events = load_events()
+    
+    # Calculate stats
+    total_events = len(events)
+    
+    # Count total participants
+    total_participants = 0
+    all_teams = set()
+    for idx in range(len(events)):
+        participants = load_participants(idx)
+        total_participants += len(participants)
+        for p in participants:
+            all_teams.add(p.get('team_name', ''))
+    
+    # Calculate total matches (rough estimate)
+    total_matches = 130 + 49 + 56  # Foosball + Tug of War + Seven Stones
+    
+    # Build team leaderboard
+    team_stats = {}
+    for idx in range(len(events)):
+        participants = load_participants(idx)
+        for p in participants:
+            team = p.get('team_name', 'Unknown')
+            if team not in team_stats:
+                team_stats[team] = {'events': set(), 'participants': 0, 'wins': 0}
+            team_stats[team]['events'].add(events[idx]['Event'])
+            team_stats[team]['participants'] += 1
+    
+    leaderboard = []
+    for team, stats in team_stats.items():
+        leaderboard.append({
+            'name': team,
+            'events': len(stats['events']),
+            'participants': stats['participants'],
+            'wins': stats['wins'],
+            'participation_rate': min(100, (len(stats['events']) / total_events) * 100)
+        })
+    
+    leaderboard.sort(key=lambda x: (x['events'], x['participants']), reverse=True)
+    
+    # Upcoming events
+    upcoming_events = []
+    for idx, event in enumerate(events):
+        if event['Status'] in ['Planned', 'In Progress']:
+            upcoming_events.append({
+                'name': event['Event'],
+                'date': event.get('Start_Date', 'TBD'),
+                'idx': idx
+            })
+    
+    return render_template('home.html', 
+                         total_events=total_events,
+                         total_participants=total_participants,
+                         total_teams=len(all_teams),
+                         total_matches=total_matches,
+                         leaderboard=leaderboard[:10],
+                         upcoming_events=upcoming_events[:5])
+
+@app.route('/dashboard')
 def dashboard():
     events = load_events()
     completed = sum(1 for e in events if e['Status'] == 'Completed')
@@ -72,7 +132,7 @@ def update(idx):
             'Notes': request.form.get('notes')
         })
         save_events(events)
-        return redirect('/')
+        return redirect('/dashboard')
     return render_template('update.html', event=events[idx], idx=idx)
 
 def clear_participants(event_id):
