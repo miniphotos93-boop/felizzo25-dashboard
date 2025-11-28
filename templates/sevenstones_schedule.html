@@ -157,8 +157,8 @@
                             </td>
                             <td>
                                 <div class="winner-btns">
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">T2</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 2, this)" class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}">T2</button>
                                 </div>
                             </td>
                         </tr>
@@ -194,8 +194,8 @@
                             </td>
                             <td>
                                 <div class="winner-btns">
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">T2</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 2, this)" class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}">T2</button>
                                 </div>
                             </td>
                         </tr>

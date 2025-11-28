@@ -152,7 +152,7 @@
     </style>
 </head>
 <body>
-    <a href="/" class="back-btn">← Back to Dashboard</a>
+    <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
     <h1>{{ event_name }} - Schedule</h1>
     
     <div class="filters">
@@ -216,8 +216,8 @@
                             </td>
                             <td>
                                 <div class="winner-btns">
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">T2</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 2, this)">T2</button>
                                 </div>
                             </td>
                         </tr>
@@ -255,8 +255,8 @@
                             </td>
                             <td>
                                 <div class="winner-btns">
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
-                                    <button class="winner-btn" onclick="selectWinner('{{ match.match_id }}', 2, this)">T2</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 1, this)">T1</button>
+                                    <button class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}" onclick="selectWinner('{{ match.match_id }}', 2, this)">T2</button>
                                 </div>
                             </td>
                         </tr>
@@ -289,7 +289,6 @@
             const rows = document.querySelectorAll('.match-row');
             const sections = document.querySelectorAll('.day-section');
             
-            // Hide all sections first
             sections.forEach(s => s.style.display = 'none');
             
             rows.forEach(row => {
@@ -306,7 +305,6 @@
                 
                 row.style.display = show ? '' : 'none';
                 
-                // Show section if any row is visible
                 if (show) {
                     row.closest('.day-section').style.display = 'block';
                 }

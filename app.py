@@ -386,10 +386,18 @@ def schedule(idx):
                 current_date += timedelta(days=1)
             
             total_matches = len(group_a_matches) + len(group_b_matches)
+            
+            # Load saved winners
+            results_file = Path(__file__).parent / f"{event_name.lower().replace(' ', '')}_results.json"
+            winners = {}
+            if results_file.exists():
+                with open(results_file, 'r') as f:
+                    winners = json.load(f)
+            
             template_name = 'tugofwar_schedule.html' if event_name == 'Tug of War' else 'sevenstones_schedule.html'
             return render_template(template_name, event_name=event_name,
                                  schedule=day_schedule, total_days=len(day_schedule),
-                                 total_matches=total_matches)
+                                 total_matches=total_matches, winners=winners)
         
         # Handle Foosball (existing code)
         participants = load_participants(idx)
@@ -503,9 +511,16 @@ def schedule(idx):
         
         total_matches = len(all_matches)
         
+        # Load saved winners
+        results_file = Path(__file__).parent / 'foosball_results.json'
+        winners = {}
+        if results_file.exists():
+            with open(results_file, 'r') as f:
+                winners = json.load(f)
+        
         return render_template('schedule.html', event_name=event['Event'], 
                              schedule=day_schedule, total_days=len(day_schedule),
-                             total_matches=total_matches, teams=unique_teams)
+                             total_matches=total_matches, teams=unique_teams, winners=winners)
     except Exception as e:
         return f"Error generating schedule: {str(e)}", 500
 
