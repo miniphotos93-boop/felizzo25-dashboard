@@ -140,7 +140,8 @@ def home():
             'Foosball': 'foosball_schedule.json',
             'Tug of War': 'tug_of_war_schedule.json',
             'Seven Stones': 'seven_stones_schedule.json',
-            'Carrom': 'carrom_schedule.json'
+            'Carrom': 'carrom_schedule.json',
+            'Chess': 'chess_schedule.json'
         }
         
         total_matches = 0
@@ -483,6 +484,39 @@ def schedule(idx):
             return render_template(template_name, event_name=event_name,
                                  schedule=day_schedule, total_days=len(day_schedule),
                                  total_matches=total_matches, winners=winners)
+        
+        # Handle Chess
+        if event_name == 'Chess':
+            schedule_file = Path(__file__).parent / 'chess_schedule.json'
+            if not schedule_file.exists():
+                return "Chess schedule not found.", 404
+            
+            with open(schedule_file) as f:
+                matches = json.load(f)
+            
+            # Group by date
+            from collections import defaultdict
+            by_date = defaultdict(list)
+            for match in matches:
+                by_date[match['date']].append(match)
+            
+            day_schedule = []
+            for date in sorted(by_date.keys()):
+                day_schedule.append({
+                    'date': date,
+                    'matches': by_date[date]
+                })
+            
+            # Load results
+            results_file = Path(__file__).parent / 'chess_results.json'
+            winners = {}
+            if results_file.exists():
+                with open(results_file) as f:
+                    winners = json.load(f)
+            
+            return render_template('chess_schedule.html', event_name=event_name,
+                                 schedule=day_schedule, total_days=len(day_schedule),
+                                 total_matches=len(matches), winners=winners)
         
         # Handle Foosball (existing code)
         participants = load_participants(idx)
