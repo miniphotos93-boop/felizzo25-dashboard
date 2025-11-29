@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Chess Schedule - Felizzo'25</title>
+    <title>Carrom Schedule - Felizzo'25</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -56,6 +56,18 @@
             color: #000;
             border-color: #0f0;
         }
+        .time-input {
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #fff;
+            border-radius: 5px;
+            width: 120px;
+        }
+        .time-input:focus {
+            outline: none;
+            border-color: #00ffff;
+        }
     </style>
 </head>
 <body>
@@ -71,6 +83,7 @@
                     <th>Match ID</th>
                     <th>Player 1</th>
                     <th>Player 2</th>
+                    <th>Time Slot</th>
                     <th>Winner</th>
                 </tr>
             </thead>
@@ -80,6 +93,11 @@
                     <td>{{ match.match_id }}</td>
                     <td>{{ match.player1 }}</td>
                     <td>{{ match.player2 }}</td>
+                    <td>
+                        <input type="time" class="time-input" 
+                               value="{{ match.time_slot or '' }}"
+                               onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
+                    </td>
                     <td>
                         <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" 
                                 onclick="selectWinner('{{ match.match_id }}', 1, this)">P1</button>
@@ -94,6 +112,24 @@
     {% endfor %}
     
     <script>
+        function saveTimeSlot(matchId, timeSlot) {
+            // Save to localStorage
+            let timeSlots = JSON.parse(localStorage.getItem('carrom_time_slots') || '{}');
+            timeSlots[matchId] = timeSlot;
+            localStorage.setItem('carrom_time_slots', JSON.stringify(timeSlots));
+            
+            // Send to server
+            fetch('/update-time-slot', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: 'Carrom',
+                    match_id: matchId, 
+                    time_slot: timeSlot
+                })
+            });
+        }
+        
         function selectWinner(matchId, winner, button) {
             // Save to localStorage
             let winners = JSON.parse(localStorage.getItem('carrom_winners') || '{}');
@@ -123,6 +159,13 @@
                         btn.classList.add('selected');
                     }
                 });
+            }
+            
+            // Load time slots
+            const timeSlots = JSON.parse(localStorage.getItem('carrom_time_slots') || '{}');
+            for (const [matchId, timeSlot] of Object.entries(timeSlots)) {
+                const input = document.querySelector(`input[onchange*="${matchId}"]`);
+                if (input) input.value = timeSlot;
             }
         });
     </script>

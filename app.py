@@ -701,6 +701,46 @@ def update_match_winner():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/update-time-slot', methods=['POST'])
+def update_time_slot():
+    try:
+        data = request.json
+        event = data['event']
+        match_id = data['match_id']
+        time_slot = data['time_slot']
+        
+        # Map event to schedule file
+        schedule_files = {
+            'Chess': 'chess_schedule.json',
+            'Carrom': 'carrom_schedule.json',
+            'Foosball': 'foosball_schedule.json',
+            'Tug of War': 'tug_of_war_schedule.json',
+            'Seven Stones': 'seven_stones_schedule.json'
+        }
+        
+        schedule_file = Path(__file__).parent / schedule_files.get(event, 'schedule.json')
+        
+        if not schedule_file.exists():
+            return jsonify({'status': 'error', 'message': 'Schedule file not found'}), 404
+        
+        # Load schedule
+        with open(schedule_file, 'r') as f:
+            schedule = json.load(f)
+        
+        # Update time slot
+        for match in schedule:
+            if match.get('match_id') == match_id:
+                match['time_slot'] = time_slot
+                break
+        
+        # Save schedule
+        with open(schedule_file, 'w') as f:
+            json.dump(schedule, f, indent=2)
+        
+        return jsonify({'status': 'success'})
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 @app.route('/api/carrom/submit-score', methods=['POST', 'OPTIONS'])
 def submit_carrom_score():
     """
