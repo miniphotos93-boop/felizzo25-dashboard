@@ -386,6 +386,167 @@
         .icon-23 { top: 75%; left: 45%; animation-delay: 0.7s; }
         .icon-24 { top: 85%; right: 45%; animation-delay: 1.7s; }
         
+        /* Main Content Grid */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section-title-small {
+            font-family: 'Fredoka One', cursive;
+            font-size: 28px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+        }
+        
+        /* Compact Stats */
+        .stats-section-compact {
+            margin-bottom: 40px;
+        }
+        
+        .stats-grid-compact {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-card-compact {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .stat-card-compact:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        
+        .stat-number-compact {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .stat-label-compact {
+            font-size: 14px;
+            color: #00ffff;
+            margin-top: 5px;
+        }
+        
+        /* Today's Events */
+        .today-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+        }
+        
+        .today-events {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .today-event-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            transition: all 0.3s;
+            animation: slideIn 0.5s ease both;
+        }
+        
+        .today-event-card:hover {
+            border-color: #ff00ff;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(255, 0, 255, 0.3);
+        }
+        
+        .event-icon {
+            font-size: 48px;
+            filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+        }
+        
+        .event-details {
+            flex: 1;
+        }
+        
+        .event-name-today {
+            font-size: 22px;
+            font-weight: bold;
+            color: #00ffff;
+            margin-bottom: 8px;
+        }
+        
+        .event-time {
+            font-size: 14px;
+            color: #ff00ff;
+            margin-bottom: 12px;
+        }
+        
+        .view-schedule-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            border-radius: 20px;
+            color: #00ffff;
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+        
+        .view-schedule-btn:hover {
+            background: rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+        
+        .no-events {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .no-events-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+        
+        .no-events-text {
+            font-size: 20px;
+            color: #00ffff;
+            margin-bottom: 10px;
+        }
+        
+        .no-events-subtext {
+            font-size: 14px;
+            color: #888;
+        }
+        
         /* Stats Section */
         .stats-section {
             padding: 80px 20px;
@@ -443,22 +604,8 @@
         }
         
         /* Leaderboard Section */
-        .leaderboard-section {
-            padding: 80px 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .section-title {
-            font-family: 'Fredoka One', cursive;
-            font-size: 48px;
-            text-align: center;
-            background: linear-gradient(90deg, #ff00ff, #00ffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 50px;
-            letter-spacing: 3px;
+        .leaderboard-section-compact {
+            /* Inherits styles from existing leaderboard */
         }
         
         /* Medal Podium */
@@ -663,70 +810,104 @@
         </a>
     </div>
     
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-number">{{ total_events }}</div>
-                <div class="stat-label">Total Events</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_participants }}</div>
-                <div class="stat-label">Participants</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_teams }}</div>
-                <div class="stat-label">Teams</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number">{{ total_matches }}</div>
-                <div class="stat-label">Total Matches</div>
-            </div>
+    <!-- Main Content Grid -->
+    <div class="main-content">
+        <!-- Left Column -->
+        <div class="left-column">
+            <!-- Stats Section -->
+            <section class="stats-section-compact">
+                <h2 class="section-title-small">📊 OVERVIEW</h2>
+                <div class="stats-grid-compact">
+                    <div class="stat-card-compact">
+                        <div class="stat-number-compact">{{ total_events }}</div>
+                        <div class="stat-label-compact">Events</div>
+                    </div>
+                    <div class="stat-card-compact">
+                        <div class="stat-number-compact">{{ total_participants }}</div>
+                        <div class="stat-label-compact">Participants</div>
+                    </div>
+                    <div class="stat-card-compact">
+                        <div class="stat-number-compact">{{ total_teams }}</div>
+                        <div class="stat-label-compact">Teams</div>
+                    </div>
+                    <div class="stat-card-compact">
+                        <div class="stat-number-compact">{{ total_matches }}</div>
+                        <div class="stat-label-compact">Matches</div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Leaderboard Section -->
+            <section class="leaderboard-section-compact">
+                <h2 class="section-title-small">🏆 RANKINGS</h2>
+                
+                <!-- Medal Podium -->
+                <div class="medal-podium">
+                    {% if leaderboard|length >= 1 %}
+                    <div class="podium-spot rank-1">
+                        <div class="medal">🥇</div>
+                        <div class="mystery-oval">?</div>
+                    </div>
+                    {% endif %}
+                    <div class="podium-row">
+                        {% if leaderboard|length >= 2 %}
+                        <div class="podium-spot rank-2">
+                            <div class="medal">🥈</div>
+                            <div class="mystery-oval">?</div>
+                        </div>
+                        {% endif %}
+                        {% if leaderboard|length >= 3 %}
+                        <div class="podium-spot rank-3">
+                            <div class="medal">🥉</div>
+                            <div class="mystery-oval">?</div>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <!-- Team List -->
+                <div class="team-list">
+                    {% for team in leaderboard %}
+                    <div class="team-row">
+                        <div class="team-name-list">{{ team.name }}</div>
+                        <div class="team-stats-list">
+                            <span class="stat-item-list">{{ team.events }} Events</span>
+                            <span class="stat-item-list">{{ team.participants }} Participants</span>
+                            <span class="stat-item-list">{{ team.wins }} Wins</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
         </div>
-    </section>
-    
-    <!-- Leaderboard Section -->
-    <section class="leaderboard-section">
-        <h2 class="section-title">🏆 TEAM RANKINGS</h2>
         
-        <!-- Medal Podium -->
-        <div class="medal-podium">
-            {% if leaderboard|length >= 1 %}
-            <div class="podium-spot rank-1">
-                <div class="medal">🥇</div>
-                <div class="mystery-oval">?</div>
-            </div>
-            {% endif %}
-            <div class="podium-row">
-                {% if leaderboard|length >= 2 %}
-                <div class="podium-spot rank-2">
-                    <div class="medal">🥈</div>
-                    <div class="mystery-oval">?</div>
+        <!-- Right Column -->
+        <div class="right-column">
+            <section class="today-section">
+                <h2 class="section-title-small">📅 WHAT'S HAPPENING TODAY</h2>
+                <div class="today-events">
+                    {% if today_events %}
+                        {% for event in today_events %}
+                        <div class="today-event-card">
+                            <div class="event-icon">🎮</div>
+                            <div class="event-details">
+                                <div class="event-name-today">{{ event.name }}</div>
+                                <div class="event-time">{{ event.start_date }}</div>
+                                <a href="/schedule/{{ event.idx }}" class="view-schedule-btn">View Schedule →</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-events">
+                            <div class="no-events-icon">🎯</div>
+                            <div class="no-events-text">No events scheduled for today</div>
+                            <div class="no-events-subtext">Check back soon!</div>
+                        </div>
+                    {% endif %}
                 </div>
-                {% endif %}
-                {% if leaderboard|length >= 3 %}
-                <div class="podium-spot rank-3">
-                    <div class="medal">🥉</div>
-                    <div class="mystery-oval">?</div>
-                </div>
-                {% endif %}
-            </div>
+            </section>
         </div>
-        
-        <!-- Team List -->
-        <div class="team-list">
-            {% for team in leaderboard %}
-            <div class="team-row">
-                <div class="team-name-list">{{ team.name }}</div>
-                <div class="team-stats-list">
-                    <span class="stat-item-list">{{ team.events }} Events</span>
-                    <span class="stat-item-list">{{ team.participants }} Participants</span>
-                    <span class="stat-item-list">{{ team.wins }} Wins</span>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
+    </div>
 </body>
 <script>
     // Check if we should skip animation (coming from dashboard)

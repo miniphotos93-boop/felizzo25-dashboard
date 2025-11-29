@@ -119,6 +119,19 @@ def home():
     
     leaderboard.sort(key=lambda x: (x['events'], x['participants']), reverse=True)
     
+    # Today's events
+    from datetime import datetime
+    today = datetime.now().strftime('%Y-%m-%d')
+    today_events = []
+    for idx, event in enumerate(events):
+        start_date = event.get('Start_Date', '')
+        if start_date and start_date.startswith(today):
+            today_events.append({
+                'name': event['Event'],
+                'start_date': start_date,
+                'idx': idx
+            })
+    
     # Upcoming events
     upcoming_events = []
     for idx, event in enumerate(events):
@@ -135,6 +148,7 @@ def home():
                          total_teams=len(all_teams),
                          total_matches=total_matches,
                          leaderboard=leaderboard[:10],
+                         today_events=today_events,
                          upcoming_events=upcoming_events[:5])
 
 @app.route('/dashboard')
