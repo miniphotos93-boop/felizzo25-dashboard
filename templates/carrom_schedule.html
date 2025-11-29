@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chess Schedule - Felizzo'25</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #00ffff;
+            margin-bottom: 30px;
+        }
+        .day-section {
+            margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .day-header {
+            font-size: 24px;
+            color: #ff00ff;
+            margin-bottom: 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+        }
+        .winner-btn {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .winner-btn:hover {
+            background: rgba(0, 255, 255, 0.4);
+        }
+        .winner-btn.selected {
+            background: #0f0;
+            color: #000;
+            border-color: #0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 {{ event_name }} Schedule</h1>
+    <p style="text-align: center; margin-bottom: 30px;">Total Matches: {{ total_matches }} | Days: {{ total_days }}</p>
+    
+    {% for day in schedule %}
+    <div class="day-section">
+        <div class="day-header">📅 {{ day.date }}</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Match ID</th>
+                    <th>Player 1</th>
+                    <th>Player 2</th>
+                    <th>Winner</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in day.matches %}
+                <tr>
+                    <td>{{ match.match_id }}</td>
+                    <td>{{ match.player1 }}</td>
+                    <td>{{ match.player2 }}</td>
+                    <td>
+                        <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" 
+                                onclick="selectWinner('{{ match.match_id }}', 1, this)">P1</button>
+                        <button class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}" 
+                                onclick="selectWinner('{{ match.match_id }}', 2, this)">P2</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+    
+    <script>
+        function selectWinner(matchId, winner, button) {
+            // Save to localStorage
+            let winners = JSON.parse(localStorage.getItem('carrom_winners') || '{}');
+            winners[matchId] = winner;
+            localStorage.setItem('carrom_winners', JSON.stringify(winners));
+            
+            // Update UI
+            const row = button.closest('tr');
+            row.querySelectorAll('.winner-btn').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            
+            // Send to server
+            fetch('/update-match-winner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({match_id: matchId, winner: winner})
+            });
+        }
+        
+        // Load from localStorage on page load
+        window.addEventListener('load', () => {
+            const winners = JSON.parse(localStorage.getItem('carrom_winners') || '{}');
+            for (const [matchId, winner] of Object.entries(winners)) {
+                const buttons = document.querySelectorAll(`button[onclick*="${matchId}"]`);
+                buttons.forEach(btn => {
+                    if (btn.textContent === `P${winner}`) {
+                        btn.classList.add('selected');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

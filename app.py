@@ -485,6 +485,39 @@ def schedule(idx):
                                  schedule=day_schedule, total_days=len(day_schedule),
                                  total_matches=total_matches, winners=winners)
         
+        # Handle Carrom
+        if event_name == 'Carrom':
+            schedule_file = Path(__file__).parent / 'carrom_schedule.json'
+            if not schedule_file.exists():
+                return "Carrom schedule not found.", 404
+            
+            with open(schedule_file) as f:
+                matches = json.load(f)
+            
+            # Group by date
+            from collections import defaultdict
+            by_date = defaultdict(list)
+            for match in matches:
+                by_date[match['date']].append(match)
+            
+            day_schedule = []
+            for date in sorted(by_date.keys()):
+                day_schedule.append({
+                    'date': date,
+                    'matches': by_date[date]
+                })
+            
+            # Load results
+            results_file = Path(__file__).parent / 'carrom_results.json'
+            winners = {}
+            if results_file.exists():
+                with open(results_file) as f:
+                    winners = json.load(f)
+            
+            return render_template('carrom_schedule.html', event_name=event_name,
+                                 schedule=day_schedule, total_days=len(day_schedule),
+                                 total_matches=len(matches), winners=winners)
+        
         # Handle Chess
         if event_name == 'Chess':
             schedule_file = Path(__file__).parent / 'chess_schedule.json'
