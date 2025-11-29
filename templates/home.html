@@ -729,8 +729,45 @@
     </section>
 </body>
 <script>
-    setTimeout(() => {
+    // Check if we should skip animation (coming from dashboard)
+    const urlParams = new URLSearchParams(window.location.search);
+    const skipAnimation = urlParams.get('skip') === 'true';
+    
+    if (skipAnimation) {
+        // Skip animation - show final state immediately
         document.querySelector('.tv-content').textContent = "FELIZZO'25";
-    }, 2500);
+        document.querySelector('.retro-tv').style.animation = 'none';
+        document.querySelector('.retro-tv').style.width = '120px';
+        document.querySelector('.retro-tv').style.height = '80px';
+        document.querySelector('.retro-tv').style.top = '20px';
+        document.querySelector('.retro-tv').style.left = '20px';
+        document.querySelector('.retro-tv').style.transform = 'translate(0, 0)';
+        document.querySelector('.retro-tv').style.padding = '8px';
+        document.querySelector('.retro-tv').style.borderWidth = '3px';
+        document.querySelector('.retro-tv').style.borderRadius = '10px';
+        document.querySelector('.tv-content').style.fontSize = '12px';
+        document.querySelector('.hero').style.display = 'none';
+        
+        // Shrink antennas
+        document.querySelectorAll('.antenna-left, .antenna-right').forEach(el => {
+            el.style.animation = 'none';
+            el.style.top = '-20px';
+            el.style.width = '2px';
+            el.style.height = '20px';
+        });
+        document.querySelector('.antenna-left').style.left = '25px';
+        document.querySelector('.antenna-right').style.right = '25px';
+        document.querySelectorAll('.antenna-ball').forEach(el => {
+            el.style.animation = 'none';
+            el.style.width = '4px';
+            el.style.height = '4px';
+            el.style.top = '-3px';
+        });
+    } else {
+        // Normal animation
+        setTimeout(() => {
+            document.querySelector('.tv-content').textContent = "FELIZZO'25";
+        }, 2500);
+    }
 </script>
 </html>
