@@ -132,6 +132,45 @@ def home():
                 'idx': idx
             })
     
+    # Event progress
+    all_events_progress = []
+    for idx, event in enumerate(events):
+        # Load schedule to count matches
+        schedule_files = {
+            'Foosball': 'foosball_schedule.json',
+            'Tug of War': 'tug_of_war_schedule.json',
+            'Seven Stones': 'seven_stones_schedule.json',
+            'Carrom': 'carrom_schedule.json'
+        }
+        
+        total_matches = 0
+        completed_matches = 0
+        
+        event_name = event['Event']
+        if event_name in schedule_files:
+            schedule_file = Path(__file__).parent / schedule_files[event_name]
+            if schedule_file.exists():
+                with open(schedule_file) as f:
+                    schedule = json.load(f)
+                    total_matches = len(schedule)
+            
+            # Load results
+            results_file = Path(__file__).parent / f"{event_name.lower().replace(' ', '_')}_results.json"
+            if results_file.exists():
+                with open(results_file) as f:
+                    results = json.load(f)
+                    completed_matches = len(results)
+        
+        progress = int((completed_matches / total_matches * 100)) if total_matches > 0 else 0
+        
+        all_events_progress.append({
+            'name': event['Event'],
+            'status': event['Status'],
+            'progress': progress,
+            'completed_matches': completed_matches,
+            'total_matches': total_matches
+        })
+    
     # Upcoming events
     upcoming_events = []
     for idx, event in enumerate(events):
@@ -149,6 +188,7 @@ def home():
                          total_matches=total_matches,
                          leaderboard=leaderboard[:10],
                          today_events=today_events,
+                         all_events=all_events_progress,
                          upcoming_events=upcoming_events[:5])
 
 @app.route('/dashboard')

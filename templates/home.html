@@ -547,6 +547,105 @@
             color: #888;
         }
         
+        /* Event Progress */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .event-progress-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .event-progress-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 0, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .event-progress-card:hover {
+            border-color: #ff00ff;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.2);
+        }
+        
+        .event-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .event-progress-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        
+        .event-status-badge {
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-completed {
+            background: rgba(0, 255, 0, 0.2);
+            border: 1px solid #0f0;
+            color: #0f0;
+        }
+        
+        .status-in-progress {
+            background: rgba(255, 165, 0, 0.2);
+            border: 1px solid #ffa500;
+            color: #ffa500;
+        }
+        
+        .status-planned {
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+        }
+        
+        .progress-bar-event {
+            width: 100%;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill-event {
+            height: 100%;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            transition: width 1s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        
+        .progress-text {
+            color: #00ffff;
+            font-weight: bold;
+        }
+        
+        .progress-matches {
+            color: #888;
+        }
+        
         /* Stats Section */
         .stats-section {
             padding: 80px 20px;
@@ -904,6 +1003,29 @@
                             <div class="no-events-subtext">Check back soon!</div>
                         </div>
                     {% endif %}
+                </div>
+            </section>
+            
+            <section class="progress-section">
+                <h2 class="section-title-small">📈 EVENT PROGRESS</h2>
+                <div class="event-progress-list">
+                    {% for event in all_events %}
+                    <div class="event-progress-card">
+                        <div class="event-progress-header">
+                            <div class="event-progress-name">{{ event.name }}</div>
+                            <div class="event-status-badge status-{{ event.status|lower|replace(' ', '-') }}">
+                                {{ event.status }}
+                            </div>
+                        </div>
+                        <div class="progress-bar-event">
+                            <div class="progress-fill-event" style="width: {{ event.progress }}%"></div>
+                        </div>
+                        <div class="progress-stats">
+                            <span class="progress-text">{{ event.progress }}% Complete</span>
+                            <span class="progress-matches">{{ event.completed_matches }}/{{ event.total_matches }} Matches</span>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
             </section>
         </div>
