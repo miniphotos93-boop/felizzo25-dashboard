@@ -62,11 +62,16 @@
             border: 1px solid rgba(0, 255, 255, 0.3);
             color: #fff;
             border-radius: 5px;
-            width: 120px;
+            width: 150px;
+            cursor: pointer;
         }
         .time-input:focus {
             outline: none;
             border-color: #00ffff;
+        }
+        .time-input option {
+            background: #000;
+            color: #fff;
         }
     </style>
 </head>
@@ -94,9 +99,29 @@
                     <td>{{ match.player1 }}</td>
                     <td>{{ match.player2 }}</td>
                     <td>
-                        <input type="time" class="time-input" 
-                               value="{{ match.time_slot or '' }}"
-                               onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
+                        <select class="time-input" 
+                                onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
+                            <option value="">Select Time</option>
+                            <option value="09:00 AM" {% if match.time_slot == '09:00 AM' %}selected{% endif %}>09:00 AM</option>
+                            <option value="09:30 AM" {% if match.time_slot == '09:30 AM' %}selected{% endif %}>09:30 AM</option>
+                            <option value="10:00 AM" {% if match.time_slot == '10:00 AM' %}selected{% endif %}>10:00 AM</option>
+                            <option value="10:30 AM" {% if match.time_slot == '10:30 AM' %}selected{% endif %}>10:30 AM</option>
+                            <option value="11:00 AM" {% if match.time_slot == '11:00 AM' %}selected{% endif %}>11:00 AM</option>
+                            <option value="11:30 AM" {% if match.time_slot == '11:30 AM' %}selected{% endif %}>11:30 AM</option>
+                            <option value="12:00 PM" {% if match.time_slot == '12:00 PM' %}selected{% endif %}>12:00 PM</option>
+                            <option value="12:30 PM" {% if match.time_slot == '12:30 PM' %}selected{% endif %}>12:30 PM</option>
+                            <option value="01:00 PM" {% if match.time_slot == '01:00 PM' %}selected{% endif %}>01:00 PM</option>
+                            <option value="01:30 PM" {% if match.time_slot == '01:30 PM' %}selected{% endif %}>01:30 PM</option>
+                            <option value="02:00 PM" {% if match.time_slot == '02:00 PM' %}selected{% endif %}>02:00 PM</option>
+                            <option value="02:30 PM" {% if match.time_slot == '02:30 PM' %}selected{% endif %}>02:30 PM</option>
+                            <option value="03:00 PM" {% if match.time_slot == '03:00 PM' %}selected{% endif %}>03:00 PM</option>
+                            <option value="03:30 PM" {% if match.time_slot == '03:30 PM' %}selected{% endif %}>03:30 PM</option>
+                            <option value="04:00 PM" {% if match.time_slot == '04:00 PM' %}selected{% endif %}>04:00 PM</option>
+                            <option value="04:30 PM" {% if match.time_slot == '04:30 PM' %}selected{% endif %}>04:30 PM</option>
+                            <option value="05:00 PM" {% if match.time_slot == '05:00 PM' %}selected{% endif %}>05:00 PM</option>
+                            <option value="05:30 PM" {% if match.time_slot == '05:30 PM' %}selected{% endif %}>05:30 PM</option>
+                            <option value="06:00 PM" {% if match.time_slot == '06:00 PM' %}selected{% endif %}>06:00 PM</option>
+                        </select>
                     </td>
                     <td>
                         <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" 
@@ -164,8 +189,8 @@
             // Load time slots
             const timeSlots = JSON.parse(localStorage.getItem('carrom_time_slots') || '{}');
             for (const [matchId, timeSlot] of Object.entries(timeSlots)) {
-                const input = document.querySelector(`input[onchange*="${matchId}"]`);
-                if (input) input.value = timeSlot;
+                const select = document.querySelector(`select[onchange*="${matchId}"]`);
+                if (select) select.value = timeSlot;
             }
         });
     </script>
