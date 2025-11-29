@@ -3,12 +3,103 @@ from flask import Flask, render_template, request, redirect, jsonify, session
 from functools import wraps
 import json
 from pathlib import Path
+import os
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this'  # Change this!
 EVENTS_FILE = Path(__file__).parent / "event_tracker.json"
 PARTICIPANTS_DIR = Path(__file__).parent / "participants_data"
 PARTICIPANTS_DIR.mkdir(exist_ok=True)
+
+DATABASE_URL = os.environ.get('DATABASE_URL')
+
+# Database helper functions
+def get_db_connection():
+    if DATABASE_URL:
+        try:
+            return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+        except:
+            return None
+    return None
+
+def init_database():
+    """Initialize database tables and migrate data"""
+    conn = get_db_connection()
+    if not conn:
+        return
+    
+    try:
+        cur = conn.cursor()
+        
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS events (
+                id SERIAL PRIMARY KEY,
+                event_name VARCHAR(255) UNIQUE NOT NULL,
+                coordinator VARCHAR(255),
+                manager VARCHAR(255),
+                start_date VARCHAR(50),
+                end_date VARCHAR(50),
+                finals_date VARCHAR(50),
+                status VARCHAR(50),
+                participants VARCHAR(50),
+                winner VARCHAR(255),
+                notes TEXT
+            )
+        ''')
+        
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS match_results (
+                id SERIAL PRIMARY KEY,
+                event_name VARCHAR(255) NOT NULL,
+                match_id VARCHAR(255) NOT NULL,
+                winner INTEGER,
+                UNIQUE(event_name, match_id)
+            )
+        ''')
+        
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS time_slots (
+                id SERIAL PRIMARY KEY,
+                event_name VARCHAR(255) NOT NULL,
+                match_id VARCHAR(255) NOT NULL,
+                time_slot VARCHAR(50),
+                UNIQUE(event_name, match_id)
+            )
+        ''')
+        
+        conn.commit()
+        
+        # Migrate events from JSON if database is empty
+        cur.execute('SELECT COUNT(*) FROM events')
+        if cur.fetchone()['count'] == 0:
+            try:
+                with open(EVENTS_FILE) as f:
+                    events = json.load(f)
+                for event in events:
+                    cur.execute('''
+                        INSERT INTO events (event_name, coordinator, manager, start_date, end_date, 
+                                          finals_date, status, participants, winner, notes)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                        ON CONFLICT (event_name) DO NOTHING
+                    ''', (
+                        event['Event'], event.get('Coordinator', ''), event.get('Manager', ''),
+                        event.get('Start_Date', ''), event.get('End_Date', ''), event.get('Finals_Date', ''),
+                        event.get('Status', 'Planned'), event.get('Participants', ''),
+                        event.get('Winner', ''), event.get('Notes', '')
+                    ))
+                conn.commit()
+            except:
+                pass
+        
+        cur.close()
+        conn.close()
+    except Exception as e:
+        print(f"Database init error: {e}")
+
+# Initialize database on startup
+init_database()
 
 # Admin users list
 ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka']  # Add admin usernames here
@@ -31,6 +122,37 @@ EVENT_TYPES = {
 }
 
 def load_events():
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute('SELECT * FROM events ORDER BY id')
+            rows = cur.fetchall()
+            cur.close()
+            conn.close()
+            
+            events = []
+            for row in rows:
+                events.append({
+                    'Event': row['event_name'],
+                    'Coordinator': row['coordinator'],
+                    'Manager': row['manager'],
+                    'Start_Date': row['start_date'],
+                    'End_Date': row['end_date'],
+                    'Finals_Date': row['finals_date'],
+                    'Status': row['status'],
+                    'Participants': row['participants'],
+                    'Winner': row['winner'],
+                    'Notes': row['notes']
+                })
+            
+            for event in events:
+                event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
+            return events
+        except:
+            pass
+    
+    # Fallback to JSON file
     with open(EVENTS_FILE) as f:
         events = json.load(f)
     
@@ -39,6 +161,39 @@ def load_events():
     return events
 
 def save_events(events):
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            for event in events:
+                cur.execute('''
+                    INSERT INTO events (event_name, coordinator, manager, start_date, end_date, 
+                                      finals_date, status, participants, winner, notes)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (event_name) DO UPDATE SET
+                        coordinator = EXCLUDED.coordinator,
+                        manager = EXCLUDED.manager,
+                        start_date = EXCLUDED.start_date,
+                        end_date = EXCLUDED.end_date,
+                        finals_date = EXCLUDED.finals_date,
+                        status = EXCLUDED.status,
+                        participants = EXCLUDED.participants,
+                        winner = EXCLUDED.winner,
+                        notes = EXCLUDED.notes
+                ''', (
+                    event['Event'], event.get('Coordinator', ''), event.get('Manager', ''),
+                    event.get('Start_Date', ''), event.get('End_Date', ''), event.get('Finals_Date', ''),
+                    event.get('Status', 'Planned'), event.get('Participants', ''),
+                    event.get('Winner', ''), event.get('Notes', '')
+                ))
+            conn.commit()
+            cur.close()
+            conn.close()
+            return
+        except:
+            pass
+    
+    # Fallback to JSON file
     events_to_save = []
     for event in events:
         event_copy = {k: v for k, v in event.items() if k != 'event_type'}
@@ -682,10 +837,27 @@ def update_match_winner():
         data = request.json
         match_id = data['match_id']
         winner = data['winner']
+        event_name = data.get('event', 'Foosball')  # Default to Foosball for backward compatibility
         
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute('''
+                    INSERT INTO match_results (event_name, match_id, winner)
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (event_name, match_id) DO UPDATE SET winner = EXCLUDED.winner
+                ''', (event_name, match_id, winner))
+                conn.commit()
+                cur.close()
+                conn.close()
+                return jsonify({'status': 'success'})
+            except:
+                pass
+        
+        # Fallback to JSON file
         results_file = Path(__file__).parent / 'foosball_results.json'
         
-        # Load existing results or create new
         try:
             with open(results_file, 'r') as f:
                 results = json.load(f)
@@ -709,7 +881,23 @@ def update_time_slot():
         match_id = data['match_id']
         time_slot = data['time_slot']
         
-        # Map event to schedule file
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute('''
+                    INSERT INTO time_slots (event_name, match_id, time_slot)
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (event_name, match_id) DO UPDATE SET time_slot = EXCLUDED.time_slot
+                ''', (event, match_id, time_slot))
+                conn.commit()
+                cur.close()
+                conn.close()
+                return jsonify({'status': 'success'})
+            except:
+                pass
+        
+        # Fallback to JSON file
         schedule_files = {
             'Chess': 'chess_schedule.json',
             'Carrom': 'carrom_schedule.json',
@@ -723,7 +911,6 @@ def update_time_slot():
         if not schedule_file.exists():
             return jsonify({'status': 'error', 'message': 'Schedule file not found'}), 404
         
-        # Load schedule
         with open(schedule_file, 'r') as f:
             schedule = json.load(f)
         
