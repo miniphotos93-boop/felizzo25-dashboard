@@ -492,8 +492,26 @@
                             data-status="{% if winners.get(match.match_id) %}completed{% else %}pending{% endif %}">
                             <td>{{ day.date }}</td>
                             <td><strong>{{ match.match_id }}</strong></td>
-                            <td>{% if match.team1_name %}{{ match.team1_name }}{% elif match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}</td>
-                            <td>{% if match.team2_name %}{{ match.team2_name }}{% elif match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}</td>
+                            <td>
+                                {% if match.team1_name %}
+                                    <strong>{{ match.team1_name }}</strong><br>
+                                    <small style="opacity: 0.8;">{{ match.team1_members }}</small>
+                                {% elif match.player1 %}
+                                    {{ match.player1 }}
+                                {% else %}
+                                    {{ match.pair1_p1 }} & {{ match.pair1_p2 }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if match.team2_name %}
+                                    <strong>{{ match.team2_name }}</strong><br>
+                                    <small style="opacity: 0.8;">{{ match.team2_members }}</small>
+                                {% elif match.player2 %}
+                                    {{ match.player2 }}
+                                {% else %}
+                                    {{ match.pair2_p1 }} & {{ match.pair2_p2 }}
+                                {% endif %}
+                            </td>
                             <td>
                                 <select class="time-input" onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
                                     <option value="">Select Time</option>
