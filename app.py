@@ -371,20 +371,26 @@ def event_detail(idx):
     if event_name in schedule_files:
         schedule_file = Path(__file__).parent / schedule_files[event_name]
         if schedule_file.exists():
-            with open(schedule_file) as f:
-                matches = json.load(f)
-            
-            # Group by date
-            from collections import defaultdict
-            by_date = defaultdict(list)
-            for match in matches:
-                by_date[match['date']].append(match)
-            
-            for date in sorted(by_date.keys()):
-                schedule.append({
-                    'date': date,
-                    'matches': by_date[date]
-                })
+            try:
+                with open(schedule_file) as f:
+                    matches = json.load(f)
+                
+                # Group by date
+                from collections import defaultdict
+                by_date = defaultdict(list)
+                for match in matches:
+                    # Check if match has date field
+                    if isinstance(match, dict) and 'date' in match:
+                        by_date[match['date']].append(match)
+                
+                for date in sorted(by_date.keys()):
+                    schedule.append({
+                        'date': date,
+                        'matches': by_date[date]
+                    })
+            except Exception as e:
+                print(f"Error loading schedule for {event_name}: {e}")
+                schedule = []
         
         # Load results
         results_file = Path(__file__).parent / f"{event_name.lower().replace(' ', '_')}_results.json"
