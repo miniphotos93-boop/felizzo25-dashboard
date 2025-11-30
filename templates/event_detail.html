@@ -476,8 +476,8 @@
                         <tr>
                             <th>📅 Date</th>
                             <th>🎯 Match ID</th>
-                            <th>{% if event.Event in ['Tug of War', 'Seven Stones'] %}🏆 Team 1{% else %}👤 Player 1{% endif %}</th>
-                            <th>{% if event.Event in ['Tug of War', 'Seven Stones'] %}🏆 Team 2{% else %}👤 Player 2{% endif %}</th>
+                            <th>{% if event.Event in ['Tug of War', 'Seven Stones', 'Carrom', 'Snookers', 'TT'] %}🏆 Team 1{% else %}👤 Player 1{% endif %}</th>
+                            <th>{% if event.Event in ['Tug of War', 'Seven Stones', 'Carrom', 'Snookers', 'TT'] %}🏆 Team 2{% else %}👤 Player 2{% endif %}</th>
                             <th>⏰ Time</th>
                             <th>📊 Status</th>
                             <th>🏆 Winner</th>
@@ -498,6 +498,9 @@
                                 {% if match.team1_name %}
                                     <strong>{{ match.team1_name }}</strong><br>
                                     <small style="opacity: 0.8;">{{ match.team1_members }}</small>
+                                {% elif match.pair1_team %}
+                                    <strong>{{ match.pair1_team }}</strong><br>
+                                    <small style="opacity: 0.8;">{{ match.pair1_p1 }} & {{ match.pair1_p2 }}</small>
                                 {% elif match.player1 %}
                                     {{ match.player1 }}
                                 {% else %}
@@ -508,6 +511,9 @@
                                 {% if match.team2_name %}
                                     <strong>{{ match.team2_name }}</strong><br>
                                     <small style="opacity: 0.8;">{{ match.team2_members }}</small>
+                                {% elif match.pair2_team %}
+                                    <strong>{{ match.pair2_team }}</strong><br>
+                                    <small style="opacity: 0.8;">{{ match.pair2_p1 }} & {{ match.pair2_p2 }}</small>
                                 {% elif match.player2 %}
                                     {{ match.player2 }}
                                 {% else %}
