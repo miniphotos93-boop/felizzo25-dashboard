@@ -354,11 +354,35 @@ def event_detail(idx):
     event = events[idx]
     event_name = event['Event']
     
-    # Load schedule
+    # Time slots
+    time_slots = [
+        '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+        '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
+        '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM', '06:00 PM'
+    ]
+    
+    # Foosball uses special two-table view
+    if event_name == 'Foosball':
+        schedule_file = Path(__file__).parent / 'foosball_day_schedule.json'
+        schedule = []
+        winners = {}
+        
+        if schedule_file.exists():
+            with open(schedule_file) as f:
+                schedule = json.load(f)
+        
+        results_file = Path(__file__).parent / 'foosball_results.json'
+        if results_file.exists():
+            with open(results_file) as f:
+                winners = json.load(f)
+        
+        return render_template('event_detail_foosball.html', event=event, event_idx=idx,
+                             schedule=schedule, winners=winners, time_slots=time_slots)
+    
+    # Other sports use date-based structure
     schedule_files = {
         'Carrom': 'carrom_schedule.json',
         'Chess': 'chess_schedule.json',
-        'Foosball': 'foosball_day_schedule.json',
         'Snookers': 'snookers_schedule.json',
         'TT': 'tt_schedule.json',
         'Seven Stones': 'sevenstones_schedule.json',
@@ -375,27 +399,18 @@ def event_detail(idx):
                 with open(schedule_file) as f:
                     data = json.load(f)
                 
-                # Handle different formats
-                if event_name == 'Foosball':
-                    # Foosball has date-based structure already
-                    for day in data:
-                        schedule.append({
-                            'date': day['date'],
-                            'matches': day['matches']
-                        })
-                else:
-                    # Group by date for other events
-                    from collections import defaultdict
-                    by_date = defaultdict(list)
-                    for match in data:
-                        if isinstance(match, dict) and 'date' in match:
-                            by_date[match['date']].append(match)
-                    
-                    for date in sorted(by_date.keys()):
-                        schedule.append({
-                            'date': date,
-                            'matches': by_date[date]
-                        })
+                # Group by date
+                from collections import defaultdict
+                by_date = defaultdict(list)
+                for match in data:
+                    if isinstance(match, dict) and 'date' in match:
+                        by_date[match['date']].append(match)
+                
+                for date in sorted(by_date.keys()):
+                    schedule.append({
+                        'date': date,
+                        'matches': by_date[date]
+                    })
             except Exception as e:
                 print(f"Error loading schedule for {event_name}: {e}")
                 schedule = []

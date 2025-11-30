@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ event.Event }} - Felizzo'25</title>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Silkscreen', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            border: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 32px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.5;
+        }
+        
+        .back-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff00ff, #ff0080);
+            border: 3px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 12px;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .tab {
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border: 3px solid transparent;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 15px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-color: #fff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .date-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .date-selector select {
+            padding: 15px 30px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ffff;
+            color: #fff;
+            border-radius: 10px;
+            font-family: 'Silkscreen', monospace;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .tables-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .table-section {
+            background: rgba(0, 0, 0, 0.5);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+        }
+        
+        .table-header {
+            font-size: 24px;
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .match-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            transition: all 0.3s;
+        }
+        
+        .match-card:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+        
+        .match-id {
+            color: #ff00ff;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .pair {
+            padding: 10px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+        
+        .vs {
+            text-align: center;
+            color: #ffa500;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        
+        .winner-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .winner-btn {
+            flex: 1;
+            padding: 10px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.1));
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+        
+        .winner-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .winner-btn.selected {
+            background: linear-gradient(135deg, #0f0, #00ff88);
+            color: #000;
+            border-color: #0f0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+        }
+        
+        .time-slot {
+            margin-top: 10px;
+            text-align: center;
+        }
+        
+        .time-slot select {
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            color: #fff;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 {{ event.Event }}</h1>
+        <a href="/dashboard" class="back-btn">← BACK</a>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('schedule')">📅 SCHEDULE</button>
+        <button class="tab" onclick="showTab('participants')">👥 PLAYERS</button>
+        <button class="tab" onclick="showTab('settings')">⚙️ SETTINGS</button>
+    </div>
+    
+    <div id="schedule" class="tab-content active">
+        <div class="date-selector">
+            <label style="color: #00ffff; margin-right: 15px;">📅 SELECT DATE:</label>
+            <select id="dateSelect" onchange="showDate(this.value)">
+                {% for day in schedule %}
+                <option value="{{ loop.index0 }}">{{ day.day_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        {% for day in schedule %}
+        <div class="day-schedule" id="day-{{ loop.index0 }}" style="{% if loop.index0 != 0 %}display: none;{% endif %}">
+            <div class="tables-container">
+                <div class="table-section">
+                    <div class="table-header">🏓 TABLE 1</div>
+                    <div id="table1-{{ loop.index0 }}"></div>
+                </div>
+                <div class="table-section">
+                    <div class="table-header">🏓 TABLE 2</div>
+                    <div id="table2-{{ loop.index0 }}"></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div id="participants" class="tab-content">
+        <div style="background: rgba(0, 0, 0, 0.5); border: 3px solid #00ffff; border-radius: 15px; overflow: hidden;">
+            <iframe src="/manage-participants/{{ event_idx }}" style="width: 100%; height: 800px; border: none;"></iframe>
+        </div>
+    </div>
+    
+    <div id="settings" class="tab-content">
+        <div style="max-width: 600px; margin: 0 auto; background: rgba(0, 0, 0, 0.5); border: 3px solid #00ffff; border-radius: 15px; padding: 40px;">
+            <h2 style="color: #00ffff; margin-bottom: 30px; font-size: 32px; text-align: center;">⚙️ EVENT SETTINGS</h2>
+            <form action="/update/{{ event_idx }}" method="POST">
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">👤 Coordinator</label>
+                    <input type="text" name="coordinator" value="{{ event.Coordinator }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <button type="submit" style="padding: 15px 40px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 18px;">💾 SAVE</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const scheduleData = {{ schedule|tojson }};
+        const winners = {{ winners|tojson }};
+        const timeSlots = {{ time_slots|tojson }};
+        
+        function distributeMatches() {
+            scheduleData.forEach((day, dayIdx) => {
+                const table1 = document.getElementById(`table1-${dayIdx}`);
+                const table2 = document.getElementById(`table2-${dayIdx}`);
+                
+                const table1Matches = [];
+                const table2Matches = [];
+                const usedPairs = new Set();
+                
+                day.matches.forEach(match => {
+                    const pair1 = `${match.pair1_p1}_${match.pair1_p2}`.toLowerCase();
+                    const pair2 = `${match.pair2_p1}_${match.pair2_p2}`.toLowerCase();
+                    
+                    // Try to assign to table 1 first
+                    if (!usedPairs.has(pair1) && !usedPairs.has(pair2)) {
+                        table1Matches.push(match);
+                        usedPairs.add(pair1);
+                        usedPairs.add(pair2);
+                    } else {
+                        table2Matches.push(match);
+                    }
+                });
+                
+                // Clear used pairs for table 2 distribution
+                usedPairs.clear();
+                const finalTable2 = [];
+                table2Matches.forEach(match => {
+                    const pair1 = `${match.pair1_p1}_${match.pair1_p2}`.toLowerCase();
+                    const pair2 = `${match.pair2_p1}_${match.pair2_p2}`.toLowerCase();
+                    
+                    if (!usedPairs.has(pair1) && !usedPairs.has(pair2)) {
+                        finalTable2.push(match);
+                        usedPairs.add(pair1);
+                        usedPairs.add(pair2);
+                    }
+                });
+                
+                table1.innerHTML = table1Matches.map(m => createMatchCard(m)).join('');
+                table2.innerHTML = finalTable2.map(m => createMatchCard(m)).join('');
+            });
+        }
+        
+        function createMatchCard(match) {
+            const winner = winners[match.match_id];
+            return `
+                <div class="match-card">
+                    <div class="match-id">${match.match_id} | ${match.group}</div>
+                    <div class="pair">${match.pair1_p1} & ${match.pair1_p2}</div>
+                    <div class="vs">VS</div>
+                    <div class="pair">${match.pair2_p1} & ${match.pair2_p2}</div>
+                    <div class="time-slot">
+                        <select onchange="saveTimeSlot('${match.match_id}', this.value)">
+                            <option value="">Select Time</option>
+                            ${timeSlots.map(t => `<option value="${t}" ${match.time_slot === t ? 'selected' : ''}>${t}</option>`).join('')}
+                        </select>
+                    </div>
+                    <div class="winner-btns">
+                        <button class="winner-btn ${winner == '1' ? 'selected' : ''}" onclick="selectWinner('${match.match_id}', 1, this)">Pair 1</button>
+                        <button class="winner-btn ${winner == '2' ? 'selected' : ''}" onclick="selectWinner('${match.match_id}', 2, this)">Pair 2</button>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function showDate(idx) {
+            document.querySelectorAll('.day-schedule').forEach(d => d.style.display = 'none');
+            document.getElementById(`day-${idx}`).style.display = 'block';
+        }
+        
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        function saveTimeSlot(matchId, timeSlot) {
+            fetch('/update-time-slot', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    match_id: matchId,
+                    time_slot: timeSlot
+                })
+            });
+        }
+        
+        function selectWinner(matchId, winner, button) {
+            const card = button.closest('.match-card');
+            card.querySelectorAll('.winner-btn').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            
+            fetch('/update-match-winner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    match_id: matchId,
+                    winner: winner
+                })
+            });
+        }
+        
+        distributeMatches();
+    </script>
+</body>
+</html>
