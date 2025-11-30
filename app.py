@@ -7,9 +7,8 @@ import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import boto3
+from botocore.exceptions import ClientError
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this'  # Change this!
@@ -1263,28 +1262,38 @@ def send_schedule_email():
         </html>
         """
         
-        # Send email using environment variables for credentials
-        smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
-        smtp_port = int(os.getenv('SMTP_PORT', '587'))
-        sender_email = os.getenv('SENDER_EMAIL')
-        sender_password = os.getenv('SENDER_PASSWORD')
+        # Send email using AWS SES
+        sender_email = os.getenv('SENDER_EMAIL', 'felizzo25@amazon.com')
+        aws_region = os.getenv('AWS_REGION', 'us-east-1')
         
-        if not sender_email or not sender_password:
-            return jsonify({'status': 'error', 'message': 'Email credentials not configured'}), 500
+        # Create SES client
+        ses_client = boto3.client('ses', region_name=aws_region)
         
-        msg = MIMEMultipart('alternative')
-        msg['Subject'] = f"{event_name} Schedule - {date}"
-        msg['From'] = sender_email
-        msg['To'] = recipient_email
+        try:
+            response = ses_client.send_email(
+                Source=sender_email,
+                Destination={
+                    'ToAddresses': [recipient_email]
+                },
+                Message={
+                    'Subject': {
+                        'Data': f"{event_name} Schedule - {date}",
+                        'Charset': 'UTF-8'
+                    },
+                    'Body': {
+                        'Html': {
+                            'Data': html_content,
+                            'Charset': 'UTF-8'
+                        }
+                    }
+                }
+            )
+            
+            return jsonify({'status': 'success', 'message': f'Schedule sent to {recipient_email}'})
         
-        msg.attach(MIMEText(html_content, 'html'))
-        
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.starttls()
-            server.login(sender_email, sender_password)
-            server.send_message(msg)
-        
-        return jsonify({'status': 'success', 'message': f'Schedule sent to {recipient_email}'})
+        except ClientError as e:
+            error_msg = e.response['Error']['Message']
+            return jsonify({'status': 'error', 'message': f'SES Error: {error_msg}'}), 500
     
     except Exception as e:
         print(f"Error sending email: {e}")
