@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ event.Event }} - Felizzo'25</title>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Silkscreen', monospace;
+            background: linear-gradient(135deg, #1a0033 0%, #000428 100%);
+            color: #fff;
+            padding: 20px;
+            min-height: 100vh;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
+            animation: bgPulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.3), rgba(0, 255, 255, 0.3));
+            border: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        h1 {
+            font-size: 32px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.5;
+        }
+        
+        .back-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff00ff, #ff0080);
+            border: 3px solid #fff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 12px;
+            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.5);
+            transition: all 0.3s;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
+        
+        .tab {
+            padding: 20px 40px;
+            background: linear-gradient(135deg, rgba(255, 0, 255, 0.2), rgba(0, 255, 255, 0.2));
+            border: 3px solid transparent;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 15px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            border-color: #fff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .team-section {
+            background: rgba(0, 0, 0, 0.5);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .team-header {
+            font-size: 24px;
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+        
+        .round-header {
+            font-size: 18px;
+            color: #ff00ff;
+            margin: 20px 0 15px 0;
+            padding: 10px;
+            background: rgba(255, 0, 255, 0.2);
+            border-radius: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #ff00ff, #00ffff);
+            color: #000;
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        th:first-child { border-radius: 10px 0 0 10px; }
+        th:last-child { border-radius: 0 10px 10px 0; }
+        
+        tr.match-row {
+            background: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+        
+        tr.match-row:hover {
+            background: rgba(0, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+        
+        td {
+            padding: 15px;
+            font-size: 14px;
+        }
+        
+        tr.match-row td:first-child { border-radius: 10px 0 0 10px; }
+        tr.match-row td:last-child { border-radius: 0 10px 10px 0; }
+        
+        .winner-btn {
+            padding: 10px 20px;
+            margin: 0 5px;
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 255, 255, 0.1));
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-size: 12px;
+        }
+        
+        .winner-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .winner-btn.selected {
+            background: linear-gradient(135deg, #0f0, #00ff88);
+            color: #000;
+            border-color: #0f0;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎮 {{ event.Event }}</h1>
+        <a href="/dashboard" class="back-btn">← BACK</a>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('schedule')">📅 SCHEDULE</button>
+        <button class="tab" onclick="showTab('participants')">👥 PLAYERS</button>
+        <button class="tab" onclick="showTab('settings')">⚙️ SETTINGS</button>
+    </div>
+    
+    <div id="schedule" class="tab-content active">
+        {% for team_data in schedule %}
+        <div class="team-section">
+            <div class="team-header">🏆 {{ team_data.team }}</div>
+            
+            {% set current_round = '' %}
+            {% for match in team_data.matches %}
+                {% if match.round != current_round %}
+                    {% set current_round = match.round %}
+                    <div class="round-header">{{ match.round }}</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Match ID</th>
+                                <th>Pair 1</th>
+                                <th>Pair 2</th>
+                                <th>Winner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                {% endif %}
+                
+                <tr class="match-row">
+                    <td><strong>{{ match.match_id }}</strong></td>
+                    <td>Pair {{ match.pair1 }}</td>
+                    <td>Pair {{ match.pair2 }}</td>
+                    <td>
+                        <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" 
+                                onclick="selectWinner('{{ match.match_id }}', 1, this)">Pair 1</button>
+                        <button class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}" 
+                                onclick="selectWinner('{{ match.match_id }}', 2, this)">Pair 2</button>
+                    </td>
+                </tr>
+                
+                {% if loop.last or team_data.matches[loop.index].round != current_round %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div id="participants" class="tab-content">
+        <div style="background: rgba(0, 0, 0, 0.5); border: 3px solid #00ffff; border-radius: 15px; overflow: hidden;">
+            <iframe src="/manage-participants/{{ event_idx }}" style="width: 100%; height: 800px; border: none;"></iframe>
+        </div>
+    </div>
+    
+    <div id="settings" class="tab-content">
+        <div style="max-width: 600px; margin: 0 auto; background: rgba(0, 0, 0, 0.5); border: 3px solid #00ffff; border-radius: 15px; padding: 40px;">
+            <h2 style="color: #00ffff; margin-bottom: 30px; font-size: 32px; text-align: center;">⚙️ EVENT SETTINGS</h2>
+            <form action="/update/{{ event_idx }}" method="POST">
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">👤 Coordinator</label>
+                    <input type="text" name="coordinator" value="{{ event.Coordinator }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">👨💼 Manager</label>
+                    <input type="text" name="manager" value="{{ event.Manager }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">📅 Start Date</label>
+                    <input type="date" name="start_date" value="{{ event.Start_Date }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">📊 Status</label>
+                    <select name="status" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                        <option value="Planned" {% if event.Status == 'Planned' %}selected{% endif %}>📋 Planned</option>
+                        <option value="In Progress" {% if event.Status == 'In Progress' %}selected{% endif %}>⚡ In Progress</option>
+                        <option value="Completed" {% if event.Status == 'Completed' %}selected{% endif %}>✅ Completed</option>
+                    </select>
+                </div>
+                <button type="submit" style="padding: 15px 40px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 18px;">💾 SAVE</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        function selectWinner(matchId, winner, button) {
+            const row = button.closest('tr');
+            row.querySelectorAll('.winner-btn').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            
+            fetch('/update-match-winner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    match_id: matchId,
+                    winner: winner
+                })
+            });
+        }
+    </script>
+</body>
+</html>

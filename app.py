@@ -352,12 +352,30 @@ def home():
 def event_detail(idx):
     events = load_events()
     event = events[idx]
+    event_name = event['Event']
     
-    # Load schedule
+    # Foosball uses team-based structure
+    if event_name == 'Foosball':
+        schedule_file = Path(__file__).parent / 'foosball_schedule.json'
+        schedule = []
+        winners = {}
+        
+        if schedule_file.exists():
+            with open(schedule_file) as f:
+                schedule = json.load(f)
+        
+        results_file = Path(__file__).parent / 'foosball_results.json'
+        if results_file.exists():
+            with open(results_file) as f:
+                winners = json.load(f)
+        
+        return render_template('event_detail_teams.html', event=event, event_idx=idx,
+                             schedule=schedule, winners=winners)
+    
+    # Other sports use date-based structure
     schedule_files = {
         'Carrom': 'carrom_schedule.json',
         'Chess': 'chess_schedule.json',
-        'Foosball': 'foosball_schedule.json',
         'Snookers': 'snookers_schedule.json',
         'TT': 'tt_schedule.json',
         'Seven Stones': 'sevenstones_schedule.json',
@@ -367,7 +385,6 @@ def event_detail(idx):
     schedule = []
     winners = {}
     
-    event_name = event['Event']
     if event_name in schedule_files:
         schedule_file = Path(__file__).parent / schedule_files[event_name]
         if schedule_file.exists():
