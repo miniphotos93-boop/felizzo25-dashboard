@@ -688,9 +688,18 @@
             const email = prompt('Enter email address to send schedule:');
             if (!email) return;
             
-            const today = new Date().toISOString().split('T')[0];
             const dateFilter = document.getElementById('dateFilter');
-            const selectedDate = dateFilter && dateFilter.value ? dateFilter.value : today;
+            let selectedDate = dateFilter && dateFilter.value ? dateFilter.value : null;
+            
+            // If no date selected, use first date from schedule
+            if (!selectedDate && dateFilter && dateFilter.options.length > 1) {
+                selectedDate = dateFilter.options[1].value; // Skip "All Dates" option
+            }
+            
+            if (!selectedDate) {
+                alert('No date available. Please select a date from the filter.');
+                return;
+            }
             
             if (!confirm(`Send schedule for ${selectedDate} to ${email}?`)) return;
             
