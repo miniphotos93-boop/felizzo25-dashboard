@@ -398,7 +398,7 @@
 <body>
     <div class="header">
         <h1>🎮 {{ event.Event }}</h1>
-        <a href="/dashboard" class="back-btn">← BACK</a>
+        <a href="/" class="back-btn">← BACK</a>
     </div>
     
     <div class="tabs">
@@ -426,6 +426,25 @@
                         {% endfor %}
                     </select>
                 </div>
+                {% if event.Event == 'Foosball' %}
+                <div class="filter-group">
+                    <label>🎯 Table/Group</label>
+                    <select id="groupFilter" onchange="filterMatches()">
+                        <option value="">All Tables</option>
+                        {% set groups = [] %}
+                        {% for day in schedule %}
+                            {% for match in day.matches %}
+                                {% if match.group not in groups %}
+                                    {% set _ = groups.append(match.group) %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        {% for group in groups|sort %}
+                        <option value="{{ group }}">{{ group }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
                 <div class="filter-group">
                     <label>🎯 Match ID</label>
                     <input type="text" id="matchFilter" onkeyup="filterMatches()" placeholder="e.g., SDL_M1">
