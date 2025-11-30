@@ -464,13 +464,13 @@
                         <tr class="match-row" 
                             data-date="{{ day.date }}" 
                             data-match="{{ match.match_id }}" 
-                            data-player1="{{ match.player1 }}" 
-                            data-player2="{{ match.player2 }}"
+                            data-player1="{% if match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}" 
+                            data-player2="{% if match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}"
                             data-status="{% if winners.get(match.match_id) %}completed{% else %}pending{% endif %}">
                             <td>{{ day.date }}</td>
                             <td><strong>{{ match.match_id }}</strong></td>
-                            <td>{{ match.player1 }}</td>
-                            <td>{{ match.player2 }}</td>
+                            <td>{% if match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}</td>
+                            <td>{% if match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}</td>
                             <td>
                                 <select class="time-input" onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
                                     <option value="">Select Time</option>
