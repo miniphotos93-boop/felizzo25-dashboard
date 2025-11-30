@@ -688,18 +688,12 @@
             const email = prompt('Enter email address to send schedule:');
             if (!email) return;
             
+            // Get today's date in IST timezone
+            const istDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+            const today = new Date(istDate).toISOString().split('T')[0];
+            
             const dateFilter = document.getElementById('dateFilter');
-            let selectedDate = dateFilter && dateFilter.value ? dateFilter.value : null;
-            
-            // If no date selected, use first date from schedule
-            if (!selectedDate && dateFilter && dateFilter.options.length > 1) {
-                selectedDate = dateFilter.options[1].value; // Skip "All Dates" option
-            }
-            
-            if (!selectedDate) {
-                alert('No date available. Please select a date from the filter.');
-                return;
-            }
+            const selectedDate = dateFilter && dateFilter.value ? dateFilter.value : today;
             
             if (!confirm(`Send schedule for ${selectedDate} to ${email}?`)) return;
             
