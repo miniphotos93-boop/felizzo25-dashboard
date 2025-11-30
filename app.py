@@ -1263,7 +1263,7 @@ def send_schedule_email():
         """
         
         # Send email using AWS SES
-        sender_email = os.getenv('SENDER_EMAIL', 'felizzo25@amazon.com')
+        sender_email = os.getenv('SENDER_EMAIL', 'ftvqs-felizzo@amazon.com')
         aws_region = os.getenv('AWS_REGION', 'us-east-1')
         
         # Create SES client
