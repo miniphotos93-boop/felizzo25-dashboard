@@ -328,7 +328,7 @@
 
         <div class="events-grid">
             {% for event in events %}
-            <div class="event-card">
+            <div class="event-card" {% if event.Event == 'Carrom' %}onclick="window.location='/event/{{ loop.index0 }}'" style="cursor: pointer;"{% endif %}>
                 <div class="event-info">
                     <h3>{{ event.Event }}</h3>
                     <p><strong>Coordinator:</strong> {{ event.Coordinator }}</p>
@@ -337,15 +337,13 @@
                     <p><strong>Start:</strong> {{ event.Start_Date }}</p>
                     {% endif %}
                     <p><strong>Winner:</strong> {{ event.Winner if event.Winner else 'TBD' }}</p>
-                    {% if event.Notes %}
-                    <p><em>{{ event.Notes }}</em></p>
-                    {% endif %}
                 </div>
                 <div>
                     <span class="status-badge status-{{ event.Status.lower().replace(' ', '-') }}">
                         {{ event.Status }}
                     </span>
                     <br><br>
+                    {% if event.Event != 'Carrom' %}
                     {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing'] %}
                     <a href="/scorecard/{{ loop.index0 }}" class="btn" style="background: linear-gradient(135deg, #ffd700, #ffed4e); color: #000; margin-bottom: 10px; display: block; text-align: center;">Scorecard</a>
                     {% endif %}
@@ -354,6 +352,9 @@
                     {% endif %}
                     <a href="/manage-participants/{{ loop.index0 }}" class="btn" style="margin-bottom: 10px; display: block; text-align: center;">Manage Participants</a>
                     <a href="/update/{{ loop.index0 }}" class="btn">Update Event</a>
+                    {% else %}
+                    <p style="color: #00ffff; font-size: 14px; margin-top: 10px;">Click card to manage</p>
+                    {% endif %}
                 </div>
             </div>
             {% endfor %}

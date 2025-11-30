@@ -347,6 +347,57 @@ def home():
                          all_events=all_events_progress,
                          upcoming_events=upcoming_events[:5])
 
+@app.route('/event/<int:idx>')
+@admin_required
+def event_detail(idx):
+    events = load_events()
+    event = events[idx]
+    
+    # Load schedule
+    schedule_files = {
+        'Carrom': 'carrom_schedule.json',
+        'Chess': 'chess_schedule.json',
+        'Foosball': 'foosball_schedule.json'
+    }
+    
+    schedule = []
+    winners = {}
+    
+    event_name = event['Event']
+    if event_name in schedule_files:
+        schedule_file = Path(__file__).parent / schedule_files[event_name]
+        if schedule_file.exists():
+            with open(schedule_file) as f:
+                matches = json.load(f)
+            
+            # Group by date
+            from collections import defaultdict
+            by_date = defaultdict(list)
+            for match in matches:
+                by_date[match['date']].append(match)
+            
+            for date in sorted(by_date.keys()):
+                schedule.append({
+                    'date': date,
+                    'matches': by_date[date]
+                })
+        
+        # Load results
+        results_file = Path(__file__).parent / f"{event_name.lower().replace(' ', '_')}_results.json"
+        if results_file.exists():
+            with open(results_file) as f:
+                winners = json.load(f)
+    
+    # Time slots
+    time_slots = [
+        '09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
+        '12:00 PM', '12:30 PM', '01:00 PM', '01:30 PM', '02:00 PM', '02:30 PM',
+        '03:00 PM', '03:30 PM', '04:00 PM', '04:30 PM', '05:00 PM', '05:30 PM', '06:00 PM'
+    ]
+    
+    return render_template('event_detail.html', event=event, event_idx=idx,
+                         schedule=schedule, winners=winners, time_slots=time_slots)
+
 @app.route('/dashboard')
 @admin_required
 def dashboard():

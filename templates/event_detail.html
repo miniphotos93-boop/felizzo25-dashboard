@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ event.Event }} - Felizzo'25</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #000;
+            color: #fff;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+        }
+        h1 {
+            color: #00ffff;
+            font-size: 36px;
+        }
+        .back-btn {
+            padding: 10px 20px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-btn:hover {
+            background: rgba(0, 255, 255, 0.4);
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+        }
+        .tab {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .tab:hover {
+            background: rgba(0, 255, 255, 0.2);
+        }
+        .tab.active {
+            background: rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            border-bottom: 3px solid #00ffff;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Schedule Tabs */
+        .schedule-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .schedule-tab {
+            padding: 10px 20px;
+            background: rgba(255, 0, 255, 0.2);
+            border: 1px solid #ff00ff;
+            color: #ff00ff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .schedule-tab.active {
+            background: rgba(255, 0, 255, 0.4);
+        }
+        
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        th {
+            background: rgba(0, 255, 255, 0.2);
+            color: #00ffff;
+        }
+        
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            color: #00ffff;
+            margin-bottom: 5px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #fff;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            opacity: 0.8;
+        }
+        
+        .winner-btn {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background: rgba(0, 255, 255, 0.2);
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .winner-btn.selected {
+            background: #0f0;
+            color: #000;
+            border-color: #0f0;
+        }
+        
+        .time-input {
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #fff;
+            border-radius: 5px;
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ event.Event }}</h1>
+        <a href="/dashboard" class="back-btn">← Back to Dashboard</a>
+    </div>
+    
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('schedule')">📅 Schedule</button>
+        <button class="tab" onclick="showTab('participants')">👥 Participants</button>
+        <button class="tab" onclick="showTab('settings')">⚙️ Settings</button>
+    </div>
+    
+    <!-- Schedule Tab -->
+    <div id="schedule" class="tab-content active">
+        <div class="schedule-tabs">
+            <button class="schedule-tab active" onclick="showScheduleType('prelims')">Prelims (Team Round-Robin)</button>
+            <button class="schedule-tab" onclick="showScheduleType('knockouts')">Knockouts</button>
+        </div>
+        
+        <div id="prelims" class="schedule-content">
+            <h2 style="color: #ff00ff; margin-bottom: 20px;">Preliminary Rounds</h2>
+            <p style="color: #888; margin-bottom: 20px;">Teams compete within their own groups. Top performers advance to knockouts.</p>
+            
+            {% for day in schedule %}
+            <div style="margin-bottom: 40px; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
+                <h3 style="color: #00ffff; margin-bottom: 15px;">📅 {{ day.date }}</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Match ID</th>
+                            <th>Player 1</th>
+                            <th>Player 2</th>
+                            <th>Time Slot</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for match in day.matches %}
+                        <tr>
+                            <td>{{ match.match_id }}</td>
+                            <td>{{ match.player1 }}</td>
+                            <td>{{ match.player2 }}</td>
+                            <td>
+                                <select class="time-input" onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
+                                    <option value="">Select Time</option>
+                                    {% for time in time_slots %}
+                                    <option value="{{ time }}" {% if match.time_slot == time %}selected{% endif %}>{{ time }}</option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" 
+                                        onclick="selectWinner('{{ match.match_id }}', 1, this)">P1</button>
+                                <button class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}" 
+                                        onclick="selectWinner('{{ match.match_id }}', 2, this)">P2</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div id="knockouts" class="schedule-content" style="display: none;">
+            <h2 style="color: #ff00ff; margin-bottom: 20px;">Knockout Rounds</h2>
+            <p style="color: #888; margin-bottom: 20px;">Coming soon - Will be populated after prelims complete</p>
+        </div>
+    </div>
+    
+    <!-- Participants Tab -->
+    <div id="participants" class="tab-content">
+        <h2 style="color: #00ffff; margin-bottom: 20px;">Manage Participants</h2>
+        <iframe src="/manage-participants/{{ event_idx }}" style="width: 100%; height: 800px; border: none; border-radius: 10px;"></iframe>
+    </div>
+    
+    <!-- Settings Tab -->
+    <div id="settings" class="tab-content">
+        <h2 style="color: #00ffff; margin-bottom: 20px;">Event Settings</h2>
+        <form action="/update/{{ event_idx }}" method="POST">
+            <div class="form-group">
+                <label>Coordinator</label>
+                <input type="text" name="coordinator" value="{{ event.Coordinator }}">
+            </div>
+            <div class="form-group">
+                <label>Manager</label>
+                <input type="text" name="manager" value="{{ event.Manager }}">
+            </div>
+            <div class="form-group">
+                <label>Start Date</label>
+                <input type="date" name="start_date" value="{{ event.Start_Date }}">
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <select name="status">
+                    <option value="Planned" {% if event.Status == 'Planned' %}selected{% endif %}>Planned</option>
+                    <option value="In Progress" {% if event.Status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                    <option value="Completed" {% if event.Status == 'Completed' %}selected{% endif %}>Completed</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Winner</label>
+                <input type="text" name="winner" value="{{ event.Winner }}">
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea name="notes" rows="4">{{ event.Notes }}</textarea>
+            </div>
+            <button type="submit">Save Changes</button>
+        </form>
+    </div>
+    
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+        
+        function showScheduleType(type) {
+            document.querySelectorAll('.schedule-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.schedule-content').forEach(c => c.style.display = 'none');
+            event.target.classList.add('active');
+            document.getElementById(type).style.display = 'block';
+        }
+        
+        function saveTimeSlot(matchId, timeSlot) {
+            fetch('/update-time-slot', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    match_id: matchId,
+                    time_slot: timeSlot
+                })
+            });
+        }
+        
+        function selectWinner(matchId, winner, button) {
+            const row = button.closest('tr');
+            row.querySelectorAll('.winner-btn').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            
+            fetch('/update-match-winner', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    match_id: matchId,
+                    winner: winner
+                })
+            });
+        }
+    </script>
+</body>
+</html>
