@@ -6,6 +6,10 @@ from pathlib import Path
 import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this'  # Change this!
@@ -1153,6 +1157,138 @@ def test_carrom_data():
 @app.route('/font-preview')
 def font_preview():
     return render_template('font_preview.html')
+
+@app.route('/send-schedule-email', methods=['POST'])
+@admin_required
+def send_schedule_email():
+    try:
+        data = request.json
+        event_name = data.get('event')
+        date = data.get('date')
+        recipient_email = data.get('email')
+        
+        if not all([event_name, date, recipient_email]):
+            return jsonify({'status': 'error', 'message': 'Missing required fields'}), 400
+        
+        # Load schedule for the event
+        schedule_files = {
+            'Carrom': 'carrom_schedule.json',
+            'Chess': 'chess_schedule.json',
+            'Foosball': 'foosball_day_schedule.json',
+            'Snookers': 'snookers_schedule.json',
+            'TT': 'tt_schedule.json',
+            'Seven Stones': 'sevenstones_schedule.json',
+            'Tug of War': 'tugofwar_schedule.json'
+        }
+        
+        matches = []
+        if event_name in schedule_files:
+            schedule_file = Path(__file__).parent / schedule_files[event_name]
+            if schedule_file.exists():
+                with open(schedule_file) as f:
+                    schedule_data = json.load(f)
+                
+                # Find matches for the specified date
+                if event_name == 'Foosball':
+                    for day in schedule_data:
+                        if day['date'] == date:
+                            matches = day['matches']
+                            break
+                elif event_name in ['Seven Stones', 'Tug of War']:
+                    for day in schedule_data:
+                        if day['date'] == date:
+                            if 'group_a' in day:
+                                matches.extend(day['group_a'])
+                            if 'group_b' in day:
+                                matches.extend(day['group_b'])
+                            break
+                else:
+                    for match in schedule_data:
+                        if match.get('date') == date:
+                            matches.append(match)
+        
+        if not matches:
+            return jsonify({'status': 'error', 'message': f'No matches found for {date}'}), 404
+        
+        # Create email content
+        html_content = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; padding: 20px;">
+            <h2 style="color: #00ffff;">{event_name} - Schedule for {date}</h2>
+            <p>Total matches: {len(matches)}</p>
+            <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+                <thead>
+                    <tr style="background: #1a0033; color: white;">
+                        <th style="padding: 10px; border: 1px solid #ddd;">Match ID</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Team 1</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Team 2</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+        """
+        
+        for match in matches:
+            team1 = ''
+            team2 = ''
+            
+            if 'team1_name' in match:
+                team1 = f"{match['team1_name']}<br><small>{match.get('team1_members', '')}</small>"
+                team2 = f"{match['team2_name']}<br><small>{match.get('team2_members', '')}</small>"
+            elif 'pair1_team' in match:
+                team1 = f"{match['pair1_team']}<br><small>{match['pair1_p1']} & {match['pair1_p2']}</small>"
+                team2 = f"{match['pair2_team']}<br><small>{match['pair2_p1']} & {match['pair2_p2']}</small>"
+            elif 'player1' in match:
+                team1 = match['player1']
+                team2 = match['player2']
+            
+            time_slot = match.get('time_slot', 'TBD')
+            
+            html_content += f"""
+                    <tr>
+                        <td style="padding: 10px; border: 1px solid #ddd;">{match['match_id']}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">{team1}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">{team2}</td>
+                        <td style="padding: 10px; border: 1px solid #ddd;">{time_slot}</td>
+                    </tr>
+            """
+        
+        html_content += """
+                </tbody>
+            </table>
+            <p style="margin-top: 20px; color: #666;">
+                This is an automated email from FELIZZO'25 Dashboard.
+            </p>
+        </body>
+        </html>
+        """
+        
+        # Send email using environment variables for credentials
+        smtp_server = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
+        smtp_port = int(os.getenv('SMTP_PORT', '587'))
+        sender_email = os.getenv('SENDER_EMAIL')
+        sender_password = os.getenv('SENDER_PASSWORD')
+        
+        if not sender_email or not sender_password:
+            return jsonify({'status': 'error', 'message': 'Email credentials not configured'}), 500
+        
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = f"{event_name} Schedule - {date}"
+        msg['From'] = sender_email
+        msg['To'] = recipient_email
+        
+        msg.attach(MIMEText(html_content, 'html'))
+        
+        with smtplib.SMTP(smtp_server, smtp_port) as server:
+            server.starttls()
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+        
+        return jsonify({'status': 'success', 'message': f'Schedule sent to {recipient_email}'})
+    
+    except Exception as e:
+        print(f"Error sending email: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

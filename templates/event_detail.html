@@ -469,6 +469,13 @@
                 </div>
             </div>
             
+            <!-- Email Schedule Button -->
+            <div style="text-align: center; margin-bottom: 20px;">
+                <button onclick="sendScheduleEmail()" style="padding: 15px 30px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 16px; font-family: 'Silkscreen', monospace;">
+                    📧 Email Today's Schedule
+                </button>
+            </div>
+            
             <!-- Table -->
             <div class="table-container">
                 <table>
@@ -674,6 +681,38 @@
                     match_id: matchId,
                     winner: winner
                 })
+            });
+        }
+        
+        function sendScheduleEmail() {
+            const email = prompt('Enter email address to send schedule:');
+            if (!email) return;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const dateFilter = document.getElementById('dateFilter');
+            const selectedDate = dateFilter && dateFilter.value ? dateFilter.value : today;
+            
+            if (!confirm(`Send schedule for ${selectedDate} to ${email}?`)) return;
+            
+            fetch('/send-schedule-email', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    date: selectedDate,
+                    email: email
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('✓ Schedule sent successfully!');
+                } else {
+                    alert('✗ Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                alert('✗ Error sending email: ' + error);
             });
         }
     </script>
