@@ -286,38 +286,36 @@
                 
                 const table1Matches = [];
                 const table2Matches = [];
-                const usedPairs = new Set();
+                const table1Pairs = new Set();
+                const table2Pairs = new Set();
                 
+                // Distribute matches ensuring no back-to-back on same table
                 day.matches.forEach(match => {
                     const pair1 = `${match.pair1_p1}_${match.pair1_p2}`.toLowerCase();
                     const pair2 = `${match.pair2_p1}_${match.pair2_p2}`.toLowerCase();
                     
-                    // Try to assign to table 1 first
-                    if (!usedPairs.has(pair1) && !usedPairs.has(pair2)) {
+                    // Try table 1 first (max 15 matches)
+                    if (table1Matches.length < 15 && !table1Pairs.has(pair1) && !table1Pairs.has(pair2)) {
                         table1Matches.push(match);
-                        usedPairs.add(pair1);
-                        usedPairs.add(pair2);
-                    } else {
+                        table1Pairs.add(pair1);
+                        table1Pairs.add(pair2);
+                    } 
+                    // Try table 2 (max 15 matches)
+                    else if (table2Matches.length < 15 && !table2Pairs.has(pair1) && !table2Pairs.has(pair2)) {
+                        table2Matches.push(match);
+                        table2Pairs.add(pair1);
+                        table2Pairs.add(pair2);
+                    }
+                    // If both tables have the pairs, add to whichever has fewer matches
+                    else if (table1Matches.length < 15) {
+                        table1Matches.push(match);
+                    } else if (table2Matches.length < 15) {
                         table2Matches.push(match);
                     }
                 });
                 
-                // Clear used pairs for table 2 distribution
-                usedPairs.clear();
-                const finalTable2 = [];
-                table2Matches.forEach(match => {
-                    const pair1 = `${match.pair1_p1}_${match.pair1_p2}`.toLowerCase();
-                    const pair2 = `${match.pair2_p1}_${match.pair2_p2}`.toLowerCase();
-                    
-                    if (!usedPairs.has(pair1) && !usedPairs.has(pair2)) {
-                        finalTable2.push(match);
-                        usedPairs.add(pair1);
-                        usedPairs.add(pair2);
-                    }
-                });
-                
                 table1.innerHTML = table1Matches.map(m => createMatchCard(m)).join('');
-                table2.innerHTML = finalTable2.map(m => createMatchCard(m)).join('');
+                table2.innerHTML = table2Matches.map(m => createMatchCard(m)).join('');
             });
         }
         
