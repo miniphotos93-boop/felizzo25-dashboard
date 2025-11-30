@@ -474,8 +474,8 @@
                         <tr>
                             <th>📅 Date</th>
                             <th>🎯 Match ID</th>
-                            <th>👤 Player 1</th>
-                            <th>👤 Player 2</th>
+                            <th>{% if event.Event in ['Tug of War', 'Seven Stones'] %}🏆 Team 1{% else %}👤 Player 1{% endif %}</th>
+                            <th>{% if event.Event in ['Tug of War', 'Seven Stones'] %}🏆 Team 2{% else %}👤 Player 2{% endif %}</th>
                             <th>⏰ Time</th>
                             <th>📊 Status</th>
                             <th>🏆 Winner</th>
@@ -487,13 +487,13 @@
                         <tr class="match-row" 
                             data-date="{{ day.date }}" 
                             data-match="{{ match.match_id }}" 
-                            data-player1="{% if match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}" 
-                            data-player2="{% if match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}"
+                            data-player1="{% if match.team1_name %}{{ match.team1_name }}{% elif match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}" 
+                            data-player2="{% if match.team2_name %}{{ match.team2_name }}{% elif match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}"
                             data-status="{% if winners.get(match.match_id) %}completed{% else %}pending{% endif %}">
                             <td>{{ day.date }}</td>
                             <td><strong>{{ match.match_id }}</strong></td>
-                            <td>{% if match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}</td>
-                            <td>{% if match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}</td>
+                            <td>{% if match.team1_name %}{{ match.team1_name }}{% elif match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}</td>
+                            <td>{% if match.team2_name %}{{ match.team2_name }}{% elif match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}</td>
                             <td>
                                 <select class="time-input" onchange="saveTimeSlot('{{ match.match_id }}', this.value)">
                                     <option value="">Select Time</option>

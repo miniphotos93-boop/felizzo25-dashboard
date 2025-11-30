@@ -399,18 +399,33 @@ def event_detail(idx):
                 with open(schedule_file) as f:
                     data = json.load(f)
                 
-                # Group by date
-                from collections import defaultdict
-                by_date = defaultdict(list)
-                for match in data:
-                    if isinstance(match, dict) and 'date' in match:
-                        by_date[match['date']].append(match)
-                
-                for date in sorted(by_date.keys()):
-                    schedule.append({
-                        'date': date,
-                        'matches': by_date[date]
-                    })
+                # Handle different formats
+                if event_name in ['Seven Stones', 'Tug of War']:
+                    # These have group_a and group_b structure
+                    for day in data:
+                        matches = []
+                        if 'group_a' in day:
+                            matches.extend(day['group_a'])
+                        if 'group_b' in day:
+                            matches.extend(day['group_b'])
+                        
+                        schedule.append({
+                            'date': day['date'],
+                            'matches': matches
+                        })
+                else:
+                    # Group by date for other events
+                    from collections import defaultdict
+                    by_date = defaultdict(list)
+                    for match in data:
+                        if isinstance(match, dict) and 'date' in match:
+                            by_date[match['date']].append(match)
+                    
+                    for date in sorted(by_date.keys()):
+                        schedule.append({
+                            'date': date,
+                            'matches': by_date[date]
+                        })
             except Exception as e:
                 print(f"Error loading schedule for {event_name}: {e}")
                 schedule = []
