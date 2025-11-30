@@ -45,7 +45,7 @@ print(f"Total matches generated: {len(all_matches)}")
 
 # Distribute matches across days (30 matches per day)
 matches_per_day = 30
-start_date = datetime(2025, 11, 27)
+start_date = datetime(2025, 12, 2)
 
 schedule = []
 remaining_matches = all_matches.copy()
