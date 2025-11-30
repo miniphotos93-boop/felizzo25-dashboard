@@ -357,7 +357,11 @@ def event_detail(idx):
     schedule_files = {
         'Carrom': 'carrom_schedule.json',
         'Chess': 'chess_schedule.json',
-        'Foosball': 'foosball_schedule.json'
+        'Foosball': 'foosball_schedule.json',
+        'Snookers': 'snookers_schedule.json',
+        'TT': 'tt_schedule.json',
+        'Seven Stones': 'sevenstones_schedule.json',
+        'Tug of War': 'tugofwar_schedule.json'
     }
     
     schedule = []
