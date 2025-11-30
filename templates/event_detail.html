@@ -180,22 +180,59 @@
             <h2 style="color: #ff00ff; margin-bottom: 20px;">Preliminary Rounds</h2>
             <p style="color: #888; margin-bottom: 20px;">Teams compete within their own groups. Top performers advance to knockouts.</p>
             
-            {% for day in schedule %}
-            <div style="margin-bottom: 40px; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
-                <h3 style="color: #00ffff; margin-bottom: 15px;">📅 {{ day.date }}</h3>
-                <table>
+            <!-- Filters -->
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
+                <div>
+                    <label style="color: #00ffff; margin-bottom: 5px; display: block;">Filter by Date</label>
+                    <select id="dateFilter" onchange="filterMatches()" style="width: 100%; padding: 8px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 255, 255, 0.3); color: #fff; border-radius: 5px;">
+                        <option value="">All Dates</option>
+                        {% for day in schedule %}
+                        <option value="{{ day.date }}">{{ day.date }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label style="color: #00ffff; margin-bottom: 5px; display: block;">Filter by Match ID</label>
+                    <input type="text" id="matchFilter" onkeyup="filterMatches()" placeholder="e.g., SDL_M1" style="width: 100%; padding: 8px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 255, 255, 0.3); color: #fff; border-radius: 5px;">
+                </div>
+                <div>
+                    <label style="color: #00ffff; margin-bottom: 5px; display: block;">Filter by Player/Team</label>
+                    <input type="text" id="playerFilter" onkeyup="filterMatches()" placeholder="Player name" style="width: 100%; padding: 8px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 255, 255, 0.3); color: #fff; border-radius: 5px;">
+                </div>
+                <div>
+                    <label style="color: #00ffff; margin-bottom: 5px; display: block;">Filter by Status</label>
+                    <select id="statusFilter" onchange="filterMatches()" style="width: 100%; padding: 8px; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(0, 255, 255, 0.3); color: #fff; border-radius: 5px;">
+                        <option value="">All</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Single Table -->
+            <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 10px;">
+                <table id="matchesTable">
                     <thead>
                         <tr>
+                            <th>Date</th>
                             <th>Match ID</th>
                             <th>Player 1</th>
                             <th>Player 2</th>
                             <th>Time Slot</th>
+                            <th>Status</th>
                             <th>Winner</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {% for day in schedule %}
                         {% for match in day.matches %}
-                        <tr>
+                        <tr class="match-row" 
+                            data-date="{{ day.date }}" 
+                            data-match="{{ match.match_id }}" 
+                            data-player1="{{ match.player1 }}" 
+                            data-player2="{{ match.player2 }}"
+                            data-status="{% if winners.get(match.match_id) %}completed{% else %}pending{% endif %}">
+                            <td>{{ day.date }}</td>
                             <td>{{ match.match_id }}</td>
                             <td>{{ match.player1 }}</td>
                             <td>{{ match.player2 }}</td>
@@ -208,6 +245,11 @@
                                 </select>
                             </td>
                             <td>
+                                <span style="padding: 5px 10px; border-radius: 5px; font-size: 12px; {% if winners.get(match.match_id) %}background: rgba(0, 255, 0, 0.2); color: #0f0; border: 1px solid #0f0;{% else %}background: rgba(255, 165, 0, 0.2); color: #ffa500; border: 1px solid #ffa500;{% endif %}">
+                                    {% if winners.get(match.match_id) %}Completed{% else %}Pending{% endif %}
+                                </span>
+                            </td>
+                            <td>
                                 <button class="winner-btn {% if winners.get(match.match_id)|string == '1' %}selected{% endif %}" 
                                         onclick="selectWinner('{{ match.match_id }}', 1, this)">P1</button>
                                 <button class="winner-btn {% if winners.get(match.match_id)|string == '2' %}selected{% endif %}" 
@@ -215,10 +257,10 @@
                             </td>
                         </tr>
                         {% endfor %}
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
-            {% endfor %}
         </div>
         
         <div id="knockouts" class="schedule-content" style="display: none;">
@@ -270,6 +312,34 @@
     </div>
     
     <script>
+        function filterMatches() {
+            const dateFilter = document.getElementById('dateFilter').value.toLowerCase();
+            const matchFilter = document.getElementById('matchFilter').value.toLowerCase();
+            const playerFilter = document.getElementById('playerFilter').value.toLowerCase();
+            const statusFilter = document.getElementById('statusFilter').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('.match-row');
+            
+            rows.forEach(row => {
+                const date = row.dataset.date.toLowerCase();
+                const matchId = row.dataset.match.toLowerCase();
+                const player1 = row.dataset.player1.toLowerCase();
+                const player2 = row.dataset.player2.toLowerCase();
+                const status = row.dataset.status.toLowerCase();
+                
+                const dateMatch = !dateFilter || date === dateFilter;
+                const matchIdMatch = !matchFilter || matchId.includes(matchFilter);
+                const playerMatch = !playerFilter || player1.includes(playerFilter) || player2.includes(playerFilter);
+                const statusMatch = !statusFilter || status === statusFilter;
+                
+                if (dateMatch && matchIdMatch && playerMatch && statusMatch) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
         function showTab(tabName) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
