@@ -105,7 +105,7 @@ def init_database():
 init_database()
 
 # Admin users list
-ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka']  # Add admin usernames here
+ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka', 'saktgane', 'abhavara', 'jdpu', 'suhmohan', 'mutnur']  # Add admin usernames here
 
 def admin_required(f):
     @wraps(f)
