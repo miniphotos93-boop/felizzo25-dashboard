@@ -802,32 +802,32 @@ def manage_participants(idx):
         if request.method == 'POST':
             action = request.form.get('action')
             participants = load_participants(idx)
-        
-        if action == 'add':
-            serial = request.form.get('serial_number')
-            participant1 = request.form.get('participant1', '').strip()
-            participant2 = request.form.get('participant2', '').strip() if event_type == 'pair' else None
-            team = request.form.get('team_name', '').strip()
             
-            if participant1 and team:
-                if not serial:
-                    serial = len(participants) + 1
-                participants.append({
-                    'serial_number': int(serial),
-                    'participant1_name': participant1,
-                    'participant2_name': participant2,
-                    'team_name': team
-                })
-                save_participants(idx, participants)
+            if action == 'add':
+                serial = request.form.get('serial_number')
+                participant1 = request.form.get('participant1', '').strip()
+                participant2 = request.form.get('participant2', '').strip() if event_type == 'pair' else None
+                team = request.form.get('team_name', '').strip()
                 
-                # Auto-regenerate Foosball schedule
-                if event['Event'] == 'Foosball':
-                    import subprocess
-                    try:
-                        subprocess.run(['python', 'generate_foosball_knockout.py'], 
-                                     cwd=Path(__file__).parent, check=True)
-                    except:
-                        pass
+                if participant1 and team:
+                    if not serial:
+                        serial = len(participants) + 1
+                    participants.append({
+                        'serial_number': int(serial),
+                        'participant1_name': participant1,
+                        'participant2_name': participant2,
+                        'team_name': team
+                    })
+                    save_participants(idx, participants)
+                    
+                    # Auto-regenerate Foosball schedule
+                    if event['Event'] == 'Foosball':
+                        import subprocess
+                        try:
+                            subprocess.run(['python', 'generate_foosball_knockout.py'], 
+                                         cwd=Path(__file__).parent, check=True)
+                        except:
+                            pass
             
             elif action == 'edit':
                 serial = int(request.form.get('serial_number'))
@@ -878,6 +878,7 @@ def manage_participants(idx):
         print(f"Error in manage_participants: {e}")
         import traceback
         traceback.print_exc()
+        return f"Error: {str(e)}", 500
         return f"Error: {str(e)}", 500
 
 @app.route('/schedule/<int:idx>')
