@@ -1495,6 +1495,25 @@ def send_schedule_email():
         if not matches:
             return jsonify({'status': 'error', 'message': f'No matches found for {date}'}), 404
         
+        # Load time slots from database
+        saved_time_slots = {}
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute('SELECT match_id, time_slot FROM time_slots WHERE event_name = %s', (event_name,))
+                for row in cur.fetchall():
+                    saved_time_slots[row[0]] = row[1]
+                cur.close()
+                conn.close()
+            except:
+                pass
+        
+        # Merge time slots into matches
+        for match in matches:
+            if 'match_id' in match and match['match_id'] in saved_time_slots:
+                match['time_slot'] = saved_time_slots[match['match_id']]
+        
         # Create email content
         html_content = f"""
         <html>
