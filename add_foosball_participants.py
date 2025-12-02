@@ -25,7 +25,6 @@ foosball_participants = [
     {"serial_number": 18, "participant1_name": "Kanan", "participant2_name": "Keerthana", "team_name": "SDL"},
     {"serial_number": 19, "participant1_name": "Agalya", "participant2_name": "Akash", "team_name": "MOD"},
     {"serial_number": 20, "participant1_name": "Rahul", "participant2_name": "Soumya", "team_name": "SE"},
-    {"serial_number": 21, "participant1_name": "Karthickraja", "participant2_name": "Stalin", "team_name": "3p Apps"},
     {"serial_number": 22, "participant1_name": "Elavarasan", "participant2_name": "Muthukumaran", "team_name": "3p Apps"},
     {"serial_number": 23, "participant1_name": "Atshara", "participant2_name": "Tejas", "team_name": "3p Apps"},
     {"serial_number": 24, "participant1_name": "Hamirth", "participant2_name": "shanmugapriyan", "team_name": "3p Apps"},
