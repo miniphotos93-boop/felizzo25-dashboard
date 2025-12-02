@@ -820,7 +820,9 @@ def manage_participants(idx):
                 
                 if participant1 and team:
                     if not serial:
-                        serial = len(participants) + 1
+                        # Find the maximum serial number and add 1
+                        max_serial = max([p.get('serial_number', 0) for p in participants]) if participants else 0
+                        serial = max_serial + 1
                     participants.append({
                         'serial_number': int(serial),
                         'participant1_name': participant1,
