@@ -479,6 +479,13 @@ def event_detail(idx):
     event = events[idx]
     event_name = event['Event']
     
+    # For soft skill events, show management page (no schedules)
+    soft_skill_events = ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'CWF', 
+                         'Painting', 'Trash to Treasure', 'Treasure Hunt', 'Meme Creation', 
+                         'Photography', 'Reels']
+    if event_name in soft_skill_events:
+        return render_template('event_manage.html', event=event, event_idx=idx)
+    
     # Time slots
     time_slots = [
         '09:00 AM', '09:10 AM', '09:20 AM', '09:30 AM', '09:40 AM', '09:50 AM',
