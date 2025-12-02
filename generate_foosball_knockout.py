@@ -52,6 +52,8 @@ for team_name, team_pairs in sorted(teams.items()):
                 
                 if len(schedule) % 8 == 0:
                     current_date += timedelta(days=1)
+                    while current_date.weekday() >= 5:
+                        current_date += timedelta(days=1)
             else:
                 next_round.append(remaining[i])
         
@@ -87,6 +89,8 @@ while len(remaining) > 1:
             
             if len(schedule) % 8 == 0:
                 current_date += timedelta(days=1)
+                while current_date.weekday() >= 5:
+                    current_date += timedelta(days=1)
         else:
             next_round.append(remaining[i])
     
