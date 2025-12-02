@@ -743,7 +743,7 @@ def manage_participants(idx):
                     'participant1_name': participant1,
                     'participant2_name': participant2,
                     'team_name': team
-                })\
+                })
                 save_participants(idx, participants)
                 
                 # Auto-regenerate Foosball schedule
