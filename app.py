@@ -794,9 +794,10 @@ def scorecard(idx):
 @app.route('/manage-participants/<int:idx>', methods=['GET', 'POST'])
 @admin_required
 def manage_participants(idx):
-    events = load_events()
-    event = events[idx]
-    event_type = event.get('event_type', 'solo')
+    try:
+        events = load_events()
+        event = events[idx]
+        event_type = event.get('event_type', 'solo')
     
     if request.method == 'POST':
         action = request.form.get('action')
@@ -873,6 +874,11 @@ def manage_participants(idx):
     participants = load_participants(idx)
     return render_template('manage_participants.html', event=event, idx=idx, 
                          participants=participants, event_type=event_type)
+    except Exception as e:
+        print(f"Error in manage_participants: {e}")
+        import traceback
+        traceback.print_exc()
+        return f"Error: {str(e)}", 500
 
 @app.route('/schedule/<int:idx>')
 def schedule(idx):
