@@ -446,6 +446,26 @@ def event_detail(idx):
             with open(results_file) as f:
                 winners = json.load(f)
     
+    # Load saved time slots from database
+    saved_time_slots = {}
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute('SELECT match_id, time_slot FROM time_slots WHERE event_name = %s', (event_name,))
+            for row in cur.fetchall():
+                saved_time_slots[row[0]] = row[1]
+            cur.close()
+            conn.close()
+        except:
+            pass
+    
+    # Merge saved time slots into schedule
+    for day in schedule:
+        for match in day['matches']:
+            if match['match_id'] in saved_time_slots:
+                match['time_slot'] = saved_time_slots[match['match_id']]
+    
     # Time slots
     time_slots = [
         '09:00 AM', '09:10 AM', '09:20 AM', '09:30 AM', '09:40 AM', '09:50 AM',
