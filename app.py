@@ -427,10 +427,25 @@ def event_detail(idx):
             with open(schedule_file) as f:
                 schedule = json.load(f)
         
-        results_file = Path(__file__).parent / 'foosball_results.json'
-        if results_file.exists():
-            with open(results_file) as f:
-                winners = json.load(f)
+        # Load winners from database
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute('SELECT match_id, winner FROM match_results WHERE event_name = %s', (event_name,))
+                for row in cur.fetchall():
+                    winners[row[0]] = row[1]
+                cur.close()
+                conn.close()
+            except:
+                pass
+        
+        # Fallback to JSON file if no database results
+        if not winners:
+            results_file = Path(__file__).parent / 'foosball_results.json'
+            if results_file.exists():
+                with open(results_file) as f:
+                    winners = json.load(f)
         
         # Load saved time slots from database
         saved_time_slots = {}
@@ -446,11 +461,20 @@ def event_detail(idx):
             except:
                 pass
         
+        # Fallback to JSON file if no database
+        if not saved_time_slots:
+            time_slots_file = Path(__file__).parent / f'{event_name.lower().replace(" ", "_")}_time_slots.json'
+            if time_slots_file.exists():
+                with open(time_slots_file) as f:
+                    saved_time_slots = json.load(f)
+        
         # Merge saved time slots into schedule
         for day in schedule:
             for match in day['matches']:
                 if match['match_id'] in saved_time_slots:
                     match['time_slot'] = saved_time_slots[match['match_id']]
+                elif 'time' in match:
+                    match['time_slot'] = match['time']
         
         return render_template('event_detail.html', event=event, event_idx=idx,
                              schedule=schedule, winners=winners, time_slots=time_slots)
@@ -506,11 +530,25 @@ def event_detail(idx):
                 print(f"Error loading schedule for {event_name}: {e}")
                 schedule = []
         
-        # Load results
-        results_file = Path(__file__).parent / f"{event_name.lower().replace(' ', '_')}_results.json"
-        if results_file.exists():
-            with open(results_file) as f:
-                winners = json.load(f)
+        # Load results from database first
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute('SELECT match_id, winner FROM match_results WHERE event_name = %s', (event_name,))
+                for row in cur.fetchall():
+                    winners[row[0]] = row[1]
+                cur.close()
+                conn.close()
+            except:
+                pass
+        
+        # Fallback to JSON file if no database results
+        if not winners:
+            results_file = Path(__file__).parent / f"{event_name.lower().replace(' ', '_')}_results.json"
+            if results_file.exists():
+                with open(results_file) as f:
+                    winners = json.load(f)
     
     # Load saved time slots from database
     saved_time_slots = {}
@@ -526,11 +564,20 @@ def event_detail(idx):
         except:
             pass
     
+    # Fallback to JSON file if no database
+    if not saved_time_slots:
+        time_slots_file = Path(__file__).parent / f'{event_name.lower().replace(" ", "_")}_time_slots.json'
+        if time_slots_file.exists():
+            with open(time_slots_file) as f:
+                saved_time_slots = json.load(f)
+    
     # Merge saved time slots into schedule
     for day in schedule:
         for match in day['matches']:
             if match['match_id'] in saved_time_slots:
                 match['time_slot'] = saved_time_slots[match['match_id']]
+            elif 'time' in match:
+                match['time_slot'] = match['time']
     
     # Time slots
     time_slots = [
@@ -1039,8 +1086,9 @@ def update_match_winner():
         data = request.json
         match_id = data['match_id']
         winner = data['winner']
-        event_name = data.get('event', 'Foosball')  # Default to Foosball for backward compatibility
+        event_name = data.get('event', 'Foosball')
         
+        # Save to database
         conn = get_db_connection()
         if conn:
             try:
@@ -1053,12 +1101,11 @@ def update_match_winner():
                 conn.commit()
                 cur.close()
                 conn.close()
-                return jsonify({'status': 'success'})
-            except:
-                pass
+            except Exception as e:
+                print(f"Database error: {e}")
         
-        # Fallback to JSON file
-        results_file = Path(__file__).parent / 'foosball_results.json'
+        # Also save to dedicated JSON file
+        results_file = Path(__file__).parent / f'{event_name.lower().replace(" ", "_")}_results.json'
         
         try:
             with open(results_file, 'r') as f:
@@ -1083,6 +1130,7 @@ def update_time_slot():
         match_id = data['match_id']
         time_slot = data['time_slot']
         
+        # Save to database
         conn = get_db_connection()
         if conn:
             try:
@@ -1095,36 +1143,20 @@ def update_time_slot():
                 conn.commit()
                 cur.close()
                 conn.close()
-                return jsonify({'status': 'success'})
-            except:
-                pass
+            except Exception as e:
+                print(f"Database error: {e}")
         
-        # Fallback to JSON file
-        schedule_files = {
-            'Chess': 'chess_schedule.json',
-            'Carrom': 'carrom_schedule.json',
-            'Foosball': 'foosball_schedule.json',
-            'Tug of War': 'tug_of_war_schedule.json',
-            'Seven Stones': 'seven_stones_schedule.json'
-        }
+        # Also save to dedicated JSON file
+        time_slots_file = Path(__file__).parent / f'{event.lower().replace(" ", "_")}_time_slots.json'
+        time_slots_data = {}
+        if time_slots_file.exists():
+            with open(time_slots_file) as f:
+                time_slots_data = json.load(f)
         
-        schedule_file = Path(__file__).parent / schedule_files.get(event, 'schedule.json')
+        time_slots_data[match_id] = time_slot
         
-        if not schedule_file.exists():
-            return jsonify({'status': 'error', 'message': 'Schedule file not found'}), 404
-        
-        with open(schedule_file, 'r') as f:
-            schedule = json.load(f)
-        
-        # Update time slot
-        for match in schedule:
-            if match.get('match_id') == match_id:
-                match['time_slot'] = time_slot
-                break
-        
-        # Save schedule
-        with open(schedule_file, 'w') as f:
-            json.dump(schedule, f, indent=2)
+        with open(time_slots_file, 'w') as f:
+            json.dump(time_slots_data, f, indent=2)
         
         return jsonify({'status': 'success'})
     except Exception as e:
