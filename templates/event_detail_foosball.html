@@ -280,6 +280,30 @@
                     <label style="display: block; color: #00ffff; margin-bottom: 10px;">👤 Coordinator</label>
                     <input type="text" name="coordinator" value="{{ event.Coordinator }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
                 </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">👨‍💼 Manager</label>
+                    <input type="text" name="manager" value="{{ event.Manager }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">📅 Start Date</label>
+                    <input type="date" name="start_date" value="{{ event.Start_Date }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">📊 Status</label>
+                    <select name="status" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                        <option value="Planned" {% if event.Status == 'Planned' %}selected{% endif %}>📋 Planned</option>
+                        <option value="In Progress" {% if event.Status == 'In Progress' %}selected{% endif %}>⚡ In Progress</option>
+                        <option value="Completed" {% if event.Status == 'Completed' %}selected{% endif %}>✅ Completed</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">🏆 Winner</label>
+                    <input type="text" name="winner" value="{{ event.Winner }}" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">
+                </div>
+                <div style="margin-bottom: 25px;">
+                    <label style="display: block; color: #00ffff; margin-bottom: 10px;">📝 Notes</label>
+                    <textarea name="notes" rows="4" style="width: 100%; padding: 15px; background: rgba(0, 0, 0, 0.7); border: 2px solid rgba(0, 255, 255, 0.5); color: #fff; border-radius: 10px;">{{ event.Notes }}</textarea>
+                </div>
                 <button type="submit" style="padding: 15px 40px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 18px;">💾 SAVE</button>
             </form>
         </div>
