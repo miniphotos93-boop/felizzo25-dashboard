@@ -22,7 +22,7 @@ DATABASE_URL = os.environ.get('DATABASE_URL')
 def get_db_connection():
     if DATABASE_URL:
         try:
-            return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
+            return psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor, connect_timeout=5)
         except:
             return None
     return None
