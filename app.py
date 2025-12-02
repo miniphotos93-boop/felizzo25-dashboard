@@ -479,6 +479,11 @@ def event_detail(idx):
     event = events[idx]
     event_name = event['Event']
     
+    # For non-sports events, show simple detail page with tabs
+    sports_events = ['Carrom', 'Chess', 'Foosball', 'Snookers', 'TT', 'Seven Stones', 'Tug of War']
+    if event_name not in sports_events:
+        return render_template('event_detail_simple.html', event=event, event_idx=idx)
+    
     # Time slots
     time_slots = [
         '09:00 AM', '09:10 AM', '09:20 AM', '09:30 AM', '09:40 AM', '09:50 AM',
