@@ -416,12 +416,9 @@ def event_detail(idx):
         '06:00 PM'
     ]
     
-    # Foosball uses special two-table view
+    # Foosball uses day schedule format
     if event_name == 'Foosball':
         schedule_file = Path(__file__).parent / 'foosball_day_schedule.json'
-        schedule = []
-        winners = {}
-        
         if schedule_file.exists():
             with open(schedule_file) as f:
                 schedule = json.load(f)
@@ -431,7 +428,27 @@ def event_detail(idx):
             with open(results_file) as f:
                 winners = json.load(f)
         
-        return render_template('event_detail_foosball.html', event=event, event_idx=idx,
+        # Load saved time slots from database
+        saved_time_slots = {}
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute('SELECT match_id, time_slot FROM time_slots WHERE event_name = %s', (event_name,))
+                for row in cur.fetchall():
+                    saved_time_slots[row[0]] = row[1]
+                cur.close()
+                conn.close()
+            except:
+                pass
+        
+        # Merge saved time slots into schedule
+        for day in schedule:
+            for match in day['matches']:
+                if match['match_id'] in saved_time_slots:
+                    match['time_slot'] = saved_time_slots[match['match_id']]
+        
+        return render_template('event_detail.html', event=event, event_idx=idx,
                              schedule=schedule, winners=winners, time_slots=time_slots)
     
     # Other sports use date-based structure
