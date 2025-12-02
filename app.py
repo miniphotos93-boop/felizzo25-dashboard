@@ -1503,7 +1503,7 @@ def send_schedule_email():
                 cur = conn.cursor()
                 cur.execute('SELECT match_id, time_slot FROM time_slots WHERE event_name = %s', (event_name,))
                 for row in cur.fetchall():
-                    saved_time_slots[row[0]] = row[1]
+                    saved_time_slots[row['match_id']] = row['time_slot']
                 cur.close()
                 conn.close()
                 print(f"Loaded {len(saved_time_slots)} time slots from database for {event_name}")
