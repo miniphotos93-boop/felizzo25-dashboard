@@ -72,6 +72,18 @@ def init_database():
             )
         ''')
         
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS participants (
+                id SERIAL PRIMARY KEY,
+                event_idx INTEGER NOT NULL,
+                serial_number INTEGER NOT NULL,
+                participant1_name VARCHAR(255),
+                participant2_name VARCHAR(255),
+                team_name VARCHAR(255),
+                UNIQUE(event_idx, serial_number)
+            )
+        ''')
+        
         conn.commit()
         
         # Migrate events from JSON if database is empty
@@ -152,16 +164,22 @@ def load_events():
             for event in events:
                 event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
             return events
-        except:
-            pass
+        except Exception as e:
+            print(f"Error loading events from database: {e}")
     
-    # Fallback to JSON file
-    with open(EVENTS_FILE) as f:
-        events = json.load(f)
-    
-    for event in events:
-        event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
-    return events
+    # Only use JSON as initial seed if database is completely empty
+    try:
+        with open(EVENTS_FILE) as f:
+            events = json.load(f)
+        
+        for event in events:
+            event['event_type'] = EVENT_TYPES.get(event['Event'], 'solo')
+        
+        # Save to database for future use
+        save_events(events)
+        return events
+    except:
+        return []
 
 def save_events(events):
     conn = get_db_connection()
@@ -219,27 +237,67 @@ def get_participants_file(idx):
     return PARTICIPANTS_DIR / f"event_{idx}.json"
 
 def load_participants(idx):
+    # Load from database first
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute('SELECT * FROM participants WHERE event_idx = %s ORDER BY serial_number', (idx,))
+            rows = cur.fetchall()
+            cur.close()
+            conn.close()
+            
+            if rows:
+                participants = []
+                for row in rows:
+                    participants.append({
+                        'serial_number': row['serial_number'],
+                        'participant1_name': row['participant1_name'],
+                        'participant2_name': row['participant2_name'],
+                        'team_name': row['team_name']
+                    })
+                return participants
+        except Exception as e:
+            print(f"Error loading participants from database: {e}")
+    
+    # Fallback to JSON file only if database is empty
     file = get_participants_file(idx)
     if file.exists():
         with open(file) as f:
-            return json.load(f)
+            participants = json.load(f)
+            # Migrate to database
+            if conn:
+                save_participants(idx, participants)
+            return participants
     return []
 
 def save_participants(idx, participants):
+    # Save to database
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            # Clear existing participants for this event
+            cur.execute('DELETE FROM participants WHERE event_idx = %s', (idx,))
+            
+            # Insert new participants
+            for p in participants:
+                cur.execute('''
+                    INSERT INTO participants (event_idx, serial_number, participant1_name, participant2_name, team_name)
+                    VALUES (%s, %s, %s, %s, %s)
+                ''', (idx, p.get('serial_number'), p.get('participant1_name'), 
+                      p.get('participant2_name'), p.get('team_name')))
+            
+            conn.commit()
+            cur.close()
+            conn.close()
+        except Exception as e:
+            print(f"Error saving participants to database: {e}")
+    
+    # Also save to JSON file as backup
     file = get_participants_file(idx)
     with open(file, 'w') as f:
         json.dump(participants, f, indent=2)
-    
-    # Auto-commit to git in production
-    if os.environ.get('RENDER'):
-        import subprocess
-        try:
-            subprocess.run(['git', 'add', str(file)], cwd=Path(__file__).parent, timeout=5)
-            subprocess.run(['git', 'commit', '-m', f'Update participants for event {idx}'], 
-                         cwd=Path(__file__).parent, timeout=5)
-            subprocess.run(['git', 'push'], cwd=Path(__file__).parent, timeout=30)
-        except:
-            pass
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
