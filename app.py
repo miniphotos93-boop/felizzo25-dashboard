@@ -219,6 +219,17 @@ def save_participants(idx, participants):
     file = get_participants_file(idx)
     with open(file, 'w') as f:
         json.dump(participants, f, indent=2)
+    
+    # Auto-commit to git in production
+    if os.environ.get('RENDER'):
+        import subprocess
+        try:
+            subprocess.run(['git', 'add', str(file)], cwd=Path(__file__).parent, timeout=5)
+            subprocess.run(['git', 'commit', '-m', f'Update participants for event {idx}'], 
+                         cwd=Path(__file__).parent, timeout=5)
+            subprocess.run(['git', 'push'], cwd=Path(__file__).parent, timeout=30)
+        except:
+            pass
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -1145,6 +1156,17 @@ def update_match_winner():
         with open(results_file, 'w') as f:
             json.dump(results, f, indent=2)
         
+        # Auto-commit in production
+        if os.environ.get('RENDER'):
+            import subprocess
+            try:
+                subprocess.run(['git', 'add', str(results_file)], cwd=Path(__file__).parent, timeout=5)
+                subprocess.run(['git', 'commit', '-m', f'Update winner for {event_name}'], 
+                             cwd=Path(__file__).parent, timeout=5)
+                subprocess.run(['git', 'push'], cwd=Path(__file__).parent, timeout=30)
+            except:
+                pass
+        
         return jsonify({'status': 'success'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
@@ -1184,6 +1206,17 @@ def update_time_slot():
         
         with open(time_slots_file, 'w') as f:
             json.dump(time_slots_data, f, indent=2)
+        
+        # Auto-commit in production
+        if os.environ.get('RENDER'):
+            import subprocess
+            try:
+                subprocess.run(['git', 'add', str(time_slots_file)], cwd=Path(__file__).parent, timeout=5)
+                subprocess.run(['git', 'commit', '-m', f'Update time slot for {event}'], 
+                             cwd=Path(__file__).parent, timeout=5)
+                subprocess.run(['git', 'push'], cwd=Path(__file__).parent, timeout=30)
+            except:
+                pass
         
         return jsonify({'status': 'success'})
     except Exception as e:
