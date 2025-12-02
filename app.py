@@ -472,7 +472,10 @@ def event_detail(idx):
                     data = json.load(f)
                 
                 # Handle different formats
-                if event_name in ['Seven Stones', 'Tug of War']:
+                if event_name in ['Carrom', 'Foosball']:
+                    # These already have day-based structure with matches array
+                    schedule = data
+                elif event_name in ['Seven Stones', 'Tug of War']:
                     # These have group_a and group_b structure
                     for day in data:
                         matches = []
@@ -486,7 +489,7 @@ def event_detail(idx):
                             'matches': matches
                         })
                 else:
-                    # Group by date for other events
+                    # Group by date for other events (Chess, Snookers, TT)
                     from collections import defaultdict
                     by_date = defaultdict(list)
                     for match in data:
