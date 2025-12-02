@@ -192,11 +192,10 @@ def save_events(events):
             conn.commit()
             cur.close()
             conn.close()
-            return
         except:
             pass
     
-    # Fallback to JSON file
+    # Also save to JSON file
     events_to_save = []
     for event in events:
         event_copy = {k: v for k, v in event.items() if k != 'event_type'}
@@ -204,6 +203,17 @@ def save_events(events):
     
     with open(EVENTS_FILE, 'w') as f:
         json.dump(events_to_save, f, indent=2)
+    
+    # Auto-commit in production
+    if os.environ.get('RENDER'):
+        import subprocess
+        try:
+            subprocess.run(['git', 'add', str(EVENTS_FILE)], cwd=Path(__file__).parent, timeout=5)
+            subprocess.run(['git', 'commit', '-m', 'Update events data'], 
+                         cwd=Path(__file__).parent, timeout=5)
+            subprocess.run(['git', 'push'], cwd=Path(__file__).parent, timeout=30)
+        except:
+            pass
 
 def get_participants_file(idx):
     return PARTICIPANTS_DIR / f"event_{idx}.json"
