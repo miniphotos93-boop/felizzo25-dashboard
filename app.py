@@ -798,10 +798,10 @@ def manage_participants(idx):
         events = load_events()
         event = events[idx]
         event_type = event.get('event_type', 'solo')
-    
-    if request.method == 'POST':
-        action = request.form.get('action')
-        participants = load_participants(idx)
+        
+        if request.method == 'POST':
+            action = request.form.get('action')
+            participants = load_participants(idx)
         
         if action == 'add':
             serial = request.form.get('serial_number')
@@ -828,52 +828,52 @@ def manage_participants(idx):
                                      cwd=Path(__file__).parent, check=True)
                     except:
                         pass
-        
-        elif action == 'edit':
-            serial = int(request.form.get('serial_number'))
-            participant1 = request.form.get('participant1', '').strip()
-            participant2 = request.form.get('participant2', '').strip() if event_type == 'pair' else None
-            team = request.form.get('team_name', '').strip()
             
-            for p in participants:
-                if p['serial_number'] == serial:
-                    p['participant1_name'] = participant1
-                    p['participant2_name'] = participant2
-                    p['team_name'] = team
-                    break
-            save_participants(idx, participants)
+            elif action == 'edit':
+                serial = int(request.form.get('serial_number'))
+                participant1 = request.form.get('participant1', '').strip()
+                participant2 = request.form.get('participant2', '').strip() if event_type == 'pair' else None
+                team = request.form.get('team_name', '').strip()
+                
+                for p in participants:
+                    if p['serial_number'] == serial:
+                        p['participant1_name'] = participant1
+                        p['participant2_name'] = participant2
+                        p['team_name'] = team
+                        break
+                save_participants(idx, participants)
+                
+                # Auto-regenerate Foosball schedule
+                if event['Event'] == 'Foosball':
+                    import subprocess
+                    try:
+                        subprocess.run(['python', 'generate_foosball_knockout.py'], 
+                                     cwd=Path(__file__).parent, check=True)
+                    except:
+                        pass
             
-            # Auto-regenerate Foosball schedule
-            if event['Event'] == 'Foosball':
-                import subprocess
-                try:
-                    subprocess.run(['python', 'generate_foosball_knockout.py'], 
-                                 cwd=Path(__file__).parent, check=True)
-                except:
-                    pass
-        
-        elif action == 'delete':
-            serial = int(request.form.get('serial_number'))
-            participants = [p for p in participants if p['serial_number'] != serial]
-            save_participants(idx, participants)
+            elif action == 'delete':
+                serial = int(request.form.get('serial_number'))
+                participants = [p for p in participants if p['serial_number'] != serial]
+                save_participants(idx, participants)
+                
+                # Auto-regenerate Foosball schedule
+                if event['Event'] == 'Foosball':
+                    import subprocess
+                    try:
+                        subprocess.run(['python', 'generate_foosball_knockout.py'], 
+                                     cwd=Path(__file__).parent, check=True)
+                    except:
+                        pass
             
-            # Auto-regenerate Foosball schedule
-            if event['Event'] == 'Foosball':
-                import subprocess
-                try:
-                    subprocess.run(['python', 'generate_foosball_knockout.py'], 
-                                 cwd=Path(__file__).parent, check=True)
-                except:
-                    pass
+            elif action == 'clear':
+                save_participants(idx, [])
+            
+            return redirect(f'/manage-participants/{idx}')
         
-        elif action == 'clear':
-            save_participants(idx, [])
-        
-        return redirect(f'/manage-participants/{idx}')
-    
-    participants = load_participants(idx)
-    return render_template('manage_participants.html', event=event, idx=idx, 
-                         participants=participants, event_type=event_type)
+        participants = load_participants(idx)
+        return render_template('manage_participants.html', event=event, idx=idx, 
+                             participants=participants, event_type=event_type)
     except Exception as e:
         print(f"Error in manage_participants: {e}")
         import traceback
