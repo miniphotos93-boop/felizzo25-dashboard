@@ -252,23 +252,32 @@ def load_participants(idx):
                 for row in rows:
                     participants.append({
                         'serial_number': row['serial_number'],
-                        'participant1_name': row['participant1_name'],
-                        'participant2_name': row['participant2_name'],
-                        'team_name': row['team_name']
+                        'participant1_name': row['participant1_name'] or '',
+                        'participant2_name': row['participant2_name'] or '',
+                        'team_name': row['team_name'] or ''
                     })
                 return participants
         except Exception as e:
             print(f"Error loading participants from database: {e}")
+            if conn:
+                try:
+                    conn.close()
+                except:
+                    pass
     
     # Fallback to JSON file only if database is empty
     file = get_participants_file(idx)
     if file.exists():
-        with open(file) as f:
-            participants = json.load(f)
-            # Migrate to database
-            if conn:
-                save_participants(idx, participants)
-            return participants
+        try:
+            with open(file) as f:
+                participants = json.load(f)
+                # Migrate to database
+                conn = get_db_connection()
+                if conn:
+                    save_participants(idx, participants)
+                return participants
+        except Exception as e:
+            print(f"Error loading participants from JSON: {e}")
     return []
 
 def save_participants(idx, participants):
