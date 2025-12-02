@@ -484,8 +484,6 @@ def event_detail(idx):
             for match in day['matches']:
                 if match['match_id'] in saved_time_slots:
                     match['time_slot'] = saved_time_slots[match['match_id']]
-                elif 'time' in match:
-                    match['time_slot'] = match['time']
         
         return render_template('event_detail.html', event=event, event_idx=idx,
                              schedule=schedule, winners=winners, time_slots=time_slots)
@@ -587,8 +585,6 @@ def event_detail(idx):
         for match in day['matches']:
             if match['match_id'] in saved_time_slots:
                 match['time_slot'] = saved_time_slots[match['match_id']]
-            elif 'time' in match:
-                match['time_slot'] = match['time']
     
     # Time slots
     time_slots = [
