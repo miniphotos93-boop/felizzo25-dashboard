@@ -277,16 +277,61 @@ def home():
     
     leaderboard.sort(key=lambda x: (x['events'], x['participants']), reverse=True)
     
-    # Today's events
+    # Today's events - check for matches scheduled today
     from datetime import datetime
     today = datetime.now().strftime('%Y-%m-%d')
     today_events = []
+    
+    schedule_files = {
+        'Carrom': 'carrom_schedule.json',
+        'Chess': 'chess_schedule.json',
+        'Foosball': 'foosball_day_schedule.json',
+        'Snookers': 'snookers_schedule.json',
+        'TT': 'tt_schedule.json',
+        'Seven Stones': 'sevenstones_schedule.json',
+        'Tug of War': 'tugofwar_schedule.json'
+    }
+    
     for idx, event in enumerate(events):
-        start_date = event.get('Start_Date', '')
-        if start_date and start_date.startswith(today):
+        event_name = event['Event']
+        has_matches_today = False
+        
+        if event_name in schedule_files:
+            schedule_file = Path(__file__).parent / schedule_files[event_name]
+            if schedule_file.exists():
+                try:
+                    with open(schedule_file) as f:
+                        schedule_data = json.load(f)
+                    
+                    # Check different schedule formats
+                    if event_name == 'Foosball':
+                        for day in schedule_data:
+                            if day.get('date') == today:
+                                has_matches_today = True
+                                break
+                    elif event_name == 'Carrom':
+                        for day in schedule_data:
+                            if day.get('date') == today:
+                                has_matches_today = True
+                                break
+                    elif event_name in ['Seven Stones', 'Tug of War']:
+                        for day in schedule_data:
+                            if day.get('date') == today:
+                                has_matches_today = True
+                                break
+                    else:
+                        # Snookers, TT, Chess - flat list with dates
+                        for match in schedule_data:
+                            if match.get('date') == today:
+                                has_matches_today = True
+                                break
+                except:
+                    pass
+        
+        if has_matches_today:
             today_events.append({
-                'name': event['Event'],
-                'start_date': start_date,
+                'name': event_name,
+                'start_date': event.get('Start_Date', ''),
                 'idx': idx
             })
     
