@@ -52,8 +52,8 @@ if small_teams_players:
 
 print(f"Total matches: {len(matches)}")
 
-# Distribute matches across days (starting Nov 25, 2024)
-start_date = datetime(2024, 11, 25)
+# Distribute matches across days (starting Dec 2, 2025)
+start_date = datetime(2025, 12, 2)
 matches_per_day = 6  # 3 matches per table, 2 tables
 current_date = start_date
 match_index = 0
