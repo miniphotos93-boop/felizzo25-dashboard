@@ -20,6 +20,7 @@ time_slots = ["09:00 AM", "09:30 AM", "10:00 AM", "10:30 AM", "11:00 AM", "11:30
               "04:00 PM", "04:30 PM", "05:00 PM", "05:30 PM"]
 
 group_winners = []
+matches_today = 0
 
 # Phase 1: Within-group knockouts
 for team_name, team_pairs in sorted(teams.items()):
@@ -35,9 +36,10 @@ for team_name, team_pairs in sorted(teams.items()):
         for i in range(0, len(remaining), 2):
             if i + 1 < len(remaining):
                 schedule.append({
+                    "match_id": f"foosball_{match_number}",
                     "match_number": match_number,
                     "date": current_date.strftime("%Y-%m-%d"),
-                    "time": time_slots[len(schedule) % len(time_slots)],
+                    "time": time_slots[matches_today % len(time_slots)],
                     "pair1_team": remaining[i]["team_name"],
                     "pair1_p1": remaining[i]["participant1_name"],
                     "pair1_p2": remaining[i]["participant2_name"],
@@ -48,12 +50,14 @@ for team_name, team_pairs in sorted(teams.items()):
                     "table": "Table 1"
                 })
                 match_number += 1
-                next_round.append({"team_name": team_name, "participant1_name": "Winner", "participant2_name": f"Match {match_number-1}"})
+                matches_today += 1
+                next_round.append({"team_name": team_name, "participant1_name": "TBD", "participant2_name": f"(Winner M{match_number-1})"})
                 
-                if len(schedule) % 8 == 0:
+                if matches_today >= 8:
                     current_date += timedelta(days=1)
                     while current_date.weekday() >= 5:
                         current_date += timedelta(days=1)
+                    matches_today = 0
             else:
                 next_round.append(remaining[i])
         
@@ -72,9 +76,10 @@ while len(remaining) > 1:
     for i in range(0, len(remaining), 2):
         if i + 1 < len(remaining):
             schedule.append({
+                "match_id": f"foosball_{match_number}",
                 "match_number": match_number,
                 "date": current_date.strftime("%Y-%m-%d"),
-                "time": time_slots[len(schedule) % len(time_slots)],
+                "time": time_slots[matches_today % len(time_slots)],
                 "pair1_team": remaining[i]["team_name"],
                 "pair1_p1": remaining[i]["participant1_name"],
                 "pair1_p2": remaining[i]["participant2_name"],
@@ -85,12 +90,14 @@ while len(remaining) > 1:
                 "table": "Table 1"
             })
             match_number += 1
-            next_round.append({"team_name": "Finals", "participant1_name": "Winner", "participant2_name": f"Match {match_number-1}"})
+            matches_today += 1
+            next_round.append({"team_name": "Finals", "participant1_name": "TBD", "participant2_name": f"(Winner M{match_number-1})"})
             
-            if len(schedule) % 8 == 0:
+            if matches_today >= 8:
                 current_date += timedelta(days=1)
                 while current_date.weekday() >= 5:
                     current_date += timedelta(days=1)
+                matches_today = 0
         else:
             next_round.append(remaining[i])
     
