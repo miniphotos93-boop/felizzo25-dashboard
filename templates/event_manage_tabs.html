@@ -89,7 +89,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('participants')">👥 Participants</button>
             <button class="tab-btn" onclick="showTab('update')">✏️ Update Event</button>
-            {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing'] %}
+            {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting'] %}
             <button class="tab-btn" onclick="showTab('scorecard')">📊 Scorecard</button>
             {% endif %}
         </div>
@@ -207,7 +207,7 @@
         </div>
         
         <!-- Scorecard Tab -->
-        {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing'] %}
+        {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting'] %}
         <div id="scorecard" class="tab-content">
             <h2 style="color: #00ffff; margin-bottom: 20px; font-size: 20px;">Scorecard</h2>
             <p style="color: #fff; opacity: 0.8; font-size: 12px;">Use the full scorecard page for detailed scoring.</p>

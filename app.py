@@ -489,7 +489,7 @@ def event_detail(idx):
         
         # Load scorecard data if applicable
         scorecard_data = None
-        if event_name in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing']:
+        if event_name in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting']:
             scorecard_data = load_scorecard(idx)
         
         return render_template('event_manage_tabs.html', 
