@@ -1506,9 +1506,14 @@ def send_schedule_email():
                     saved_time_slots[row[0]] = row[1]
                 cur.close()
                 conn.close()
-                print(f"Loaded {len(saved_time_slots)} time slots from database")
+                print(f"Loaded {len(saved_time_slots)} time slots from database for {event_name}")
             except Exception as e:
-                print(f"Error loading time slots: {e}")
+                print(f"Error loading time slots: {type(e).__name__}: {str(e)}")
+                if conn:
+                    try:
+                        conn.close()
+                    except:
+                        pass
         
         # Merge time slots into matches
         for match in matches:
