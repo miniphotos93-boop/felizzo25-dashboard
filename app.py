@@ -479,12 +479,25 @@ def event_detail(idx):
     event = events[idx]
     event_name = event['Event']
     
-    # For soft skill events, show management page (no schedules)
+    # For soft skill events, show comprehensive management page with tabs
     soft_skill_events = ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'CWF', 
                          'Painting', 'Trash to Treasure', 'Treasure Hunt', 'Meme Creation', 
                          'Photography', 'Reels']
     if event_name in soft_skill_events:
-        return render_template('event_manage.html', event=event, event_idx=idx)
+        participants = load_participants(idx)
+        event_type = event.get('event_type', 'solo')
+        
+        # Load scorecard data if applicable
+        scorecard_data = None
+        if event_name in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing']:
+            scorecard_data = load_scorecard(idx)
+        
+        return render_template('event_manage_tabs.html', 
+                             event=event, 
+                             event_idx=idx,
+                             participants=participants,
+                             event_type=event_type,
+                             scorecard=scorecard_data)
     
     # Time slots
     time_slots = [
