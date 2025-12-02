@@ -1352,9 +1352,10 @@ def send_schedule_email():
         data = request.json
         event_name = data.get('event')
         date = data.get('date')
-        recipient_email = data.get('email')
+        sender_email = data.get('sender_email')
+        recipient_email = data.get('recipient_email')
         
-        if not all([event_name, date, recipient_email]):
+        if not all([event_name, date, sender_email, recipient_email]):
             return jsonify({'status': 'error', 'message': 'Missing required fields'}), 400
         
         # Load schedule for the event
@@ -1451,7 +1452,6 @@ def send_schedule_email():
         """
         
         # Send email using AWS SES
-        sender_email = os.getenv('SENDER_EMAIL', 'ftvqs-felizzo@amazon.com')
         aws_region = os.getenv('AWS_REGION', 'us-east-1')
         
         # Create SES client

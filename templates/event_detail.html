@@ -469,11 +469,44 @@
                 </div>
             </div>
             
-            <!-- Email Schedule Button -->
+            <!-- Share Schedule Button -->
             <div style="text-align: center; margin-bottom: 20px;">
-                <button onclick="sendScheduleEmail()" style="padding: 15px 30px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 16px; font-family: 'Silkscreen', monospace;">
-                    📧 Email Today's Schedule
+                <button onclick="showShareModal()" style="padding: 15px 30px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 15px; font-size: 16px; font-family: 'Silkscreen', monospace;">
+                    📤 Share Schedule
                 </button>
+            </div>
+            
+            <!-- Share Schedule Modal -->
+            <div id="shareModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+                <div style="background: #1a0033; padding: 30px; border-radius: 20px; border: 2px solid #00ffff; max-width: 500px; width: 90%;">
+                    <h3 style="color: #00ffff; margin-top: 0; font-family: 'Silkscreen', monospace;">📤 Share Schedule</h3>
+                    
+                    <div style="margin: 20px 0;">
+                        <label style="color: #fff; display: block; margin-bottom: 5px;">Select Date:</label>
+                        <select id="shareDate" style="width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #00ffff; background: #0a0015; color: #fff; font-size: 14px;">
+                            <option value="">Choose a date...</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <label style="color: #fff; display: block; margin-bottom: 5px;">Your Email:</label>
+                        <input type="email" id="senderEmail" placeholder="your.email@amazon.com" style="width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #00ffff; background: #0a0015; color: #fff; font-size: 14px;">
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <label style="color: #fff; display: block; margin-bottom: 5px;">Recipient Email:</label>
+                        <input type="email" id="recipientEmail" placeholder="recipient@amazon.com" style="width: 100%; padding: 10px; border-radius: 10px; border: 2px solid #00ffff; background: #0a0015; color: #fff; font-size: 14px;">
+                    </div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button onclick="sendScheduleEmail()" style="flex: 1; padding: 12px; background: linear-gradient(135deg, #00ffff, #00ff88); border: none; color: #000; font-weight: bold; cursor: pointer; border-radius: 10px; font-family: 'Silkscreen', monospace;">
+                            Send
+                        </button>
+                        <button onclick="closeShareModal()" style="flex: 1; padding: 12px; background: #ff0066; border: none; color: #fff; font-weight: bold; cursor: pointer; border-radius: 10px; font-family: 'Silkscreen', monospace;">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
             </div>
             
             <!-- Table -->
@@ -684,32 +717,62 @@
             });
         }
         
+        function showShareModal() {
+            const modal = document.getElementById('shareModal');
+            const dateSelect = document.getElementById('shareDate');
+            
+            // Populate date dropdown with available dates from schedule
+            dateSelect.innerHTML = '<option value="">Choose a date...</option>';
+            const dates = new Set();
+            document.querySelectorAll('tbody tr').forEach(row => {
+                const date = row.cells[0].textContent.trim();
+                if (date) dates.add(date);
+            });
+            
+            Array.from(dates).sort().forEach(date => {
+                const option = document.createElement('option');
+                option.value = date;
+                option.textContent = date;
+                dateSelect.appendChild(option);
+            });
+            
+            modal.style.display = 'flex';
+        }
+        
+        function closeShareModal() {
+            document.getElementById('shareModal').style.display = 'none';
+            document.getElementById('shareDate').value = '';
+            document.getElementById('senderEmail').value = '';
+            document.getElementById('recipientEmail').value = '';
+        }
+        
         function sendScheduleEmail() {
-            const email = prompt('Enter email address to send schedule:');
-            if (!email) return;
+            const date = document.getElementById('shareDate').value;
+            const senderEmail = document.getElementById('senderEmail').value;
+            const recipientEmail = document.getElementById('recipientEmail').value;
             
-            // Get today's date in IST timezone
-            const istDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-            const today = new Date(istDate).toISOString().split('T')[0];
+            if (!date || !senderEmail || !recipientEmail) {
+                alert('Please fill in all fields');
+                return;
+            }
             
-            const dateFilter = document.getElementById('dateFilter');
-            const selectedDate = dateFilter && dateFilter.value ? dateFilter.value : today;
-            
-            if (!confirm(`Send schedule for ${selectedDate} to ${email}?`)) return;
+            if (!confirm(`Send schedule for ${date} from ${senderEmail} to ${recipientEmail}?`)) return;
             
             fetch('/send-schedule-email', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({
                     event: '{{ event.Event }}',
-                    date: selectedDate,
-                    email: email
+                    date: date,
+                    sender_email: senderEmail,
+                    recipient_email: recipientEmail
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
                     alert('✓ Schedule sent successfully!');
+                    closeShareModal();
                 } else {
                     alert('✗ Error: ' + data.message);
                 }
