@@ -1487,5 +1487,30 @@ def send_schedule_email():
         print(f"Error sending email: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/clear-foosball-timeslots')
+@admin_required
+def clear_foosball_timeslots():
+    try:
+        # Clear from database
+        conn = get_db_connection()
+        if conn:
+            try:
+                cur = conn.cursor()
+                cur.execute("DELETE FROM time_slots WHERE event_name = 'Foosball'")
+                conn.commit()
+                cur.close()
+                conn.close()
+            except Exception as e:
+                print(f"Database error: {e}")
+        
+        # Clear JSON file
+        time_slots_file = Path(__file__).parent / 'foosball_time_slots.json'
+        if time_slots_file.exists():
+            time_slots_file.unlink()
+        
+        return "Foosball time slots cleared successfully", 200
+    except Exception as e:
+        return f"Error: {str(e)}", 500
+
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)
