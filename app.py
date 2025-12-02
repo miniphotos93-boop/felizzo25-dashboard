@@ -457,6 +457,15 @@ def event_detail(idx):
     
     # Other sports use date-based structure
     schedule_files = {
+        'Carrom': 'carrom_schedule.json',
+        'Chess': 'chess_schedule.json',
+        'Snookers': 'snookers_schedule.json',
+        'TT': 'tt_schedule.json',
+        'Seven Stones': 'sevenstones_schedule.json',
+        'Tug of War': 'tugofwar_schedule.json'
+    }
+    
+    if event_name in schedule_files:
         schedule_file = Path(__file__).parent / schedule_files[event_name]
         if schedule_file.exists():
             try:
