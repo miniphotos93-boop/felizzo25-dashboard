@@ -1506,13 +1506,18 @@ def send_schedule_email():
                     saved_time_slots[row[0]] = row[1]
                 cur.close()
                 conn.close()
-            except:
-                pass
+                print(f"Loaded {len(saved_time_slots)} time slots from database")
+            except Exception as e:
+                print(f"Error loading time slots: {e}")
         
         # Merge time slots into matches
         for match in matches:
-            if 'match_id' in match and match['match_id'] in saved_time_slots:
-                match['time_slot'] = saved_time_slots[match['match_id']]
+            if 'match_id' in match:
+                print(f"Match ID: {match['match_id']}, Has time_slot in DB: {match['match_id'] in saved_time_slots}")
+                if match['match_id'] in saved_time_slots:
+                    match['time_slot'] = saved_time_slots[match['match_id']]
+            else:
+                print(f"Match missing match_id field: {match}")
         
         # Create email content
         html_content = f"""
