@@ -829,14 +829,22 @@ def manage_participants(idx):
                     })
                     save_participants(idx, participants)
                     
-                    # Auto-regenerate Foosball schedule
-                    if event['Event'] == 'Foosball':
+                    # Auto-regenerate schedule for sports events
+                    schedule_generators = {
+                        'Foosball': 'generate_foosball_knockout.py',
+                        'Chess': 'generate_chess_schedule.py',
+                        'Carrom': 'generate_carrom_schedule.py',
+                        'Snookers': 'generate_snookers_tt_schedules.py',
+                        'TT': 'generate_snookers_tt_schedules.py'
+                    }
+                    
+                    if event['Event'] in schedule_generators:
                         import subprocess
                         try:
-                            subprocess.run(['python', 'generate_foosball_knockout.py'], 
-                                         cwd=Path(__file__).parent, check=True)
-                        except:
-                            pass
+                            subprocess.run(['python', schedule_generators[event['Event']]], 
+                                         cwd=Path(__file__).parent, check=True, timeout=60)
+                        except Exception as e:
+                            print(f"Schedule generation error: {e}")
             
             elif action == 'edit':
                 serial = int(request.form.get('serial_number'))
@@ -852,28 +860,44 @@ def manage_participants(idx):
                         break
                 save_participants(idx, participants)
                 
-                # Auto-regenerate Foosball schedule
-                if event['Event'] == 'Foosball':
+                # Auto-regenerate schedule for sports events
+                schedule_generators = {
+                    'Foosball': 'generate_foosball_knockout.py',
+                    'Chess': 'generate_chess_schedule.py',
+                    'Carrom': 'generate_carrom_schedule.py',
+                    'Snookers': 'generate_snookers_tt_schedules.py',
+                    'TT': 'generate_snookers_tt_schedules.py'
+                }
+                
+                if event['Event'] in schedule_generators:
                     import subprocess
                     try:
-                        subprocess.run(['python', 'generate_foosball_knockout.py'], 
-                                     cwd=Path(__file__).parent, check=True)
-                    except:
-                        pass
+                        subprocess.run(['python', schedule_generators[event['Event']]], 
+                                     cwd=Path(__file__).parent, check=True, timeout=60)
+                    except Exception as e:
+                        print(f"Schedule generation error: {e}")
             
             elif action == 'delete':
                 serial = int(request.form.get('serial_number'))
                 participants = [p for p in participants if p['serial_number'] != serial]
                 save_participants(idx, participants)
                 
-                # Auto-regenerate Foosball schedule
-                if event['Event'] == 'Foosball':
+                # Auto-regenerate schedule for sports events
+                schedule_generators = {
+                    'Foosball': 'generate_foosball_knockout.py',
+                    'Chess': 'generate_chess_schedule.py',
+                    'Carrom': 'generate_carrom_schedule.py',
+                    'Snookers': 'generate_snookers_tt_schedules.py',
+                    'TT': 'generate_snookers_tt_schedules.py'
+                }
+                
+                if event['Event'] in schedule_generators:
                     import subprocess
                     try:
-                        subprocess.run(['python', 'generate_foosball_knockout.py'], 
-                                     cwd=Path(__file__).parent, check=True)
-                    except:
-                        pass
+                        subprocess.run(['python', schedule_generators[event['Event']]], 
+                                     cwd=Path(__file__).parent, check=True, timeout=60)
+                    except Exception as e:
+                        print(f"Schedule generation error: {e}")
             
             elif action == 'clear':
                 save_participants(idx, [])
