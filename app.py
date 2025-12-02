@@ -732,8 +732,17 @@ def manage_participants(idx):
                     'participant1_name': participant1,
                     'participant2_name': participant2,
                     'team_name': team
-                })
+                })\
                 save_participants(idx, participants)
+                
+                # Auto-regenerate Foosball schedule
+                if event['Event'] == 'Foosball':
+                    import subprocess
+                    try:
+                        subprocess.run(['python', 'generate_foosball_knockout.py'], 
+                                     cwd=Path(__file__).parent, check=True)
+                    except:
+                        pass
         
         elif action == 'edit':
             serial = int(request.form.get('serial_number'))
@@ -748,11 +757,29 @@ def manage_participants(idx):
                     p['team_name'] = team
                     break
             save_participants(idx, participants)
+            
+            # Auto-regenerate Foosball schedule
+            if event['Event'] == 'Foosball':
+                import subprocess
+                try:
+                    subprocess.run(['python', 'generate_foosball_knockout.py'], 
+                                 cwd=Path(__file__).parent, check=True)
+                except:
+                    pass
         
         elif action == 'delete':
             serial = int(request.form.get('serial_number'))
             participants = [p for p in participants if p['serial_number'] != serial]
             save_participants(idx, participants)
+            
+            # Auto-regenerate Foosball schedule
+            if event['Event'] == 'Foosball':
+                import subprocess
+                try:
+                    subprocess.run(['python', 'generate_foosball_knockout.py'], 
+                                 cwd=Path(__file__).parent, check=True)
+                except:
+                    pass
         
         elif action == 'clear':
             save_participants(idx, [])
