@@ -1,0 +1,20 @@
+[
+  {
+    "serial_number": 1,
+    "participant1_name": "Participant 1",
+    "participant2_name": null,
+    "team_name": "Team A"
+  },
+  {
+    "serial_number": 2,
+    "participant1_name": "Participant 2",
+    "participant2_name": null,
+    "team_name": "Team B"
+  },
+  {
+    "serial_number": 3,
+    "participant1_name": "Participant 3",
+    "participant2_name": null,
+    "team_name": "Team C"
+  }
+]
