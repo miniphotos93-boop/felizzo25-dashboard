@@ -55,13 +55,16 @@
 
         <div class="tabs">
             <div class="tab active" onclick="showRound('round1')">Round 1</div>
+            {% if event.Event != 'Painting' %}
             <div class="tab" onclick="showRound('round2')">Round 2</div>
             <div class="tab" onclick="showRound('round3')">Round 3</div>
             <div class="tab" onclick="showRound('aggregate')">Aggregate Scores</div>
             <div class="tab" onclick="showRound('faceoff')">Face-off</div>
+            {% endif %}
         </div>
 
         {% for round_num in ['1', '2', '3'] %}
+        {% if event.Event != 'Painting' or round_num == '1' %}
         <div id="round{{ round_num }}" class="round-content {% if round_num == '1' %}active{% endif %}">
             <h2>Round {{ round_num }} Scoring (50 points max per judge)</h2>
             {% for p in participants %}
@@ -249,8 +252,10 @@
             </form>
             {% endfor %}
         </div>
+        {% endif %}
         {% endfor %}
 
+        {% if event.Event != 'Painting' %}
         <div id="aggregate" class="round-content">
             <h2>Aggregate Scores (Total of 3 Rounds - Max 450 points)</h2>
             <table class="aggregate-table">
@@ -419,6 +424,7 @@
                 <p style="color: #e0e0ff;">Complete all 3 rounds to see top 2 participants for face-off.</p>
             {% endif %}
         </div>
+        {% endif %}
     </div>
 
     <script>
