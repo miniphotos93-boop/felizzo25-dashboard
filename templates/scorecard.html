@@ -78,7 +78,43 @@
                         
                         <table style="width: 100%; font-size: 13px;">
                             <tbody>
-                                {% if event.Event in ['Solo Singing', 'Group Singing'] %}
+                                {% if event.Event == 'Painting' %}
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Originality (10)
+                                        <span class="tooltip">The degree to which the artwork is unique and not a copy of another work.</span>
+                                    </th>
+                                    <td><input type="number" name="originality" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('originality', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Creativity (10)
+                                        <span class="tooltip">The imaginative use of ideas and materials to present an interesting and unique subject or view.</span>
+                                    </th>
+                                    <td><input type="number" name="creativity" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('creativity', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Craftsmanship (10)
+                                        <span class="tooltip">The artist's skill in handling the medium, including brushwork, perspective, and other technical aspects.</span>
+                                    </th>
+                                    <td><input type="number" name="craftsmanship" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('craftsmanship', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Color Scheme (10)
+                                        <span class="tooltip">The use of color and its impact, including harmony and value.</span>
+                                    </th>
+                                    <td><input type="number" name="color_scheme" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('color_scheme', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Clarity of Theme (10)
+                                        <span class="tooltip">Whether the subject and meaning are clear to the viewer.</span>
+                                    </th>
+                                    <td><input type="number" name="clarity_of_theme" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('clarity_of_theme', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                {% elif event.Event in ['Solo Singing', 'Group Singing'] %}
                                 {% if event.Event == 'Group Singing' %}
                                 <tr>
                                     <th style="text-align: left; font-size: 11px;">
@@ -172,7 +208,11 @@
                         function calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}() {
                             const form = document.querySelector('form input[value="{{ judge_idx }}"][name="judge_idx"]').closest('form');
                             let total = 0;
+                            {% if event.Event == 'Painting' %}
+                            ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'].forEach(c => {
+                            {% else %}
                             ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(c => {
+                            {% endif %}
                                 total += parseInt(form.querySelector('[name="' + c + '"]').value) || 0;
                             });
                             document.getElementById('judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}').textContent = total;
@@ -259,6 +299,38 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                {% if event.Event == 'Painting' %}
+                                <tr>
+                                    <th style="text-align: left;">Originality (10)</th>
+                                    <td><input type="number" name="originality_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('originality', 0) }}"></td>
+                                    <td><input type="number" name="originality_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('originality', 0) }}"></td>
+                                    <td><input type="number" name="originality_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('originality', 0) }}"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left;">Creativity (10)</th>
+                                    <td><input type="number" name="creativity_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('creativity', 0) }}"></td>
+                                    <td><input type="number" name="creativity_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('creativity', 0) }}"></td>
+                                    <td><input type="number" name="creativity_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('creativity', 0) }}"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left;">Craftsmanship (10)</th>
+                                    <td><input type="number" name="craftsmanship_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('craftsmanship', 0) }}"></td>
+                                    <td><input type="number" name="craftsmanship_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('craftsmanship', 0) }}"></td>
+                                    <td><input type="number" name="craftsmanship_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('craftsmanship', 0) }}"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left;">Color Scheme (10)</th>
+                                    <td><input type="number" name="color_scheme_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('color_scheme', 0) }}"></td>
+                                    <td><input type="number" name="color_scheme_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('color_scheme', 0) }}"></td>
+                                    <td><input type="number" name="color_scheme_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('color_scheme', 0) }}"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left;">Clarity of Theme (10)</th>
+                                    <td><input type="number" name="clarity_of_theme_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('clarity_of_theme', 0) }}"></td>
+                                    <td><input type="number" name="clarity_of_theme_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('clarity_of_theme', 0) }}"></td>
+                                    <td><input type="number" name="clarity_of_theme_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('clarity_of_theme', 0) }}"></td>
+                                </tr>
+                                {% else %}
                                 <tr>
                                     <th style="text-align: left;">Technical Proficiency (10)</th>
                                     <td><input type="number" name="technical_0" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_0', {}).get('technical', 0) }}"></td>
@@ -291,6 +363,7 @@
                                     <td><input type="number" name="stage_presence_1" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_1', {}).get('stage_presence', 0) }}"></td>
                                     <td><input type="number" name="stage_presence_2" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get('faceoff', {}).get(p.serial_number|string, {}).get('judge_2', {}).get('stage_presence', 0) }}"></td>
                                 </tr>
+                                {% endif %}
                                 <tr style="background: rgba(255, 215, 0, 0.1); font-weight: bold;">
                                     <th style="text-align: left;">TOTAL (out of 50)</th>
                                     <td class="total-col" id="faceoff_judge0_total_{{ p.serial_number }}">0</td>
@@ -314,7 +387,11 @@
                             function calculateFaceoffTotals() {
                                 let judge0Total = 0, judge1Total = 0, judge2Total = 0;
                                 
+                                {% if event.Event == 'Painting' %}
+                                ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'].forEach(criteria => {
+                                {% else %}
                                 ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(criteria => {
+                                {% endif %}
                                     judge0Total += parseInt(form.querySelector('[name="' + criteria + '_0"]').value) || 0;
                                     judge1Total += parseInt(form.querySelector('[name="' + criteria + '_1"]').value) || 0;
                                     judge2Total += parseInt(form.querySelector('[name="' + criteria + '_2"]').value) || 0;

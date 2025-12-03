@@ -12,6 +12,8 @@ from botocore.exceptions import ClientError
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-this'  # Change this!
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 EVENTS_FILE = Path(__file__).parent / "event_tracker.json"
 PARTICIPANTS_DIR = Path(__file__).parent / "participants_data"
 PARTICIPANTS_DIR.mkdir(exist_ok=True)
@@ -743,8 +745,18 @@ def save_scorecard(idx, scorecard):
 def scorecard(idx):
     events = load_events()
     event = events[idx]
+    event_name = event['Event']
+    print(f"DEBUG: Event name = '{event_name}'")
     participants = load_participants(idx)
     scorecard_data = load_scorecard(idx)
+    
+    # Define criteria based on event type
+    criteria_map = {
+        'Painting': ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'],
+        'default': ['technical', 'musicality', 'choreography', 'performance', 'stage_presence']
+    }
+    criteria = criteria_map.get(event_name, criteria_map['default'])
+    print(f"DEBUG: Using criteria = {criteria}")
     
     if request.method == 'POST':
         action = request.form.get('action')
@@ -768,13 +780,7 @@ def scorecard(idx):
             if participant_serial not in scorecard_data['rounds'][round_num]:
                 scorecard_data['rounds'][round_num][participant_serial] = {}
             
-            judge_scores = {
-                'technical': int(request.form.get('technical', 0)),
-                'musicality': int(request.form.get('musicality', 0)),
-                'choreography': int(request.form.get('choreography', 0)),
-                'performance': int(request.form.get('performance', 0)),
-                'stage_presence': int(request.form.get('stage_presence', 0))
-            }
+            judge_scores = {c: int(request.form.get(c, 0)) for c in criteria}
             
             scorecard_data['rounds'][round_num][participant_serial][f'judge_{judge_idx}'] = judge_scores
             save_scorecard(idx, scorecard_data)
@@ -798,7 +804,7 @@ def scorecard(idx):
     
     return render_template('scorecard.html', event=event, idx=idx, 
                          participants=participants, scorecard=scorecard_data,
-                         aggregates=aggregates, top_2=top_2)
+                         aggregates=aggregates, top_2=top_2, criteria=criteria)
 
 @app.route('/manage-participants/<int:idx>', methods=['GET', 'POST'])
 @admin_required
