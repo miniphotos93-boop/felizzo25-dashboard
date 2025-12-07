@@ -310,20 +310,6 @@
         "pair2_p2": "MOHANAPRIYA",
         "round": "MIXED_TEAMS - Semifinal 2",
         "table": "Table 1"
-      },
-      {
-        "match_id": "foosball_22",
-        "match_number": 22,
-        "date": "2025-12-08",
-        "time": "10:00 AM",
-        "pair1_team": "Winner SF1",
-        "pair1_p1": "TBD",
-        "pair1_p2": "TBD",
-        "pair2_team": "Winner SF2",
-        "pair2_p1": "TBD",
-        "pair2_p2": "TBD",
-        "round": "MIXED_TEAMS - Final",
-        "table": "Table 1"
       }
     ]
   }
