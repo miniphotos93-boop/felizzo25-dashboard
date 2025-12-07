@@ -1,95 +1,279 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Font Preview</title>
-    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Bungee&family=Black+Ops+One&family=Righteous&family=Audiowide&family=Monoton&family=Permanent+Marker&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <title>Font Preview - Felizzo'25</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600;700&family=Lato:wght@400;700&family=Poppins:wght@400;600;700&family=Montserrat:wght@400;600;700&family=Raleway:wght@400;600;700&family=Nunito:wght@400;600;700&family=Work+Sans:wght@400;600;700&family=Barlow:wght@400;600;700&family=Source+Sans+Pro:wght@400;600;700&family=Rubik:wght@400;500;700&family=DM+Sans:wght@400;500;700&family=Manrope:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #000;
+            background: #0a0a0a;
             color: #fff;
-            padding: 40px;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
             font-family: Arial;
+            font-size: 32px;
+        }
+        .font-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
         }
         .font-sample {
-            margin: 40px 0;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .font-sample:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: scale(1.02);
+            background: linear-gradient(135deg, #1a0033 0%, #000428 100%);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
         }
         .font-name {
+            font-family: Arial;
+            font-size: 14px;
             color: #00ffff;
-            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .sample-content h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        .sample-content .subtitle {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+        .sample-content p {
+            font-size: 14px;
+            line-height: 1.6;
             margin-bottom: 10px;
         }
-        .sample-text {
-            font-size: 80px;
-            background: linear-gradient(90deg, #ff00ff, #00ffff, #ff0080);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .sample-content .stats {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
         }
-        .font1 { font-family: 'Russo One', sans-serif; }
-        .font2 { font-family: 'Bungee', cursive; }
-        .font3 { font-family: 'Black Ops One', cursive; }
-        .font4 { font-family: 'Righteous', cursive; }
-        .font5 { font-family: 'Audiowide', cursive; }
-        .font6 { font-family: 'Monoton', cursive; }
-        .font7 { font-family: 'Permanent Marker', cursive; }
-        .font8 { font-family: 'Bebas Neue', cursive; }
+        .sample-content .stat {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
-    <h1 style="color: #00ffff; font-size: 32px;">Click on a font to select it</h1>
-    
-    <div class="font-sample" onclick="selectFont(1)">
-        <div class="font-name">1. Russo One - Bold, industrial, modern</div>
-        <div class="sample-text font1">FELIZZO'25</div>
+    <div class="container">
+        <h1>Choose Your Font - Click to Select</h1>
+        <div class="font-grid">
+            <div class="font-sample" onclick="selectFont('Inter')">
+                <div class="font-name">1. Inter</div>
+                <div class="sample-content" style="font-family: 'Inter', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Roboto')">
+                <div class="font-name">2. Roboto</div>
+                <div class="sample-content" style="font-family: 'Roboto', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Open Sans')">
+                <div class="font-name">3. Open Sans</div>
+                <div class="sample-content" style="font-family: 'Open Sans', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Lato')">
+                <div class="font-name">4. Lato</div>
+                <div class="sample-content" style="font-family: 'Lato', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Poppins')">
+                <div class="font-name">5. Poppins</div>
+                <div class="sample-content" style="font-family: 'Poppins', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Montserrat')">
+                <div class="font-name">6. Montserrat</div>
+                <div class="sample-content" style="font-family: 'Montserrat', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Raleway')">
+                <div class="font-name">7. Raleway</div>
+                <div class="sample-content" style="font-family: 'Raleway', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Nunito')">
+                <div class="font-name">8. Nunito</div>
+                <div class="sample-content" style="font-family: 'Nunito', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Work Sans')">
+                <div class="font-name">9. Work Sans</div>
+                <div class="sample-content" style="font-family: 'Work Sans', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Barlow')">
+                <div class="font-name">10. Barlow</div>
+                <div class="sample-content" style="font-family: 'Barlow', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Source Sans Pro')">
+                <div class="font-name">11. Source Sans Pro</div>
+                <div class="sample-content" style="font-family: 'Source Sans Pro', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Rubik')">
+                <div class="font-name">12. Rubik</div>
+                <div class="sample-content" style="font-family: 'Rubik', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('DM Sans')">
+                <div class="font-name">13. DM Sans</div>
+                <div class="sample-content" style="font-family: 'DM Sans', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Manrope')">
+                <div class="font-name">14. Manrope</div>
+                <div class="sample-content" style="font-family: 'Manrope', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="font-sample" onclick="selectFont('Space Grotesk')">
+                <div class="font-name">15. Space Grotesk</div>
+                <div class="sample-content" style="font-family: 'Space Grotesk', sans-serif;">
+                    <h2>Chess Tournament</h2>
+                    <div class="subtitle">Schedule • Participants • Settings</div>
+                    <p>Round-robin format with 81 matches across 18 days. Each player competes against all team members.</p>
+                    <div class="stats">
+                        <div class="stat">81 Matches</div>
+                        <div class="stat">18 Days</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="font-sample" onclick="selectFont(2)">
-        <div class="font-name">2. Bungee - Chunky, urban, street style</div>
-        <div class="sample-text font2">FELIZZO'25</div>
-    </div>
-    
-    <div class="font-sample" onclick="selectFont(3)">
-        <div class="font-name">3. Black Ops One - Military stencil, aggressive</div>
-        <div class="sample-text font3">FELIZZO'25</div>
-    </div>
-    
-    <div class="font-sample" onclick="selectFont(4)">
-        <div class="font-name">4. Righteous - Rounded, futuristic, smooth</div>
-        <div class="sample-text font4">FELIZZO'25</div>
-    </div>
-    
-    <div class="font-sample" onclick="selectFont(5)">
-        <div class="font-name">5. Audiowide - Tech, digital, sci-fi</div>
-        <div class="sample-text font5">FELIZZO'25</div>
-    </div>
-    
-    <div class="font-sample" onclick="selectFont(6)">
-        <div class="font-name">6. Monoton - Retro neon, 80s style</div>
-        <div class="sample-text font6">FELIZZO'25</div>
-    </div>
-    
-    <div class="font-sample" onclick="selectFont(7)">
-        <div class="font-name">7. Permanent Marker - Hand-drawn, energetic</div>
-        <div class="sample-text font7">FELIZZO'25</div>
-    </div>
-    
-    <div class="font-sample" onclick="selectFont(8)">
-        <div class="font-name">8. Bebas Neue - Tall, condensed, sporty</div>
-        <div class="sample-text font8">FELIZZO'25</div>
-    </div>
-    
     <script>
-        function selectFont(num) {
-            alert('You selected font #' + num + '. Tell Kiro to use this font!');
+        function selectFont(fontName) {
+            alert('You selected: ' + fontName + '\n\nTell Kiro to apply this font!');
         }
     </script>
 </body>

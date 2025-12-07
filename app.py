@@ -86,6 +86,16 @@ def init_database():
             )
         ''')
         
+        cur.execute('''
+            CREATE TABLE IF NOT EXISTS scorecards (
+                id SERIAL PRIMARY KEY,
+                event_idx INTEGER NOT NULL,
+                scorecard_data JSONB NOT NULL,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                UNIQUE(event_idx)
+            )
+        ''')
+        
         conn.commit()
         
         # Migrate events from JSON if database is empty
@@ -730,6 +740,23 @@ def get_scorecard_file(idx):
     return PARTICIPANTS_DIR / f"scorecard_{idx}.json"
 
 def load_scorecard(idx):
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute('SELECT scorecard_data FROM scorecards WHERE event_idx = %s', (idx,))
+            row = cur.fetchone()
+            cur.close()
+            conn.close()
+            if row:
+                return row['scorecard_data']
+        except:
+            if conn:
+                try:
+                    conn.close()
+                except:
+                    pass
+    
     file = get_scorecard_file(idx)
     if file.exists():
         with open(file) as f:
@@ -737,6 +764,23 @@ def load_scorecard(idx):
     return {"judges": ["Judge 1", "Judge 2", "Judge 3"], "rounds": {}, "faceoff": {}}
 
 def save_scorecard(idx, scorecard):
+    conn = get_db_connection()
+    if conn:
+        try:
+            cur = conn.cursor()
+            cur.execute('''
+                INSERT INTO scorecards (event_idx, scorecard_data)
+                VALUES (%s, %s)
+                ON CONFLICT (event_idx) DO UPDATE SET 
+                    scorecard_data = EXCLUDED.scorecard_data,
+                    updated_at = CURRENT_TIMESTAMP
+            ''', (idx, json.dumps(scorecard)))
+            conn.commit()
+            cur.close()
+            conn.close()
+        except Exception as e:
+            print(f"Database error: {e}")
+    
     file = get_scorecard_file(idx)
     with open(file, 'w') as f:
         json.dump(scorecard, f, indent=2)
@@ -772,7 +816,6 @@ def scorecard(idx):
         elif action == 'save_scores':
             round_num = request.form.get('round')
             participant_serial = request.form.get('participant_serial')
-            judge_idx = int(request.form.get('judge_idx'))
             
             if round_num not in scorecard_data['rounds']:
                 scorecard_data['rounds'][round_num] = {}
@@ -780,9 +823,17 @@ def scorecard(idx):
             if participant_serial not in scorecard_data['rounds'][round_num]:
                 scorecard_data['rounds'][round_num][participant_serial] = {}
             
-            judge_scores = {c: int(request.form.get(c, 0)) for c in criteria}
+            # Handle face-off round (scores for all 3 judges at once)
+            if round_num == 'faceoff':
+                for judge_idx in range(3):
+                    judge_scores = {c: int(request.form.get(f'{c}_{judge_idx}', 0)) for c in criteria}
+                    scorecard_data['rounds'][round_num][participant_serial][f'judge_{judge_idx}'] = judge_scores
+            else:
+                # Handle regular rounds (one judge at a time)
+                judge_idx = int(request.form.get('judge_idx'))
+                judge_scores = {c: int(request.form.get(c, 0)) for c in criteria}
+                scorecard_data['rounds'][round_num][participant_serial][f'judge_{judge_idx}'] = judge_scores
             
-            scorecard_data['rounds'][round_num][participant_serial][f'judge_{judge_idx}'] = judge_scores
             save_scorecard(idx, scorecard_data)
         
         return redirect(f'/scorecard/{idx}')
@@ -793,10 +844,11 @@ def scorecard(idx):
         serial = str(p['serial_number'])
         total = 0
         for round_num in ['1', '2', '3']:
-            if round_num in scorecard_data['rounds'] and serial in scorecard_data['rounds'][round_num]:
+            if round_num in scorecard_data.get('rounds', {}) and serial in scorecard_data['rounds'][round_num]:
                 round_scores = scorecard_data['rounds'][round_num][serial]
-                for judge_scores in round_scores.values():
-                    total += sum(judge_scores.values())
+                for judge_key, judge_scores in round_scores.items():
+                    if isinstance(judge_scores, dict):
+                        total += sum(judge_scores.values())
         aggregates[serial] = total
     
     # Get top 2 for faceoff
@@ -1618,6 +1670,11 @@ def send_schedule_email():
     except Exception as e:
         print(f"Error sending email: {e}")
         return jsonify({'status': 'error', 'message': str(e)}), 500
+
+@app.route('/api/export-scorecard/<int:idx>')
+def export_scorecard(idx):
+    scorecard = load_scorecard(idx)
+    return jsonify({'status': 'success', 'event_idx': idx, 'data': scorecard})
 
 @app.route('/clear-foosball-timeslots')
 @admin_required

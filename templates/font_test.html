@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Font Preview - Felizzo'25</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Righteous&family=Bungee&family=Bangers&family=Rubik:wght@700&family=Poppins:wght@700&family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(135deg, #1a0033 0%, #000428 100%);
+            color: #fff;
+            padding: 40px;
+        }
+        .font-sample {
+            background: rgba(0, 0, 0, 0.5);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+        .font-sample:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+        }
+        .font-name {
+            color: #00ffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .sample-text {
+            font-size: 36px;
+            background: linear-gradient(90deg, #ff00ff, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+        .sample-small {
+            font-size: 18px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .sample-button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #00ffff, #00ff88);
+            border: none;
+            color: #000;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .select-btn {
+            padding: 10px 20px;
+            background: #ff00ff;
+            border: none;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+        }
+        .select-btn:hover {
+            background: #00ffff;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; font-size: 48px; margin-bottom: 50px; font-family: 'Fredoka One', cursive; color: #00ffff;">Choose Your Font</h1>
+    
+    <!-- Font 1: Fredoka One -->
+    <div class="font-sample">
+        <div class="font-name">1. Fredoka One (Current Home Page)</div>
+        <div class="sample-text" style="font-family: 'Fredoka One', cursive;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Fredoka One', cursive;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Fredoka One', cursive;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Fredoka One')">Use This Font</button>
+    </div>
+    
+    <!-- Font 2: Righteous -->
+    <div class="font-sample">
+        <div class="font-name">2. Righteous (Bold & Modern)</div>
+        <div class="sample-text" style="font-family: 'Righteous', cursive;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Righteous', cursive;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Righteous', cursive;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Righteous')">Use This Font</button>
+    </div>
+    
+    <!-- Font 3: Bungee -->
+    <div class="font-sample">
+        <div class="font-name">3. Bungee (Chunky & Fun)</div>
+        <div class="sample-text" style="font-family: 'Bungee', cursive;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Bungee', cursive;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Bungee', cursive;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Bungee')">Use This Font</button>
+    </div>
+    
+    <!-- Font 4: Bangers -->
+    <div class="font-sample">
+        <div class="font-name">4. Bangers (Comic Book Style)</div>
+        <div class="sample-text" style="font-family: 'Bangers', cursive;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Bangers', cursive;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Bangers', cursive;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Bangers')">Use This Font</button>
+    </div>
+    
+    <!-- Font 5: Rubik Bold -->
+    <div class="font-sample">
+        <div class="font-name">5. Rubik Bold (Clean & Modern)</div>
+        <div class="sample-text" style="font-family: 'Rubik', sans-serif; font-weight: 700;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Rubik', sans-serif; font-weight: 700;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Rubik', sans-serif; font-weight: 700;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Rubik')">Use This Font</button>
+    </div>
+    
+    <!-- Font 6: Poppins Bold -->
+    <div class="font-sample">
+        <div class="font-name">6. Poppins Bold (Professional)</div>
+        <div class="sample-text" style="font-family: 'Poppins', sans-serif; font-weight: 700;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Poppins', sans-serif; font-weight: 700;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Poppins', sans-serif; font-weight: 700;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Poppins')">Use This Font</button>
+    </div>
+    
+    <!-- Font 7: Montserrat ExtraBold -->
+    <div class="font-sample">
+        <div class="font-name">7. Montserrat ExtraBold (Strong & Bold)</div>
+        <div class="sample-text" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">🎮 Carrom Tournament</div>
+        <div class="sample-small" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">Match ID: SDL_M1 | Player 1 vs Player 2</div>
+        <button class="sample-button" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">SELECT WINNER</button>
+        <button class="select-btn" onclick="selectFont('Montserrat')">Use This Font</button>
+    </div>
+    
+    <script>
+        function selectFont(fontName) {
+            alert(`You selected: ${fontName}\n\nTell me to apply this font!`);
+        }
+    </script>
+</body>
+</html>
