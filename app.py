@@ -346,16 +346,34 @@ def home():
     # Calculate total matches (rough estimate)
     total_matches = 130 + 49 + 56  # Foosball + Tug of War + Seven Stones
     
-    # Build team leaderboard
+    # Build team leaderboard with points
     team_stats = {}
     for idx in range(len(events)):
         participants = load_participants(idx)
         for p in participants:
             team = p.get('team_name', 'Unknown')
             if team not in team_stats:
-                team_stats[team] = {'events': set(), 'participants': 0, 'wins': 0}
+                team_stats[team] = {'events': set(), 'participants': 0, 'points': 0}
             team_stats[team]['events'].add(events[idx]['Event'])
             team_stats[team]['participants'] += 1
+        
+        # Add points for 1st, 2nd, 3rd place
+        event = events[idx]
+        if event.get('First_Place'):
+            team = event['First_Place']
+            if team not in team_stats:
+                team_stats[team] = {'events': set(), 'participants': 0, 'points': 0}
+            team_stats[team]['points'] += 100
+        if event.get('Second_Place'):
+            team = event['Second_Place']
+            if team not in team_stats:
+                team_stats[team] = {'events': set(), 'participants': 0, 'points': 0}
+            team_stats[team]['points'] += 50
+        if event.get('Third_Place'):
+            team = event['Third_Place']
+            if team not in team_stats:
+                team_stats[team] = {'events': set(), 'participants': 0, 'points': 0}
+            team_stats[team]['points'] += 25
     
     leaderboard = []
     for team, stats in team_stats.items():
@@ -363,11 +381,11 @@ def home():
             'name': team,
             'events': len(stats['events']),
             'participants': stats['participants'],
-            'wins': stats['wins'],
+            'wins': stats['points'],
             'participation_rate': min(100, (len(stats['events']) / total_events) * 100)
         })
     
-    leaderboard.sort(key=lambda x: (x['events'], x['participants']), reverse=True)
+    leaderboard.sort(key=lambda x: (x['wins'], x['events'], x['participants']), reverse=True)
     
     # Today's events - check for matches scheduled today
     from datetime import datetime
@@ -731,7 +749,9 @@ def update(idx):
             'Finals_Date': request.form.get('finals_date'),
             'Status': request.form.get('status'),
             'Participants': request.form.get('participants'),
-            'Winner': request.form.get('winner'),
+            'First_Place': request.form.get('first_place', ''),
+            'Second_Place': request.form.get('second_place', ''),
+            'Third_Place': request.form.get('third_place', ''),
             'Notes': request.form.get('notes')
         })
         save_events(events)

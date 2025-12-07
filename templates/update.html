@@ -46,8 +46,16 @@
                 <input type="number" name="participants" value="{{ event.Participants }}">
             </div>
             <div class="form-group">
-                <label>Winner</label>
-                <input type="text" name="winner" value="{{ event.Winner }}">
+                <label>1st Place (100 points)</label>
+                <input type="text" name="first_place" value="{{ event.First_Place }}">
+            </div>
+            <div class="form-group">
+                <label>2nd Place (50 points)</label>
+                <input type="text" name="second_place" value="{{ event.Second_Place }}">
+            </div>
+            <div class="form-group">
+                <label>3rd Place (25 points)</label>
+                <input type="text" name="third_place" value="{{ event.Third_Place }}">
             </div>
             <div class="form-group">
                 <label>Notes</label>
