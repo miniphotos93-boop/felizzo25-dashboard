@@ -594,7 +594,7 @@ def event_detail(idx):
         'Carrom': 'carrom_schedule.json',
         'Chess': 'chess_schedule.json',
         'Snookers': 'snookers_schedule.json',
-        'TT': 'tt_schedule.json',
+        'TT': 'tt_prelims_schedule.json',
         'Seven Stones': 'sevenstones_schedule.json',
         'Tug of War': 'tugofwar_schedule.json'
     }
@@ -606,8 +606,14 @@ def event_detail(idx):
                 with open(schedule_file) as f:
                     data = json.load(f)
                 
+                # Handle TT prelims (flat list format)
+                if event_name == 'TT' and isinstance(data, list) and 'match_id' in data[0]:
+                    schedule.append({
+                        'date': 'Prelims - Completed',
+                        'matches': data
+                    })
                 # Handle different formats
-                if event_name in ['Carrom', 'Foosball']:
+                elif event_name in ['Carrom', 'Foosball']:
                     # These already have day-based structure with matches array
                     schedule = data
                 elif event_name in ['Seven Stones', 'Tug of War']:
