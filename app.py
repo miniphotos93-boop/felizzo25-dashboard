@@ -1342,6 +1342,60 @@ def update_match_winner():
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
+@app.route('/update-match-date', methods=['POST'])
+def update_match_date():
+    try:
+        data = request.json
+        event = data['event']
+        match_id = data['match_id']
+        new_date = data['date']
+        
+        # Load schedule file
+        schedule_files = {
+            'Carrom': 'carrom_schedule.json',
+            'Chess': 'chess_schedule.json',
+            'Foosball': 'foosball_day_schedule.json',
+            'Snookers': 'snookers_schedule.json',
+            'TT': 'tt_schedule.json',
+            'Seven Stones': 'sevenstones_schedule.json',
+            'Tug of War': 'tugofwar_schedule.json'
+        }
+        
+        if event not in schedule_files:
+            return jsonify({'status': 'error', 'message': 'Event not found'}), 404
+        
+        schedule_file = Path(__file__).parent / schedule_files[event]
+        
+        with open(schedule_file) as f:
+            schedule = json.load(f)
+        
+        # Update match date
+        updated = False
+        if event == 'Foosball':
+            for day in schedule:
+                for match in day['matches']:
+                    if match['match_id'] == match_id:
+                        match['date'] = new_date
+                        day['date'] = new_date
+                        updated = True
+                        break
+        else:
+            for match in schedule:
+                if match.get('match_id') == match_id:
+                    match['date'] = new_date
+                    updated = True
+                    break
+        
+        if updated:
+            with open(schedule_file, 'w') as f:
+                json.dump(schedule, f, indent=2)
+            return jsonify({'status': 'success'})
+        else:
+            return jsonify({'status': 'error', 'message': 'Match not found'}), 404
+            
+    except Exception as e:
+        return jsonify({'status': 'error', 'message': str(e)}), 500
+
 @app.route('/update-time-slot', methods=['POST'])
 def update_time_slot():
     try:

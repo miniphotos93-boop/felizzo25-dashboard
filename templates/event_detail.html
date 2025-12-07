@@ -532,7 +532,12 @@
                             data-player1="{% if match.team1_name %}{{ match.team1_name }}{% elif match.player1 %}{{ match.player1 }}{% else %}{{ match.pair1_p1 }} & {{ match.pair1_p2 }}{% endif %}" 
                             data-player2="{% if match.team2_name %}{{ match.team2_name }}{% elif match.player2 %}{{ match.player2 }}{% else %}{{ match.pair2_p1 }} & {{ match.pair2_p2 }}{% endif %}"
                             data-status="{% if winners.get(match.match_id) %}completed{% else %}pending{% endif %}">
-                            <td>{{ day.date }}</td>
+                            <td>
+                                <input type="date" class="date-input" value="{{ day.date }}" 
+                                       onchange="saveMatchDate('{{ match.match_id }}', this.value)"
+                                       style="background: rgba(255,255,255,0.1); border: 1px solid rgba(0,255,255,0.3); 
+                                              color: #00ffff; padding: 5px; border-radius: 5px; font-size: 12px;">
+                            </td>
                             <td><strong>{{ match.match_id }}</strong></td>
                             <td>
                                 {% if match.team1_name %}
@@ -693,6 +698,23 @@
                     time_slot: timeSlot
                 })
             });
+        }
+        
+        function saveMatchDate(matchId, newDate) {
+            fetch('/update-match-date', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    event: '{{ event.Event }}',
+                    match_id: matchId,
+                    date: newDate
+                })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                      console.log('Date updated');
+                  }
+              });
         }
         
         function selectWinner(matchId, winner, button) {
