@@ -966,6 +966,16 @@
                 
                 <!-- Team List -->
                 <div class="team-list">
+                    <!-- Table Header -->
+                    <div class="team-row" style="background: rgba(0, 255, 255, 0.1); font-weight: bold; border-bottom: 2px solid #00ffff;">
+                        <div class="team-name-list">Team</div>
+                        <div class="team-stats-list">
+                            <span class="stat-item-list">Events Participated</span>
+                            <span class="stat-item-list">Participants</span>
+                            <span class="stat-item-list">Score</span>
+                        </div>
+                    </div>
+                    
                     {% for team in leaderboard %}
                     <div class="team-row">
                         <div class="team-name-list">{{ team.name }}</div>
