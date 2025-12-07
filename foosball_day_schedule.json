@@ -279,5 +279,52 @@
         "table": "Table 1"
       }
     ]
+  },
+  {
+    "date": "2025-12-08",
+    "matches": [
+      {
+        "match_id": "foosball_20",
+        "match_number": 20,
+        "date": "2025-12-08",
+        "time": "09:00 AM",
+        "pair1_team": "Core experience",
+        "pair1_p1": "Chandran",
+        "pair1_p2": "Vignesh",
+        "pair2_team": "SE",
+        "pair2_p1": "Dhanush",
+        "pair2_p2": "Manuneethy cholan",
+        "round": "MIXED_TEAMS - Semifinal 1",
+        "table": "Table 1"
+      },
+      {
+        "match_id": "foosball_21",
+        "match_number": 21,
+        "date": "2025-12-08",
+        "time": "09:30 AM",
+        "pair1_team": "NFA",
+        "pair1_p1": "Anantha karthick",
+        "pair1_p2": "shahid",
+        "pair2_team": "SDL",
+        "pair2_p1": "pradeep",
+        "pair2_p2": "MOHANAPRIYA",
+        "round": "MIXED_TEAMS - Semifinal 2",
+        "table": "Table 1"
+      },
+      {
+        "match_id": "foosball_22",
+        "match_number": 22,
+        "date": "2025-12-08",
+        "time": "10:00 AM",
+        "pair1_team": "Winner SF1",
+        "pair1_p1": "TBD",
+        "pair1_p2": "TBD",
+        "pair2_team": "Winner SF2",
+        "pair2_p1": "TBD",
+        "pair2_p2": "TBD",
+        "round": "MIXED_TEAMS - Final",
+        "table": "Table 1"
+      }
+    ]
   }
 ]
