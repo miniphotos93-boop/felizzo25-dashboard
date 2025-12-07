@@ -50,6 +50,9 @@ def init_database():
                 status VARCHAR(50),
                 participants VARCHAR(50),
                 winner VARCHAR(255),
+                first_place VARCHAR(255),
+                second_place VARCHAR(255),
+                third_place VARCHAR(255),
                 notes TEXT
             )
         ''')
@@ -173,6 +176,9 @@ def load_events():
                     'Status': row['status'],
                     'Participants': row['participants'],
                     'Winner': row['winner'],
+                    'First_Place': row.get('first_place', ''),
+                    'Second_Place': row.get('second_place', ''),
+                    'Third_Place': row.get('third_place', ''),
                     'Notes': row['notes']
                 })
             
@@ -204,8 +210,9 @@ def save_events(events):
             for event in events:
                 cur.execute('''
                     INSERT INTO events (event_name, coordinator, manager, start_date, end_date, 
-                                      finals_date, status, participants, winner, notes)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                                      finals_date, status, participants, winner, first_place, 
+                                      second_place, third_place, notes)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     ON CONFLICT (event_name) DO UPDATE SET
                         coordinator = EXCLUDED.coordinator,
                         manager = EXCLUDED.manager,
@@ -215,12 +222,17 @@ def save_events(events):
                         status = EXCLUDED.status,
                         participants = EXCLUDED.participants,
                         winner = EXCLUDED.winner,
+                        first_place = EXCLUDED.first_place,
+                        second_place = EXCLUDED.second_place,
+                        third_place = EXCLUDED.third_place,
                         notes = EXCLUDED.notes
                 ''', (
                     event['Event'], event.get('Coordinator', ''), event.get('Manager', ''),
                     event.get('Start_Date', ''), event.get('End_Date', ''), event.get('Finals_Date', ''),
                     event.get('Status', 'Planned'), event.get('Participants', ''),
-                    event.get('Winner', ''), event.get('Notes', '')
+                    event.get('Winner', ''), event.get('First_Place', ''), 
+                    event.get('Second_Place', ''), event.get('Third_Place', ''),
+                    event.get('Notes', '')
                 ))
             conn.commit()
             cur.close()
