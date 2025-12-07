@@ -125,8 +125,11 @@ def init_database():
     except Exception as e:
         print(f"Database init error: {e}")
 
-# Initialize database on startup (commented out to prevent timeout)
-# init_database()
+# Initialize database on startup
+try:
+    init_database()
+except:
+    pass
 
 # Admin users list
 ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka', 'saktgane', 'abhavara', 'jdpu', 'suhmohan', 'mutnur', 'kuthal', 'lavys', 'nsym']  # Add admin usernames here
