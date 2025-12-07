@@ -892,8 +892,10 @@ def scorecard(idx):
                         total += sum(judge_scores.values())
         aggregates[serial] = total
     
-    # Get top 2 for faceoff
+    # Get top 2 for faceoff (only if they have scores > 0)
     top_2 = sorted(aggregates.items(), key=lambda x: x[1], reverse=True)[:2]
+    if top_2 and top_2[0][1] == 0:  # If top scorer has 0 points, no scores entered yet
+        top_2 = []
     
     return render_template('scorecard.html', event=event, idx=idx, 
                          participants=participants, scorecard=scorecard_data,
