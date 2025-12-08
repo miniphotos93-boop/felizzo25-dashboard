@@ -576,11 +576,16 @@ def event_detail(idx):
                 cur = conn.cursor()
                 cur.execute('SELECT match_id, winner FROM match_results WHERE event_name = %s', (event_name,))
                 for row in cur.fetchall():
-                    winners[row[0]] = row[1]
+                    winners[row['match_id']] = row['winner']
                 cur.close()
                 conn.close()
-            except:
-                pass
+            except Exception as e:
+                print(f"Error loading Foosball results from database: {e}")
+                if conn:
+                    try:
+                        conn.close()
+                    except:
+                        pass
         
         # Fallback to JSON file if no database results
         if not winners:
@@ -683,11 +688,16 @@ def event_detail(idx):
                 cur = conn.cursor()
                 cur.execute('SELECT match_id, winner FROM match_results WHERE event_name = %s', (event_name,))
                 for row in cur.fetchall():
-                    winners[row[0]] = row[1]
+                    winners[row['match_id']] = row['winner']
                 cur.close()
                 conn.close()
-            except:
-                pass
+            except Exception as e:
+                print(f"Error loading results from database for {event_name}: {e}")
+                if conn:
+                    try:
+                        conn.close()
+                    except:
+                        pass
         
         # Fallback to JSON file if no database results
         if not winners:
