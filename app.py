@@ -135,7 +135,7 @@ except:
     pass
 
 # Admin users list
-ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka', 'saktgane', 'abhavara', 'jdpu', 'suhmohan', 'mutnur', 'kuthal', 'lavys', 'nsym']  # Add admin usernames here
+ADMINS = ['sharikan', 'abirajad', 'ramybabu', 'rammaka', 'saktgane', 'abhavara', 'jdpu', 'suhmohan', 'mutnur', 'kuthal', 'lavys', 'nsym', 'dillibab', 'rajeswj', 'selsel']  # Add admin usernames here
 
 def admin_required(f):
     @wraps(f)
