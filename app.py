@@ -534,7 +534,7 @@ def event_detail(idx):
         
         # Load scorecard data if applicable
         scorecard_data = None
-        if event_name in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting']:
+        if event_name in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting', 'Trash to Treasure']:
             scorecard_data = load_scorecard(idx)
         
         return render_template('event_manage_tabs.html', 
@@ -812,7 +812,12 @@ def load_scorecard(idx):
     if file.exists():
         with open(file) as f:
             return json.load(f)
-    return {"judges": ["Judge 1", "Judge 2", "Judge 3"], "rounds": {}, "faceoff": {}}
+    
+    # Default: 3 judges for most events, 2 for Trash to Treasure
+    events = load_events()
+    num_judges = 2 if events[idx]['Event'] == 'Trash to Treasure' else 3
+    judges = [f'Judge {i+1}' for i in range(num_judges)]
+    return {"judges": judges, "rounds": {}, "faceoff": {}}
 
 def save_scorecard(idx, scorecard):
     conn = get_db_connection()
@@ -848,6 +853,7 @@ def scorecard(idx):
     # Define criteria based on event type
     criteria_map = {
         'Painting': ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'],
+        'Trash to Treasure': ['creativity', 'product_completion'],
         'default': ['technical', 'musicality', 'choreography', 'performance', 'stage_presence']
     }
     criteria = criteria_map.get(event_name, criteria_map['default'])
@@ -857,11 +863,11 @@ def scorecard(idx):
         action = request.form.get('action')
         
         if action == 'save_judges':
-            scorecard_data['judges'] = [
-                request.form.get('judge1', 'Judge 1'),
-                request.form.get('judge2', 'Judge 2'),
-                request.form.get('judge3', 'Judge 3')
-            ]
+            num_judges = 2 if event_name == 'Trash to Treasure' else 3
+            judges = []
+            for i in range(num_judges):
+                judges.append(request.form.get(f'judge{i+1}', f'Judge {i+1}'))
+            scorecard_data['judges'] = judges
             save_scorecard(idx, scorecard_data)
         
         elif action == 'save_scores':
