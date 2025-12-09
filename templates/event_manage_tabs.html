@@ -89,7 +89,7 @@
         <div class="tabs">
             <button class="tab-btn active" onclick="showTab('participants')">👥 Participants</button>
             <button class="tab-btn" onclick="showTab('update')">✏️ Update Event</button>
-            {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting'] %}
+            {% if event.Event in ['Solo Dance', 'Group Dance', 'Solo Singing', 'Group Singing', 'Painting', 'Trash to Treasure'] %}
             <a href="/scorecard/{{ event_idx }}" class="tab-btn" style="text-decoration: none;">📊 Scorecard</a>
             {% endif %}
         </div>
