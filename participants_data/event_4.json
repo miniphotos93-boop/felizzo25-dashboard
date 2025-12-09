@@ -9,7 +9,7 @@
     "serial_number": 2,
     "participant1_name": "Syed S",
     "participant2_name": "Hari",
-    "team_name": "EU/UK"
+    "team_name": "3P LAUNCHES"
   },
   {
     "serial_number": 3,
@@ -33,7 +33,7 @@
     "serial_number": 6,
     "participant1_name": "Balamurugan",
     "participant2_name": "Balaji",
-    "team_name": "EU/UK"
+    "team_name": "3P LAUNCHES"
   },
   {
     "serial_number": 7,
@@ -57,7 +57,7 @@
     "serial_number": 10,
     "participant1_name": "Vignesh",
     "participant2_name": "Janarthanam",
-    "team_name": "Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 11,
@@ -81,7 +81,7 @@
     "serial_number": 14,
     "participant1_name": "Subash",
     "participant2_name": "Balaji",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 15,
@@ -99,7 +99,7 @@
     "serial_number": 17,
     "participant1_name": "Muralidharan M",
     "participant2_name": "Akash R",
-    "team_name": "Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 18,
@@ -151,7 +151,7 @@
   },
   {
     "serial_number": 27,
-    "participant1_name": "Muthu",
+    "participant1_name": "Saravana",
     "participant2_name": "Soorya",
     "team_name": "Discovery"
   },
@@ -159,7 +159,7 @@
     "serial_number": 28,
     "participant1_name": "Srinivasaperumal",
     "participant2_name": "Aravindh",
-    "team_name": "Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 29,
@@ -175,7 +175,7 @@
   },
   {
     "serial_number": 31,
-    "participant1_name": "Thirumal",
+    "participant1_name": "Muthu",
     "participant2_name": "abirajan",
     "team_name": "Discovery"
   },
@@ -183,7 +183,7 @@
     "serial_number": 32,
     "participant1_name": "Swarnali",
     "participant2_name": "Divya",
-    "team_name": "FBDA"
+    "team_name": "Discovery"
   },
   {
     "serial_number": 33,
@@ -207,7 +207,7 @@
     "serial_number": 36,
     "participant1_name": "Anantha karthick",
     "participant2_name": "shahid",
-    "team_name": "NFA"
+    "team_name": "Vega"
   },
   {
     "serial_number": 37,
@@ -237,7 +237,7 @@
     "serial_number": 41,
     "participant1_name": "Aasif",
     "participant2_name": "Deepu P J",
-    "team_name": "Sysapps"
+    "team_name": "System Experience"
   },
   {
     "serial_number": 42,
@@ -250,5 +250,29 @@
     "participant1_name": "Raasique",
     "participant2_name": "chithra",
     "team_name": "MOD"
+  },
+  {
+    "serial_number": 44,
+    "participant1_name": "Lakshmipathy",
+    "participant2_name": "Ishrat",
+    "team_name": "Vega"
+  },
+  {
+    "serial_number": 45,
+    "participant1_name": "Jayaram",
+    "participant2_name": "Inbaraj",
+    "team_name": "3P LAUNCHES"
+  },
+  {
+    "serial_number": 46,
+    "participant1_name": "Santhosh",
+    "participant2_name": "Kaushik",
+    "team_name": "3P LAUNCHES"
+  },
+  {
+    "serial_number": 47,
+    "participant1_name": "Abinesh",
+    "participant2_name": "Bharath",
+    "team_name": "3P LAUNCHES"
   }
 ]
