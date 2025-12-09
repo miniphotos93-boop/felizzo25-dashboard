@@ -227,14 +227,22 @@
                             const form = document.querySelector('form input[value="{{ judge_idx }}"][name="judge_idx"]').closest('form');
                             let total = 0;
                             {% if event.Event == 'Painting' %}
-                            ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'].forEach(c => {
+                            const criteria = ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'];
                             {% elif event.Event == 'Trash to Treasure' %}
-                            ['creativity', 'product_completion'].forEach(c => {
+                            const criteria = ['creativity', 'product_completion'];
                             {% else %}
-                            ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(c => {
+                            const criteria = ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'];
                             {% endif %}
-                                total += parseInt(form.querySelector('[name="' + c + '"]').value) || 0;
+                            console.log('Event: {{ event.Event }}, Judge: {{ judge_idx }}, Participant: {{ p.serial_number }}, Criteria:', criteria);
+                            criteria.forEach(c => {
+                                const input = form.querySelector('[name="' + c + '"]');
+                                if (input) {
+                                    const val = parseInt(input.value) || 0;
+                                    console.log('  ' + c + ':', val);
+                                    total += val;
+                                }
                             });
+                            console.log('  Total:', total);
                             document.getElementById('judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}').textContent = total;
                         }
                         calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}();
