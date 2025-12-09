@@ -55,7 +55,7 @@
 
         <div class="tabs">
             <div class="tab active" onclick="showRound('round1')">Round 1</div>
-            {% if event.Event != 'Painting' %}
+            {% if event.Event not in ['Painting', 'Trash to Treasure'] %}
             <div class="tab" onclick="showRound('round2')">Round 2</div>
             <div class="tab" onclick="showRound('round3')">Round 3</div>
             <div class="tab" onclick="showRound('aggregate')">Aggregate Scores</div>
@@ -64,13 +64,13 @@
         </div>
 
         {% for round_num in ['1', '2', '3'] %}
-        {% if event.Event != 'Painting' or round_num == '1' %}
+        {% if event.Event not in ['Painting', 'Trash to Treasure'] or round_num == '1' %}
         <div id="round{{ round_num }}" class="round-content {% if round_num == '1' %}active{% endif %}">
-            <h2>Round {{ round_num }} Scoring (50 points max per judge)</h2>
+            <h2>Round {{ round_num }} Scoring ({% if event.Event == 'Trash to Treasure' %}20{% else %}50{% endif %} points max per judge)</h2>
             {% for p in participants %}
             <h3 style="color: #00ffff; margin-top: 30px;">{{ p.participant1_name }} - {{ p.team_name }}</h3>
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
-                {% for judge_idx in range(3) %}
+            <div style="display: grid; grid-template-columns: repeat({% if event.Event == 'Trash to Treasure' %}2{% else %}3{% endif %}, 1fr); gap: 20px;">
+                {% for judge_idx in range(2 if event.Event == 'Trash to Treasure' else 3) %}
                 <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 15px; border: 2px solid rgba(255, 215, 0, 0.2);">
                     <h4 style="color: #ffd700; text-align: center; margin-bottom: 15px;">{{ scorecard.judges[judge_idx] }}</h4>
                     <form method="POST">
@@ -228,6 +228,8 @@
                             let total = 0;
                             {% if event.Event == 'Painting' %}
                             ['originality', 'creativity', 'craftsmanship', 'color_scheme', 'clarity_of_theme'].forEach(c => {
+                            {% elif event.Event == 'Trash to Treasure' %}
+                            ['creativity', 'product_completion'].forEach(c => {
                             {% else %}
                             ['technical', 'musicality', 'choreography', 'performance', 'stage_presence'].forEach(c => {
                             {% endif %}
@@ -242,18 +244,26 @@
             </div>
             <div style="background: rgba(0, 255, 255, 0.1); padding: 20px; border-radius: 10px; margin-top: 20px; text-align: center; border: 2px solid rgba(0, 255, 255, 0.3);">
                 <h3 style="color: #00ffff; margin-bottom: 10px;">Round {{ round_num }} - Combined Total Score</h3>
-                <p style="color: #fff; font-size: 32px; font-weight: bold;" id="grand_total_{{ p.serial_number }}_{{ round_num }}">0 / 150</p>
-                <p style="color: #e0e0ff; font-size: 14px;">Sum of all 3 judges' scores</p>
+                <p style="color: #fff; font-size: 32px; font-weight: bold;" id="grand_total_{{ p.serial_number }}_{{ round_num }}">0 / {% if event.Event == 'Trash to Treasure' %}40{% else %}150{% endif %}</p>
+                <p style="color: #e0e0ff; font-size: 14px;">Sum of all {% if event.Event == 'Trash to Treasure' %}2{% else %}3{% endif %} judges' scores</p>
             </div>
             <script>
                 (function() {
                     function updateGrandTotal() {
                         let total = 0;
+                        {% if event.Event == 'Trash to Treasure' %}
+                        {% for judge_idx in range(2) %}
+                        const judge{{ judge_idx }}Total = parseInt(document.getElementById('judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}').textContent) || 0;
+                        total += judge{{ judge_idx }}Total;
+                        {% endfor %}
+                        document.getElementById('grand_total_{{ p.serial_number }}_{{ round_num }}').textContent = total + ' / 40';
+                        {% else %}
                         {% for judge_idx in range(3) %}
                         const judge{{ judge_idx }}Total = parseInt(document.getElementById('judge{{ judge_idx }}_total_{{ p.serial_number }}_{{ round_num }}').textContent) || 0;
                         total += judge{{ judge_idx }}Total;
                         {% endfor %}
                         document.getElementById('grand_total_{{ p.serial_number }}_{{ round_num }}').textContent = total + ' / 150';
+                        {% endif %}
                     }
                     
                     // Update grand total whenever any judge's scores change
@@ -270,7 +280,7 @@
         {% endif %}
         {% endfor %}
 
-        {% if event.Event != 'Painting' %}
+        {% if event.Event not in ['Painting', 'Trash to Treasure'] %}
         <div id="aggregate" class="round-content">
             <h2>Aggregate Scores (Total of 3 Rounds - Max 450 points)</h2>
             <table class="aggregate-table">
