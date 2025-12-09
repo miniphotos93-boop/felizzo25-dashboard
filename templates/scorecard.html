@@ -117,6 +117,21 @@
                                     </th>
                                     <td><input type="number" name="clarity_of_theme" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('clarity_of_theme', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
                                 </tr>
+                                {% elif event.Event == 'Trash to Treasure' %}
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Creativity (10)
+                                        <span class="tooltip">Originality and innovative use of materials.</span>
+                                    </th>
+                                    <td><input type="number" name="creativity" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('creativity', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
+                                <tr>
+                                    <th style="text-align: left; font-size: 11px;">
+                                        Product Completion (10)
+                                        <span class="tooltip">How well-finished and functional the final product is.</span>
+                                    </th>
+                                    <td><input type="number" name="product_completion" class="score-input" min="0" max="10" value="{{ scorecard.rounds.get(round_num, {}).get(p.serial_number|string, {}).get('judge_' + judge_idx|string, {}).get('product_completion', 0) }}" onchange="calcJudgeTotal{{ judge_idx }}_{{ p.serial_number }}_{{ round_num }}()"></td>
+                                </tr>
                                 {% elif event.Event in ['Solo Singing', 'Group Singing'] %}
                                 {% if event.Event == 'Group Singing' %}
                                 <tr>
